@@ -1,0 +1,150 @@
+@import url("https://fonts.googleapis.com/css2?family=Anton&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Manrope&display=swap");
+
+.page {
+  max-width: 1460px;
+  margin: 0 auto;
+}
+
+main {
+  background-color: lightgrey;
+  max-height: 100%;
+  margin-top: -30px;
+}
+
+.header-top {
+  position: relative;
+}
+
+.background-header {
+  width: 100%;
+  max-height: 667px;
+  z-index: 0;
+}
+
+.logo {
+  position: absolute;
+  width: 207px;
+  height: 25px;
+  top: 51px;
+  left: 69px;
+  padding: 0;
+}
+
+.first-title {
+  color: yellow;
+  font-weight: 400;
+  font-size: 44px;
+  text-align: center;
+  font-family: "Anton", sans-serif;
+  position: absolute;
+  top: 245px;
+  left: 275px;
+  width: 890px;
+  height: 132px;
+}
+
+.search-elts {
+  z-index: 1;
+  position: absolute;
+  width: 954px;
+  height: 72px;
+  top: 406.42px;
+  left: 243px;
+}
+.search-bar {
+  width: 954px;
+  height: 72px;
+  border-radius: 10px;
+  padding-left: 24px;
+}
+
+input::placeholder {
+  margin-left: 24px;
+  font-family: "Manrope", sans-serif;
+}
+
+.search-btn {
+  background-color: #1b1b1b;
+  border-radius: 15px;
+  width: 56px;
+  height: 56px;
+  position: absolute;
+  z-index: 5;
+  margin-left: -65px;
+  margin-top: 7px;
+  box-shadow: none;
+  border: 0 none;
+  outline: 0;
+}
+
+.glass-elt {
+  font-size: 34px;
+  color: white;
+  font-weight: 100;
+}
+
+.glass-black {
+  display: none;
+}
+
+.selects {
+  background-color: #fff;
+  padding: 17px;
+  border-radius: 11px;
+  margin: 15px;
+  width: 188px;
+  color: black;
+  font-family: "manrope";
+}
+
+/* Assurez-vous d'inclure le lien vers Font Awesome dans votre document HTML */
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+.custom-select {
+  position: relative;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 4px;
+}
+
+.custom-select .option {
+  cursor: pointer;
+}
+
+.custom-select .option-search {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-top: none;
+}
+
+.custom-select:hover .option-search {
+  display: block;
+}
+
+.custom-select .option-search i {
+  display: inline-block;
+  margin-right: 4px;
+  color: #aaa;
+}
+
+/* Pour un champ de recherche avec une icône centrée verticalement */
+.custom-select .option-search input[type="search"] {
+  padding-left: 20px; /* Ajustez la valeur en fonction de la largeur de votre icône */
+  background-position: 4px center; /* Ajustez la valeur en fonction de la largeur de votre icône */
+  background-repeat: no-repeat;
+  background-size: 16px 16px; /* Ajustez la taille de l'icône si nécessaire */
+}
+
+@media only screen and (max-width: 767px) {
+  .background-header {
+    width: 100%;
+    height: auto;
+  }
+}

@@ -8,7 +8,7 @@
 
 main {
   background-color: lightgrey;
-  max-height: 100%;
+  min-height: 100vh;
   margin-top: -30px;
 }
 
@@ -98,15 +98,39 @@ input::placeholder {
   font-family: "manrope";
 }
 
-/* Assurez-vous d'inclure le lien vers Font Awesome dans votre document HTML */
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
 .custom-select {
   position: relative;
   display: inline-block;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  padding: 4px;
+  border-radius: 11px;
+  background-color: white;
+  width: 195px;
+  height: 56px;
+  padding: 17px;
+}
+
+.custom-select .option {
+  display: flex;
+}
+
+.title-filer {
+  justify-content: flex-start;
+}
+.arrow-top,
+.arrow-bottom {
+  width: 13px;
+  height: 6px;
+  position: absolute;
+  right: 5px;
+  top: 25px;
+}
+
+.select-one {
+  top: 20px;
+  left: 20px;
+}
+
+.arrow-top {
+  display: none;
 }
 
 .custom-select .option {
@@ -116,31 +140,49 @@ input::placeholder {
 .custom-select .option-search {
   display: none;
   position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
-  background-color: #fff;
-  border: 1px solid #ccc;
+  top: 5px;
   border-top: none;
+  width: 195px;
+  height: 46px;
+  border-radius: 2px;
+  background-color: #fff;
+  left: -18px;
+  padding: 10px;
 }
 
 .custom-select:hover .option-search {
   display: block;
+  position: relative;
 }
 
-.custom-select .option-search i {
+.custom-select:hover .arrow-bottom {
+  display: none;
+}
+
+.custom-select:hover .arrow-top {
+  display: block;
+}
+
+.little-search {
+  width: 175px;
+  position: absolute;
+  top: 10px;
+  border: 1px solid #c6c6c6;
+  margin: 0 auto;
+}
+
+/* .custom-select .option-search i {
   display: inline-block;
   margin-right: 4px;
   color: #aaa;
 }
 
 /* Pour un champ de recherche avec une icône centrée verticalement */
-.custom-select .option-search input[type="search"] {
+/* .custom-select .option-search input[type="search"] {
   padding-left: 20px; /* Ajustez la valeur en fonction de la largeur de votre icône */
-  background-position: 4px center; /* Ajustez la valeur en fonction de la largeur de votre icône */
-  background-repeat: no-repeat;
-  background-size: 16px 16px; /* Ajustez la taille de l'icône si nécessaire */
-}
+/* background-position: 4px center; /* Ajustez la valeur en fonction de la largeur de votre icône */
+/* background-repeat: no-repeat; */
+/* background-size: 16px 16px; Ajustez la taille de l'icône si nécessaire */
 
 @media only screen and (max-width: 767px) {
   .background-header {

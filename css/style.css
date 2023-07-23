@@ -78,6 +78,10 @@ input::placeholder {
   outline: 0;
 }
 
+.search-btn.search-btn:hover {
+  background-color: yellow;
+}
+
 .glass-elt {
   font-size: 34px;
   color: white;
@@ -86,6 +90,12 @@ input::placeholder {
 
 .glass-black {
   display: none;
+}
+
+.glass-black,
+.glass-white {
+  margin-top: 3px;
+  margin-left: 12px;
 }
 
 .selects {
@@ -188,19 +198,6 @@ input::placeholder {
   right: 20px;
   top: 17px;
 }
-
-/* .custom-select .option-search i {
-  display: inline-block;
-  margin-right: 4px;
-  color: #aaa;
-}
-
-/* Pour un champ de recherche avec une icône centrée verticalement */
-/* .custom-select .option-search input[type="search"] {
-  padding-left: 20px; /* Ajustez la valeur en fonction de la largeur de votre icône */
-/* background-position: 4px center; /* Ajustez la valeur en fonction de la largeur de votre icône */
-/* background-repeat: no-repeat; */
-/* background-size: 16px 16px; Ajustez la taille de l'icône si nécessaire */
 
 @media only screen and (max-width: 767px) {
   .background-header {

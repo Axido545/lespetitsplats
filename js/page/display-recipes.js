@@ -1,17 +1,33 @@
-// display-recipes.js
+const btnSearchYellow = document.querySelector(".search-btn");
+const glassSearchBlack = document.querySelector(".glass-black");
+const glassSearchWhite = document.querySelector(".glass-white");
+glassSearchWhite.style.display ="block";
 
-// Importez les données JSON du fichier "recipes.js"
-import recipes from './data/recipes.js'; // Assurez-vous que le chemin d'accès est correct
 
-// Récupérer l'élément ul (liste non ordonnée) dans le HTML
-const recipeList = document.getElementById("recipeList");
+btnSearchYellow.addEventListener("mouseover", function(){
+    glassSearchBlack.style.display ="block";
+    glassSearchWhite.style.display ="none";
+})
 
-// Parcourir les recettes et ajouter chaque nom en tant qu'élément de liste li
-recipes.forEach((recipe) => {
-    const listItem = document.createElement("li");
-    listItem.textContent = recipe.name;
-    recipeList.appendChild(listItem);
-});
+btnSearchYellow.addEventListener('mouseleave', () => {
+    glassSearchBlack.style.display ="none";
+    glassSearchWhite.style.display ="block";
+  });
+
+// // display-recipes.js
+
+// // Importez les données JSON du fichier "recipes.js"
+// import recipes from './data/recipes.js'; // Assurez-vous que le chemin d'accès est correct
+
+// // Récupérer l'élément ul (liste non ordonnée) dans le HTML
+// const recipeList = document.getElementById("recipeList");
+
+// // Parcourir les recettes et ajouter chaque nom en tant qu'élément de liste li
+// recipes.forEach((recipe) => {
+//     const listItem = document.createElement("li");
+//     listItem.textContent = recipe.name;
+//     recipeList.appendChild(listItem);
+// });
 
 
 

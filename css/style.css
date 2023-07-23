@@ -129,6 +129,16 @@ input::placeholder {
   left: 20px;
 }
 
+.select-two {
+  top: 20px;
+  left: 40px;
+}
+
+.select-three {
+  top: 20px;
+  left: 60px;
+}
+
 .arrow-top {
   display: none;
 }
@@ -169,6 +179,14 @@ input::placeholder {
   top: 10px;
   border: 1px solid #c6c6c6;
   margin: 0 auto;
+  z-index: 1;
+}
+
+.little-glass {
+  position: absolute;
+  z-index: 2;
+  right: 20px;
+  top: 17px;
 }
 
 /* .custom-select .option-search i {

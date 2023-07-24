@@ -1,20 +1,16 @@
-// Assurez-vous d'avoir lié votre fichier recipes.js avant d'utiliser la variable "recipes".
-// Exemple: <script src="data/recipes.js"></script>
-
 // Fonction pour afficher les recettes dans l'élément avec l'ID "recipeContainer"
 function displayRecipes() {
 
   const recipeContainer = document.getElementById("recipeContainer");
 recipeContainer.setAttribute("class","gallery-recipes")
 
-  // Vérifiez si l'élément "recipeContainer" existe dans la page
+  // Vérification si l'élément "recipeContainer" existe dans la page
   if (!recipeContainer) {
     console.error("L'élément recipeContainer n'existe pas dans la page.");
     return;
   }
 
-  // Parcourir toutes les recettes et générer le code HTML pour les afficher
-
+  // Parcour toutes les recettes et générer le code HTML pour les afficher
   let recipeHTML = "";
   for (const recipe of recipes) {
     recipeHTML += `
@@ -46,14 +42,14 @@ recipeContainer.setAttribute("class","gallery-recipes")
     `;
   }
 
-  // Ajouter le code HTML généré dans l'élément "recipeContainer"
+  // Ajout de code HTML généré dans l'élément "recipeContainer"
   recipeContainer.innerHTML = recipeHTML;
 
 
-   // Calculer le nombre de recettes
+   // Calcule du nombre de recettes
  const numberOfRecipes = recipes.length;
 
- // Afficher le nombre de recettes dans un élément HTML avec l'ID "recipeCount"
+ // Affichage le nombre de recettes dans un élément HTML avec l'ID "recipeCount"
  const recipeCountElement = document.getElementById("recipeCount");
  if (recipeCountElement) {
    recipeCountElement.textContent = `${numberOfRecipes} recettes`;

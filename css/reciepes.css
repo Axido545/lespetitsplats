@@ -1,0 +1,30 @@
+.gallery-recipes {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 30px;
+  grid-auto-rows: minmax(100px, auto);
+  overflow: hidden;
+  width: 100%;
+  margin-top: 74px;
+  margin-left: 60px;
+  margin-right: 60px;
+}
+
+.img-recette {
+  width: 380px;
+  height: 253px;
+  border-radius: 21px 21px 0 0;
+  object-fit: cover;
+}
+
+.recipe-article {
+  background-color: white;
+  width: 380px;
+  border-radius: 21px;
+}
+
+.reciepe-name {
+  font-family: "Anton";
+  font-size: 18px;
+  color: black;
+}

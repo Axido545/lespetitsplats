@@ -1,62 +1,71 @@
-async function getRecipes() {
-    try {
-      const response = await fetch("data/recipes.js");
-      console.log(response);
-      if (!response.ok) {
-        throw new Error(
-          "Une erreur s'est produite lors de la récupération des données des photographes.",
-        );
-      } else {
-      }
-      const data = await response.json();
-      console.log(data);
-      return { recipes: data };
-    } catch (error) {
-      console.error(error);
-      return { recipes: [] }; // Retourne un tableau vide en cas d'erreur
-    }
+// Assurez-vous d'avoir lié votre fichier recipes.js avant d'utiliser la variable "recipes".
+// Exemple: <script src="data/recipes.js"></script>
+
+// Fonction pour afficher les recettes dans l'élément avec l'ID "recipeContainer"
+function displayRecipes() {
+
+  const recipeContainer = document.getElementById("recipeContainer");
+recipeContainer.setAttribute("class","gallery-recipes")
+
+  // Vérifiez si l'élément "recipeContainer" existe dans la page
+  if (!recipeContainer) {
+    console.error("L'élément recipeContainer n'existe pas dans la page.");
+    return;
   }
-  async function displayData(recipes) {
-    const recipesSection = document.querySelector(".recipes-section");
 
-    // Vérifier que recipes est un tableau avant d'utiliser forEach
-    if (!Array.isArray(recipes)) {
-        console.error("Les données des recettes ne sont pas valides.", recipes);
-        return;
+  // Parcourir toutes les recettes et générer le code HTML pour les afficher
+
+  let recipeHTML = "";
+  for (const recipe of recipes) {
+    recipeHTML += `
+
+
+
+      <article class="recipe-article">
+        <img class="img-recette" src="asset/imgs_recettes/${recipe.image}" alt="${recipe.name}" />
+        <h2 class="reciepe-name">${recipe.name}</h2>
+        <p>Servings: ${recipe.servings}</p>
+        <p>Time: ${recipe.time} minutes</p>
+        <h3>Ingrédients:</h3>
+        <ul>
+    `;
+
+    for (const ingredient of recipe.ingredients) {
+      const { ingredient: name, quantity, unit = "" } = ingredient;
+      recipeHTML += `
+        <li>${name}: ${quantity} ${unit}</li>
+      `;
     }
 
-    recipes.forEach((recipe) => {
-        const recipeModel = photographerFactory(recipe);
-        const userCardDOM = recipeModel.getUserCardDOM();
-        recipesSection.appendChild(userCardDOM);
-    });
-}
-async function init() {
-    try {
-        // Récupère les données des recettes
-        const response = await fetch("data/recipes.js");
-        if (!response.ok) {
-            throw new Error("Une erreur s'est produite lors de la récupération des données des recettes.");
-        }
+    recipeHTML += `
+        </ul>
+        <p>${recipe.description}</p>
+        <p>Appareil: ${recipe.appliance}</p>
+        <p>Ustensils: ${recipe.ustensils.join(", ")}</p>
+      </article>
+    `;
+  }
 
-        const data = await response.json();
+  // Ajouter le code HTML généré dans l'élément "recipeContainer"
+  recipeContainer.innerHTML = recipeHTML;
 
-        // Vérifiez le contenu des données récupérées
-        console.log(data);
 
-        // Assurez-vous que data est un tableau valide contenant les données des recettes
-        if (!Array.isArray(data)) {
-            throw new Error("Les données des recettes ne sont pas valides.");
-        }
+   // Calculer le nombre de recettes
+ const numberOfRecipes = recipes.length;
 
-        // Afficher les données des recettes
-        displayData(data);
-    } catch (error) {
-        console.error(error);
-    }
+ // Afficher le nombre de recettes dans un élément HTML avec l'ID "recipeCount"
+ const recipeCountElement = document.getElementById("recipeCount");
+ if (recipeCountElement) {
+   recipeCountElement.textContent = `${numberOfRecipes} recettes`;
+ }
 }
 
-init();
 
 
-  
+
+
+
+
+
+// Appeler la fonction pour afficher les recettes lorsque la page est chargée
+window.onload = displayRecipes;

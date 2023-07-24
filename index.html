@@ -6,6 +6,8 @@
     <title>Les petits plats</title>
     <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <link rel="stylesheet" type="text/css" href="css/reciepes.css" />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -56,7 +58,7 @@
     <main>
 
 
-      
+      <header class="header-main">
   <div class="custom-select select-one">
             <div class="option"><span class="title-filter"> Ingrédients</spoan>
             <img class="arrow-bottom" alt="fllèche en bas" src="asset/arrow-bottom.png">
@@ -97,16 +99,21 @@
           </div>
                   
         
+          <p id="recipeCount"></p>
                               
   
-   
-
+          <section id="recipeContainer"></div>
+          </header>
 
     </main>
-  
+    <div class="recipes-section"></div>
 
     <script src="https://kit.fontawesome.com/78279c6304.js" crossorigin="anonymous"></script>
-    <script src="js/script/index.js"></script>
+    <script  src="js/script/index.js"></script>
     <script src="js/page/display-recipes.js"></script>
+    <script src="data/recipes.js"></script>
+
+
+
   </body>
 </html>

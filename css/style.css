@@ -7,9 +7,9 @@
 }
 
 main {
-  background-color: lightgrey;
+  /* background-color: lightgrey; */
   min-height: 100vh;
-  margin-top: -30px;
+  /* margin-top: -30px; */
 }
 
 .header-top {
@@ -23,12 +23,12 @@ main {
 }
 
 .logo {
-  position: absolute;
+  /* position: absolute; */
   width: 207px;
   height: 25px;
   top: 51px;
   left: 69px;
-  padding: 0;
+  /* padding: 0; */
 }
 
 .first-title {
@@ -37,20 +37,20 @@ main {
   font-size: 44px;
   text-align: center;
   font-family: "Anton", sans-serif;
-  position: absolute;
+  /* position: absolute; */
   top: 245px;
-  left: 275px;
+  /* left: 275px;
   width: 890px;
-  height: 132px;
+  height: 132px; */
 }
 
 .search-elts {
   z-index: 1;
-  position: absolute;
+  /* position: absolute; */
   width: 954px;
   height: 72px;
   top: 406.42px;
-  left: 243px;
+  left: 175px;
 }
 .search-bar {
   width: 954px;
@@ -69,13 +69,13 @@ input::placeholder {
   border-radius: 15px;
   width: 56px;
   height: 56px;
-  position: absolute;
   z-index: 5;
   margin-left: -65px;
   margin-top: 7px;
   box-shadow: none;
   border: 0 none;
   outline: 0;
+  right: 10px;
 }
 
 .search-btn.search-btn:hover {
@@ -90,12 +90,6 @@ input::placeholder {
 
 .glass-black {
   display: none;
-}
-
-.glass-black,
-.glass-white {
-  margin-top: 3px;
-  margin-left: 12px;
 }
 
 .selects {

@@ -1,8 +1,9 @@
+
+
 // Fonction pour afficher les recettes dans l'élément avec l'ID "recipeContainer"
 function displayRecipes() {
-
   const recipeContainer = document.getElementById("recipeContainer");
-recipeContainer.setAttribute("class","gallery-recipes")
+  recipeContainer.classList.add("gallery-recipes");
 
   // Vérification si l'élément "recipeContainer" existe dans la page
   if (!recipeContainer) {
@@ -10,58 +11,72 @@ recipeContainer.setAttribute("class","gallery-recipes")
     return;
   }
 
-  // Parcour toutes les recettes et générer le code HTML pour les afficher
-  let recipeHTML = "";
-  for (const recipe of recipes) {
-    recipeHTML += `
+  for (let recipe of recipes) {
+    const articleRecipe = document.createElement('article');
+    articleRecipe.classList.add("recipe-article", "position-relative", "col-4"); // Ajout des classes Bootstrap pour la mise en forme
+    recipeContainer.appendChild(articleRecipe);
 
+    const imgRecipe = document.createElement("img");
+    imgRecipe.classList.add("img-recette", "img-fluid"); // Ajout des classes Bootstrap pour la mise en forme
+    imgRecipe.setAttribute("src", `asset/imgs_recettes/${recipe.image}`);
+    imgRecipe.setAttribute("alt", recipe.name);
+    articleRecipe.appendChild(imgRecipe);
 
+    const wrapTextRecipe = document.createElement("section");
+    wrapTextRecipe.classList.add("text-container", "p-3"); // Ajout des classes Bootstrap pour la mise en forme
+    articleRecipe.appendChild(wrapTextRecipe);
 
-      <article class="recipe-article">
-        <img class="img-recette" src="asset/imgs_recettes/${recipe.image}" alt="${recipe.name}" />
-        <h2 class="reciepe-name">${recipe.name}</h2>
-        <p>Servings: ${recipe.servings}</p>
-        <p>Time: ${recipe.time} minutes</p>
-        <h3>Ingrédients:</h3>
-        <ul>
-    `;
+    const titleRecipe = document.createElement("h2");
+    titleRecipe.classList.add("reciepe-name", "mb-3"); // Ajout des classes Bootstrap pour la mise en forme
+    titleRecipe.textContent = recipe.name;
+    wrapTextRecipe.appendChild(titleRecipe);
+
+    const subTitlRecipeIng = document.createElement("h3");
+    subTitlRecipeIng.classList.add("reciepe-subtitle", "mb-2"); // Ajout des classes Bootstrap pour la mise en forme
+    subTitlRecipeIng.textContent = "INGREDIENTS";
+    wrapTextRecipe.appendChild(subTitlRecipeIng);
+
+    const recipeDesc = document.createElement("p");
+    recipeDesc.textContent = recipe.description;
+    wrapTextRecipe.appendChild(recipeDesc);
+
+    const ingredientsList = document.createElement("ul");
+    wrapTextRecipe.appendChild(ingredientsList);
 
     for (const ingredient of recipe.ingredients) {
       const { ingredient: name, quantity, unit = "" } = ingredient;
-      recipeHTML += `
-        <li>${name}: ${quantity} ${unit}</li>
-      `;
+      const ingredientItem = document.createElement("li");
+      ingredientItem.textContent = `${name}: ${quantity} ${unit}`;
+      ingredientsList.appendChild(ingredientItem);
     }
 
-    recipeHTML += `
-        </ul>
-        <p>${recipe.description}</p>
-        <p>Appareil: ${recipe.appliance}</p>
-        <p>Ustensils: ${recipe.ustensils.join(", ")}</p>
-      </article>
-    `;
+    const servingsParagraph = document.createElement("p");
+    servingsParagraph.textContent = `Servings: ${recipe.servings}`;
+    wrapTextRecipe.appendChild(servingsParagraph);
+
+    const timeParagraph = document.createElement("p");
+    timeParagraph.classList.add("reciepe-time");
+    timeParagraph.textContent = `${recipe.time} min`;
+    wrapTextRecipe.appendChild(timeParagraph);
+
+    const applianceParagraph = document.createElement("p");
+    applianceParagraph.textContent = `Appareil: ${recipe.appliance}`;
+    wrapTextRecipe.appendChild(applianceParagraph);
+
+    const ustensilsParagraph = document.createElement("p");
+    ustensilsParagraph.textContent = `Ustensils: ${recipe.ustensils.join(", ")}`;
+    wrapTextRecipe.appendChild(ustensilsParagraph);
   }
 
-  // Ajout de code HTML généré dans l'élément "recipeContainer"
-  recipeContainer.innerHTML = recipeHTML;
+  // Calcule du nombre de recettes
+  const numberOfRecipes = recipes.length;
 
-
-   // Calcule du nombre de recettes
- const numberOfRecipes = recipes.length;
-
- // Affichage le nombre de recettes dans un élément HTML avec l'ID "recipeCount"
- const recipeCountElement = document.getElementById("recipeCount");
- if (recipeCountElement) {
-   recipeCountElement.textContent = `${numberOfRecipes} recettes`;
- }
+  // Affichage le nombre de recettes dans un élément HTML avec l'ID "recipeCount"
+  const recipeCountElement = document.getElementById("recipeCount");
+  if (recipeCountElement) {
+    recipeCountElement.textContent = `${numberOfRecipes} recettes`;
+  }
 }
-
-
-
-
-
-
-
 
 // Appeler la fonction pour afficher les recettes lorsque la page est chargée
 window.onload = displayRecipes;

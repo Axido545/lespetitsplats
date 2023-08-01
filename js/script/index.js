@@ -1,5 +1,20 @@
-import hello from "../utils/boucle-for.js"
+import {hello, SearchFor} from "../utils/boucle-for.js"
 hello();
+SearchFor();
+
+
+const searchBtn = document.querySelector(".search-btn");
+const whiteGlass = document.querySelector(".glass-white")
+const blackGlass = document.querySelector(".glass-black")
+whiteGlass.style.display ="block"
+blackGlass.style.display ="none"
+
+searchBtn.addEventListener("mouseover", function(){
+  whiteGlass.style.display ="none"
+ blackGlass.style.display ="block"
+
+
+})
 
 // Fonction pour afficher les recettes dans l'élément avec l'ID "recipeContainer"
  export function displayRecipes() {

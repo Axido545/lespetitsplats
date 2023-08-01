@@ -10,11 +10,17 @@ whiteGlass.style.display ="block"
 blackGlass.style.display ="none"
 
 searchBtn.addEventListener("mouseover", function(){
-  whiteGlass.style.display ="none"
- blackGlass.style.display ="block"
+whiteGlass.style.display ="none"
+blackGlass.style.display ="block"
 
 
 })
+searchBtn.addEventListener("mouseout", function(){
+  whiteGlass.style.display ="block"
+  blackGlass.style.display ="none"
+  
+  
+  })
 
 // Fonction pour afficher les recettes dans l'élément avec l'ID "recipeContainer"
  export function displayRecipes() {

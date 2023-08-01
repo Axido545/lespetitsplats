@@ -55,3 +55,7 @@
   font-weight: 700;
   letter-spacing: 9%;
 }
+
+.ingredient-Item-name {
+  margin-bottom: 0;
+}

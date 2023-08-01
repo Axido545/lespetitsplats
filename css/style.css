@@ -212,3 +212,10 @@ input::placeholder {
   font-size: 21px;
   top: 30px;
 }
+
+.recipe-desc {
+  -webkit-line-clamp: 4;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}

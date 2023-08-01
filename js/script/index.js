@@ -31,41 +31,63 @@ function displayRecipes() {
     titleRecipe.textContent = recipe.name;
     wrapTextRecipe.appendChild(titleRecipe);
 
+    const subTitlRecipeRec = document.createElement("h3");
+    subTitlRecipeRec.classList.add("reciepe-subtitle", "mb-2"); // Ajout des classes Bootstrap pour la mise en forme
+    subTitlRecipeRec.textContent = "RECETTE";
+    wrapTextRecipe.appendChild(subTitlRecipeRec);
+
+    const recipeDesc = document.createElement("p");
+    recipeDesc.textContent = recipe.description;
+    recipeDesc.setAttribute("class","recipe-desc")
+    wrapTextRecipe.appendChild(recipeDesc);
+
+
+
     const subTitlRecipeIng = document.createElement("h3");
     subTitlRecipeIng.classList.add("reciepe-subtitle", "mb-2"); // Ajout des classes Bootstrap pour la mise en forme
     subTitlRecipeIng.textContent = "INGREDIENTS";
     wrapTextRecipe.appendChild(subTitlRecipeIng);
 
-    const recipeDesc = document.createElement("p");
-    recipeDesc.textContent = recipe.description;
-    wrapTextRecipe.appendChild(recipeDesc);
-
-    const ingredientsList = document.createElement("ul");
+    const ingredientsList = document.createElement("section");
+    ingredientsList.setAttribute("class","row row-cols-2")
     wrapTextRecipe.appendChild(ingredientsList);
 
     for (const ingredient of recipe.ingredients) {
       const { ingredient: name, quantity, unit = "" } = ingredient;
-      const ingredientItem = document.createElement("li");
-      ingredientItem.textContent = `${name}: ${quantity} ${unit}`;
-      ingredientsList.appendChild(ingredientItem);
+
+      const ingredientBlock = document.createElement("div")
+      ingredientBlock.setAttribute("class","col")
+      ingredientsList.appendChild(ingredientBlock);
+
+
+      const ingredientItem = document.createElement("p");
+      ingredientItem.setAttribute("class","ingredient-Item-name")
+      ingredientItem.textContent = `${name}`;
+      ingredientBlock.appendChild(ingredientItem);
+
+      const ingredientSubItem = document.createElement("p")
+      ingredientSubItem.setAttribute("class","fw-light")
+      ingredientSubItem.textContent = `${quantity} ${unit}`;
+      ingredientBlock.appendChild(ingredientSubItem);
+
     }
 
-    const servingsParagraph = document.createElement("p");
-    servingsParagraph.textContent = `Servings: ${recipe.servings}`;
-    wrapTextRecipe.appendChild(servingsParagraph);
+    // const servingsParagraph = document.createElement("p");
+    // servingsParagraph.textContent = `Servings: ${recipe.servings}`;
+    // wrapTextRecipe.appendChild(servingsParagraph);
 
     const timeParagraph = document.createElement("p");
     timeParagraph.classList.add("reciepe-time");
     timeParagraph.textContent = `${recipe.time} min`;
     wrapTextRecipe.appendChild(timeParagraph);
 
-    const applianceParagraph = document.createElement("p");
-    applianceParagraph.textContent = `Appareil: ${recipe.appliance}`;
-    wrapTextRecipe.appendChild(applianceParagraph);
+    // const applianceParagraph = document.createElement("p");
+    // applianceParagraph.textContent = `Appareil: ${recipe.appliance}`;
+    // wrapTextRecipe.appendChild(applianceParagraph);
 
-    const ustensilsParagraph = document.createElement("p");
-    ustensilsParagraph.textContent = `Ustensils: ${recipe.ustensils.join(", ")}`;
-    wrapTextRecipe.appendChild(ustensilsParagraph);
+    // const ustensilsParagraph = document.createElement("p");
+    // ustensilsParagraph.textContent = `Ustensils: ${recipe.ustensils.join(", ")}`;
+    // wrapTextRecipe.appendChild(ustensilsParagraph);
   }
 
   // Calcule du nombre de recettes

@@ -1,37 +1,13 @@
-import {hello, SearchFor} from "../utils/boucle-for.js"
-hello();
+import {SearchFor} from "../utils/boucle-for.js"
 SearchFor();
+import {recipes}  from './data/recipes.js';
 
-
-const searchBtn = document.querySelector(".search-btn");
-const whiteGlass = document.querySelector(".glass-white")
-const blackGlass = document.querySelector(".glass-black")
-whiteGlass.style.display ="block"
-blackGlass.style.display ="none"
-
-searchBtn.addEventListener("mouseover", function(){
-whiteGlass.style.display ="none"
-blackGlass.style.display ="block"
-
-
-})
-searchBtn.addEventListener("mouseout", function(){
-  whiteGlass.style.display ="block"
-  blackGlass.style.display ="none"
-  
-  
-  })
-
-// Fonction pour afficher les recettes dans l'élément avec l'ID "recipeContainer"
- export function displayRecipes() {
+/// Fonction pour afficher les recettes dans l'élément avec l'ID "recipeContainer"
+export function displayRecipes() {
   const recipeContainer = document.getElementById("recipeContainer");
   recipeContainer.classList.add("gallery-recipes");
 
-  // Vérification si l'élément "recipeContainer" existe dans la page
-  if (!recipeContainer) {
-    console.error("L'élément recipeContainer n'existe pas dans la page.");
-    return;
-  }
+
 
   for (let recipe of recipes) {
     const articleRecipe = document.createElement('article');
@@ -120,7 +96,30 @@ searchBtn.addEventListener("mouseout", function(){
   if (recipeCountElement) {
     recipeCountElement.textContent = `${numberOfRecipes} recettes`;
   }
-}
 
+
+}
 // Appeler la fonction pour afficher les recettes lorsque la page est chargée
 window.onload = displayRecipes;
+
+
+
+
+const searchBtn = document.querySelector(".search-btn");
+const whiteGlass = document.querySelector(".glass-white")
+const blackGlass = document.querySelector(".glass-black")
+whiteGlass.style.display ="block"
+blackGlass.style.display ="none"
+
+searchBtn.addEventListener("mouseover", function(){
+whiteGlass.style.display ="none"
+blackGlass.style.display ="block"
+
+
+})
+searchBtn.addEventListener("mouseout", function(){
+  whiteGlass.style.display ="block"
+  blackGlass.style.display ="none"
+  
+  
+  })

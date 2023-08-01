@@ -1,15 +1,11 @@
 //recherche avec boucle for
 
-// verif que cette page est bien en relation Allahu a3lam
-export function hello (){
-    console.log("hello")
-}
-
 export function SearchFor (){
     console.log("test")
 
     
 const searchUp = document.querySelector(".search-bar");
+
 
 searchUp.addEventListener("change", function(){
     console.log("ca bbouge")

@@ -1,7 +1,8 @@
-
+import hello from "../utils/boucle-for.js"
+hello();
 
 // Fonction pour afficher les recettes dans l'élément avec l'ID "recipeContainer"
-function displayRecipes() {
+ export function displayRecipes() {
   const recipeContainer = document.getElementById("recipeContainer");
   recipeContainer.classList.add("gallery-recipes");
 

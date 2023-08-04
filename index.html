@@ -37,21 +37,28 @@
         alt="logo"
         title="logo"
       />
-      <div class="form-data">
-        <h1 class="first-title container position-absolute">
+      <form id="searchForm" class="form-data" novalidate>
+        <label
+          for="searchInput"
+          class="first-title container position-absolute"
+        >
           CHERCHEZ PARMI PLUS DE 50 RECETTES<br />
           DU QUOTIDIEN, SIMPLES ET DÉLICIEUSES
-        </h1>
+        </label>
         <nav class="search-elts mx-auto position-absolute container">
           <div class="input-group col-8 mx-auto">
             <input
               type="search"
+              id="searchInput"
+              name="searchInput"
+              minlength="3"
+              required
               class="form-control search-bar rounded"
               placeholder="Rechercher une recette, un ingrédient, ..."
             />
             <button
               class="btn search-btn rounded position-absolute"
-              type="button"
+              type="submit"
             >
               <img
                 src="asset/glass-white.png"
@@ -66,7 +73,7 @@
             </button>
           </div>
         </nav>
-      </div>
+      </form>
     </header>
 
     <main class="bg-light p-3">

@@ -1,13 +1,11 @@
-import {SearchFor} from "../utils/boucle-for.js"
-SearchFor();
-import {recipes}  from './data/recipes.js';
+import { searchRecipes, displayFilteredRecipes } from '../utils/boucle-for.js';
+import {recipes}  from '../data/recipes.js';
+
 
 /// Fonction pour afficher les recettes dans l'élément avec l'ID "recipeContainer"
 export function displayRecipes() {
   const recipeContainer = document.getElementById("recipeContainer");
   recipeContainer.classList.add("gallery-recipes");
-
-
 
   for (let recipe of recipes) {
     const articleRecipe = document.createElement('article');
@@ -63,16 +61,19 @@ export function displayRecipes() {
       ingredientItem.textContent = `${name}`;
       ingredientBlock.appendChild(ingredientItem);
 
-      const ingredientSubItem = document.createElement("p")
-      ingredientSubItem.setAttribute("class","fw-light")
-      ingredientSubItem.textContent = `${quantity} ${unit}`;
-      ingredientBlock.appendChild(ingredientSubItem);
+      if(quantity) {
+        const ingredientSubItem = document.createElement("p")
+        ingredientSubItem.setAttribute("class","fw-light")
+        ingredientSubItem.textContent = `${quantity} ${unit}`;
+        ingredientBlock.appendChild(ingredientSubItem);
+
+
+      }
+
+  
 
     }
 
-    // const servingsParagraph = document.createElement("p");
-    // servingsParagraph.textContent = `Servings: ${recipe.servings}`;
-    // wrapTextRecipe.appendChild(servingsParagraph);
 
     const timeParagraph = document.createElement("p");
     timeParagraph.classList.add("reciepe-time");
@@ -103,8 +104,6 @@ export function displayRecipes() {
 window.onload = displayRecipes;
 
 
-
-
 const searchBtn = document.querySelector(".search-btn");
 const whiteGlass = document.querySelector(".glass-white")
 const blackGlass = document.querySelector(".glass-black")
@@ -114,12 +113,30 @@ blackGlass.style.display ="none"
 searchBtn.addEventListener("mouseover", function(){
 whiteGlass.style.display ="none"
 blackGlass.style.display ="block"
-
-
 })
+
 searchBtn.addEventListener("mouseout", function(){
   whiteGlass.style.display ="block"
   blackGlass.style.display ="none"
   
   
   })
+
+
+// Gestionnaire d'événement pour le formulaire de recherche
+document.getElementById('searchForm').addEventListener('submit', function (event) {
+  event.preventDefault();
+  const searchInput = document.getElementById('searchInput').value.trim();
+  if (searchInput.length >= 3) {
+    const filteredRecipes = searchRecipes(searchInput);
+    displayFilteredRecipes(filteredRecipes);
+  } else {
+    console.log('Veuillez saisir au moins 3 caractères.');
+  }
+});
+
+
+
+
+searchRecipes();
+displayFilteredRecipes();

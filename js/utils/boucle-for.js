@@ -1,31 +1,34 @@
-//recherche avec boucle for
-
-export function SearchFor (){
-    console.log("test")
-
-    
-const searchUp = document.querySelector(".search-bar");
+import { recipes } from '../data/recipes.js';
 
 
-searchUp.addEventListener("change", function(){
-    console.log("ca bbouge")
-})
 
-// if(searchUp.lenght.value > 3 ) {
-// console.log("ok le mot depasse 3")
-
-// }
-
+// Fonction pour effectuer la recherche en fonction de la saisie de l'utilisateur
+export function searchRecipes(keyword) {
+  const filteredRecipes = [];
+  for (const recipe of recipes) {
+    if (recipe.name.toLowerCase().includes(keyword.toLowerCase())) {
+      filteredRecipes.push(recipe);
+    }
+  }
+  return filteredRecipes;
 }
 
+// Fonction pour afficher les recettes filtrées dans la console (remplacez ceci par votre propre logique d'affichage)
+export function displayFilteredRecipes(filteredRecipes) {
+  console.log(filteredRecipes);
+  
+  const allRecipeItems = document.querySelectorAll('.recipe-article');
 
-// import
-// {displayRecipe} from "../script/index.js"
-// console.log("Yo!");
+  for (const recipeItem of allRecipeItems) {
+    const recipeName = recipeItem.querySelector('.reciepe-name').textContent.trim();
+    const isRecipeIncluded = filteredRecipes.some(recipe => recipe.name.toLowerCase() === recipeName.toLowerCase());
 
-// function handleSubmit(event){
-//     event.preventDefault();
-//     const searchQuery = document.querySelector(".search-bar");
+    if (isRecipeIncluded) {
+      recipeItem.style.display = 'block'; // Afficher la recette
+    } else {
+      recipeItem.style.display = 'none'; // Masquer la recette
+    }
+  }
+}
 
-// }
 

@@ -69,7 +69,7 @@ input::placeholder {
   border-radius: 15px;
   width: 56px;
   height: 56px;
-  z-index: 5;
+  z-index: 100;
   margin-left: -65px;
   margin-top: 7px;
   box-shadow: none;
@@ -218,4 +218,9 @@ input::placeholder {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+
+.input-group .btn {
+  position: relative;
+  z-index: 2000;
 }

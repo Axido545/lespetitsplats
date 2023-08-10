@@ -59,3 +59,10 @@
 .ingredient-Item-name {
   margin-bottom: 0;
 }
+
+.message-error {
+  display: none;
+  color: red;
+  font-weight: bold;
+  width: 667px;
+}

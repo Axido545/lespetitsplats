@@ -2,16 +2,16 @@ import {recipes}  from '../data/recipes.js';
 
 
 
-// // Afficher les recettes filtrées dans la console
-// displayFilteredRecipes(filteredRecipes);
+const myInput =   document.getElementById('searchInput')
+export const searchInput = myInput.value.trim(); // Obtenez la valeur du champ de recherche
 
 // Fonction pour effectuer la recherche en fonction de la saisie de l'utilisateur
-export function searchRecipes(keyword) {
-  const lowerCaseKeyword = keyword.toLowerCase();
+export function searchRecipes(myInput) {
+  const lowerCaseKeyword = myInput.toLowerCase();
 
   const filteredRecipes = recipes.filter(recipe => {
     const lowerCaseName = recipe.name.toLowerCase();
-    const lowerCaseIngredients = recipe.ingredients.join(' ').toLowerCase();
+    const lowerCaseIngredients = recipe.ingredients.map(ingredient => ingredient.ingredient.toLowerCase()).join(' ');
     const lowerCaseDescription = recipe.description.toLowerCase();
 
     return (
@@ -61,3 +61,26 @@ export function displayFilteredRecipes(filteredRecipes) {
     }
   
   }
+
+
+  
+
+// Gestionnaire d'événement pour le champ de recherche en temps réeldocument.getElementById('searchInput').addEventListener('input', function (event) {
+  myInput.addEventListener('change', function (event) {
+    // event.preventDefault(); // Empêche le rafraîchissement de la page
+  
+    const recipeContainer = document.getElementById("recipeContainer");
+    if (searchInput.length >= 3) {
+      const filteredRecipes = searchRecipes(searchInput);
+  
+      if (filteredRecipes.length === 0) {
+        recipeContainer.textContent = `« Aucune recette ne contient « ${searchInput} » vous pouvez chercher « tarte aux pommes », « poisson », etc.`;
+      } 
+    } 
+    
+    if(searchInput.length < 3){
+      recipeContainer.textContent = "Veuillez saisir au moins 3 caractères.";
+    }
+  });
+  
+

@@ -1,6 +1,5 @@
-import { searchRecipes, displayFilteredRecipes } from '../utils/filtre.js';
+import { searchRecipes} from '../utils/filtre.js';
 import {recipes}  from '../data/recipes.js';
-
 
 /// Fonction pour afficher les recettes dans l'élément avec l'ID "recipeContainer"
 export function displayRecipes() {
@@ -9,26 +8,27 @@ export function displayRecipes() {
 
   for (let recipe of recipes) {
     const articleRecipe = document.createElement('article');
-    articleRecipe.classList.add("recipe-article", "position-relative", "col-4"); // Ajout des classes Bootstrap pour la mise en forme
+    articleRecipe.classList.add("recipe-article", "position-relative", "col-4");
+    articleRecipe.setAttribute("id", recipe.id)
     recipeContainer.appendChild(articleRecipe);
 
     const imgRecipe = document.createElement("img");
-    imgRecipe.classList.add("img-recette", "img-fluid"); // Ajout des classes Bootstrap pour la mise en forme
+    imgRecipe.classList.add("img-recette", "img-fluid");
     imgRecipe.setAttribute("src", `asset/imgs_recettes/${recipe.image}`);
     imgRecipe.setAttribute("alt", recipe.name);
     articleRecipe.appendChild(imgRecipe);
 
     const wrapTextRecipe = document.createElement("section");
-    wrapTextRecipe.classList.add("text-container", "p-3"); // Ajout des classes Bootstrap pour la mise en forme
+    wrapTextRecipe.classList.add("text-container", "p-3"); 
     articleRecipe.appendChild(wrapTextRecipe);
 
     const titleRecipe = document.createElement("h2");
-    titleRecipe.classList.add("reciepe-name", "mb-3"); // Ajout des classes Bootstrap pour la mise en forme
+    titleRecipe.classList.add("reciepe-name", "mb-3");
     titleRecipe.textContent = recipe.name;
     wrapTextRecipe.appendChild(titleRecipe);
 
     const subTitlRecipeRec = document.createElement("h3");
-    subTitlRecipeRec.classList.add("reciepe-subtitle", "mb-2"); // Ajout des classes Bootstrap pour la mise en forme
+    subTitlRecipeRec.classList.add("reciepe-subtitle", "mb-2"); 
     subTitlRecipeRec.textContent = "RECETTE";
     wrapTextRecipe.appendChild(subTitlRecipeRec);
 
@@ -40,8 +40,7 @@ export function displayRecipes() {
 
 
     const subTitlRecipeIng = document.createElement("h3");
-    subTitlRecipeIng.classList.add("reciepe-subtitle", "mb-2"); // Ajout des classes Bootstrap pour la mise en forme
-    subTitlRecipeIng.textContent = "INGREDIENTS";
+    subTitlRecipeIng.classList.add("reciepe-subtitle", "mb-2"); 
     wrapTextRecipe.appendChild(subTitlRecipeIng);
 
     const ingredientsList = document.createElement("section");
@@ -66,23 +65,29 @@ export function displayRecipes() {
         ingredientSubItem.setAttribute("class","fw-light")
         ingredientSubItem.textContent = `${quantity} ${unit}`;
         ingredientBlock.appendChild(ingredientSubItem);
+
       }
+
     }
+
     const timeParagraph = document.createElement("p");
     timeParagraph.classList.add("reciepe-time");
     timeParagraph.textContent = `${recipe.time} min`;
     wrapTextRecipe.appendChild(timeParagraph);
-  }
+
   // Calcule du nombre de recettes
   const numberOfRecipes = recipes.length;
+
   // Affichage le nombre de recettes dans un élément HTML avec l'ID "recipeCount"
   const recipeCountElement = document.getElementById("recipeCount");
   if (recipeCountElement) {
     recipeCountElement.textContent = `${numberOfRecipes} recettes`;
   }
+
+}
 }
 // Appeler la fonction pour afficher les recettes lorsque la page est chargée
-displayRecipes();
+window.onload = displayRecipes;
 
 const searchBtn = document.querySelector(".search-btn");
 const whiteGlass = document.querySelector(".glass-white")
@@ -90,47 +95,83 @@ const blackGlass = document.querySelector(".glass-black")
 whiteGlass.style.display ="block"
 blackGlass.style.display ="none"
 
-searchBtn.addEventListener("mouseover", function(event){
-  event.preventDefault(); // Empêche le rafraîchissement de la page
+searchBtn.addEventListener("mouseover", function(){
 whiteGlass.style.display ="none"
 blackGlass.style.display ="block"
 })
 
-searchBtn.addEventListener("mouseout", function(event){
-  event.preventDefault(); // Empêche le rafraîchissement de la page
+searchBtn.addEventListener("mouseout", function(){
   whiteGlass.style.display ="block"
   blackGlass.style.display ="none"
+    
   })
 
+  const searchInput = document.getElementById('searchInput');
 
-// Gestionnaire d'événement pour le champ de recherche en temps réel
-document.getElementById('searchInput').addEventListener('change', function (event) {
-  event.preventDefault(); // Empêche le rafraîchissement de la page
-  const searchInput = event.target.value.trim();
-  
-  if (searchInput.length >= 3) {
-    const filteredRecipes = searchRecipes(searchInput);
-    displayFilteredRecipes(filteredRecipes);
+  const messageError = document.createElement("span");
+  messageError.setAttribute("class","message-error")
+  recipeContainer.appendChild(messageError);
 
-    if(filteredRecipes.length === 0) {
-      const recipeContainer = document.getElementById("recipeContainer");
-      const key = document.getElementById('searchInput')
-  
-      recipeContainer.textContent = `« Aucune recette ne contient « ${key.value} » vous pouvez chercher « tarte aux pommes », « poisson », etc.` ;
-  
-    }
+  const recipeCount = document.querySelector("#recipeCount")
 
-  } else {
-    recipeContainer.textContent = "Veuillez saisir au moins 3 caractères.";
+  function maskRecipe() {
+    const allRecipe = document.querySelectorAll("article");
+    allRecipe.forEach(recipe => {
+      recipe.style.display = "none";
+    });
   }
-
-
+  function displayRecipe() {
+    const allRecipe = document.querySelectorAll("article");
+    allRecipe.forEach(recipe => {
+      recipe.style.display = "block";
+    });
+  }
+  displayRecipe() ;
   
+  // Gestionnaire d'événement pour le formulaire de recherche
+  searchInput.addEventListener('input', function (event) {
+    event.preventDefault();
+    const inputValue = searchInput.value.trim();
+    console.log("L'élément a changé :", inputValue);
+  
+    if (inputValue.length < 3) {
+      console.log("moins de 3 caractères");
+  
+      messageError.style.display = "block";
+      messageError.textContent = "Veuillez entrer trois caractères minimum";
+      recipeCount.style.display ="none"
+      
+      maskRecipe() 
+    } else {
+      messageError.style.display = "none";
+      
+      maskRecipe() 
+  
+      const filteredRecipes = searchRecipes(inputValue);
+  
+      if (filteredRecipes.length === 0) {
+        messageError.style.display ="block"
+        recipeCount.style.display ="none"
 
 
-});
+        messageError.textContent = `Aucune recette ne contient ‘${inputValue} ’ vous pouvez chercher «
+        tarte aux pommes », « poisson », etc.`;
+      } else {
+        messageError.style.display ="none"
 
-searchRecipes();
-displayFilteredRecipes();
+         // Affiche uniquement les recettes filtrées
+    filteredRecipes.forEach(recipe => {
+      const recipeItem = document.getElementById(recipe.id);
+      if (recipeItem) {
+        recipeItem.style.display = "block";
+      }
+    });
+    recipeCount.style.display = "block";
+
+    recipeCount.textContent = `${filteredRecipes.length} recettes`;
+      }
+    }
+  });
+  
 
 

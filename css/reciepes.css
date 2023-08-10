@@ -36,7 +36,7 @@
   color: black;
   position: absolute;
   top: 21px;
-  left: 295px;
+  right: 10px;
   padding: 5px;
   width: 65px;
   height: 26px;
@@ -58,4 +58,11 @@
 
 .ingredient-Item-name {
   margin-bottom: 0;
+}
+
+.message-error {
+  display: none;
+  width: 667px;
+  color: red;
+  font-weight: bold;
 }

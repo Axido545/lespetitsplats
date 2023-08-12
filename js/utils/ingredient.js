@@ -2,6 +2,8 @@ import { recipes } from '../data/recipes.js';
 
 export function dispayIngredient() {
   const searchIngredient = document.getElementById("ingredientSearch");
+      const tagContainer = document.querySelector(".selected-tags");
+
 
   searchIngredient.addEventListener('keyup', function() {
     const myIngredient = searchIngredient.value.trim();
@@ -37,20 +39,91 @@ export function dispayIngredient() {
     });
   });
 
-  // Fonction pour créer un "tag"
-  function createTag(ingredient) {
-    const tagContainer = document.querySelector(".selected-tags");
+// Supposons que "tagContainer" est l'élément parent où vous créez vos balises.
+
+// // Code pour créer une balise et son bouton de fermeture.
+// function createTag(tagText) {
+//   const tagElement = document.createElement('div');
+//   tagElement.className = 'tag'; // Appliquez des styles CSS si nécessaire.
   
-    // Vérifier si le tag existe déjà
-    const existingTag = Array.from(tagContainer.querySelectorAll(".tag")).find(tag => tag.textContent === ingredient);
+//   const tagTextElement = document.createElement('span');
+//   tagTextElement.textContent = tagText;
   
-    if (!existingTag) {
-      const tagElement = document.createElement("div");
-      tagElement.classList.add("tag");
-      tagElement.textContent = ingredient;
-      tagContainer.appendChild(tagElement);
-    }
-  }
+//   const closeTag = document.createElement('i');
+//   closeTag.setAttribute("class", "x close-tag")
+//   // closeTag.textContent = 'X';
+  
+//   tagElement.appendChild(tagTextElement);
+//   tagElement.appendChild(closeTag);
+//   tagContainer.appendChild(tagElement);
+  
+//   // Ajouter un gestionnaire d'événements au bouton de fermeture.
+//   closeTag.addEventListener('click', function() {
+//       tagElement.style.display = "none";
+//       console.log("La balise a été fermée : " + tagText);
+//   });
+// }
+
+// }
+
+
+  // // Fonction pour créer un "tag"
+  // function createTag(ingredient) {
+  //   const tagContainer = document.querySelector(".selected-tags");
+  
+  //   // Vérifier si le tag existe déjà
+  //   const existingTag = Array.from(tagContainer.querySelectorAll(".tag")).find(tag => tag.textContent === ingredient);
+  
+  //   if (!existingTag) {
+  //     const tagElement = document.createElement("div");
+  //     tagElement.classList.add("tag");
+  //     tagElement.innerHTML =`${ingredient}    <span class="close-tag">x</span>` ;
+  //     tagContainer.appendChild(tagElement);
+
+
+  //     const closeTag = document.querySelector(".close-tag")
+
+
+
+  //     const tagToDelet = document.querySelector(".tag")
+
+    
+
+
+  //     closeTag.addEventListener('click', function(){
+  //       tagToDelet.style.display ="none"
+  //       console.log("il ve se fermer la le tag")
+      
+  //     })
+
+
+  //   }
+
+  // }
+
+// Code pour créer une balise et son bouton de fermeture.
+function createTag(tagText) {
+  const tagElement = document.createElement('div');
+  tagElement.className = 'tag'; // Appliquez des styles CSS si nécessaire.
+  
+  const tagTextElement = document.createElement('span');
+  tagTextElement.textContent = tagText;
+  
+  const closeTag = document.createElement('i');
+  closeTag.setAttribute("class", "fa-solid fa-xmark close-tag")
+  
+  tagElement.appendChild(tagTextElement);
+  tagElement.appendChild(closeTag);
+  tagContainer.appendChild(tagElement);
+  
+  // Ajoute un gestionnaire d'événements au bouton de fermeture.
+  closeTag.addEventListener('click', function() {
+      tagElement.style.display = "none";
+      console.log("La balise a été fermée : " + tagText);
+  });
+}
+
+
   
 }
 

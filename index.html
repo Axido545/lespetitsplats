@@ -95,8 +95,13 @@
                 />
               </div>
               <div class="option-search">
-                <input class="form-control little-search" type="search" />
+                <input
+                  class="form-control little-search"
+                  id="ingredientSearch"
+                  type="search"
+                />
                 <img class="little-glass" alt="" src="asset/little-glass.png" />
+                <div class="all-suggestions"></div>
               </div>
             </div>
           </div>
@@ -147,7 +152,7 @@
         </div>
 
         <p id="recipeCount"></p>
-
+        <div class="selected-tags"></div>
         <section id="recipeContainer"></section>
       </div>
     </main>

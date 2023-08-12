@@ -1,5 +1,6 @@
 import { searchRecipes} from '../utils/filtre.js';
 import {recipes}  from '../data/recipes.js';
+import {  dispayIngredient  } from '../utils/ingredient.js';
 
 /// Fonction pour afficher les recettes dans l'élément avec l'ID "recipeContainer"
 export function displayRecipes() {
@@ -175,3 +176,4 @@ searchBtn.addEventListener("mouseout", function(){
   
 
 
+  dispayIngredient()

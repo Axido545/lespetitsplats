@@ -3,7 +3,7 @@ import {recipes}  from '../data/recipes.js';
 
 
 const myInput =   document.getElementById('searchInput')
-export const searchInput = myInput.value.trim(); // Obtenez la valeur du champ de recherche
+export const searchInput = myInput.value.trim(); // Obtenir la valeur du champ de recherche
 
 // Fonction pour effectuer la recherche en fonction de la saisie de l'utilisateur
 export function searchRecipes(myInput) {

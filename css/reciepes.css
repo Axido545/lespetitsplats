@@ -66,3 +66,32 @@
   font-weight: bold;
   width: 667px;
 }
+
+.all-suggestions {
+  width: 195px;
+  background-color: white;
+  margin-top: 35px;
+  padding-left: 15px;
+  margin-left: -11px;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 5px;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: #ffd15b;
+  margin: 10px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.suggestion {
+  width: 195px;
+  margin-left: -15px;
+  padding: 15px;
+}
+
+.suggestion:hover {
+  background-color: #ffd15b;
+}

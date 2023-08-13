@@ -1,7 +1,7 @@
 import { recipes } from '../data/recipes.js';
 
 export function dispayIngredient() {
-  const searchIngredient = document.getElementById("ingredientSearch");
+  const searchIngredient = document.getElementById("ingredientSearch") ;  // Convertir en minuscules pour une recherche insensible à la casse
       const tagContainer = document.querySelector(".selected-tags");
 
 
@@ -20,12 +20,13 @@ export function dispayIngredient() {
 
     result.forEach(recipe => {
       recipe.ingredients.forEach(ingredient => {
-        suggestionsHTML += `
-          <div class="suggestion" data-ingredient="${ingredient.ingredient}">${ingredient.ingredient}</div><br/>
-        `;
+        if (ingredient.ingredient.toLowerCase().includes(lowerCaseMyIngredient)) {
+          suggestionsHTML += `
+            <div class="suggestion" data-ingredient="${ingredient.ingredient}">${ingredient.ingredient}</div><br/>
+          `;
+        }
       });
     });
-
     const suggestionsContainer = document.querySelector(".all-suggestions");
     suggestionsContainer.innerHTML = suggestionsHTML;
 

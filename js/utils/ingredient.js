@@ -32,6 +32,23 @@ function filterRecipesByTags() {
 // // Fonction pour afficher les recettes filtrées
  function displayFilteredRecipes(filteredRecipes) {
   maskRecipe();
+
+ // Affiche uniquement les recettes filtrées
+ if (filteredRecipes.length === 0) {
+  recipeContainer.style.display = "none"; // Masquer le conteneur de recettes
+  recipeCount.style.display = "none"; // Masquer le compteur de recettes
+} else {
+  recipeContainer.style.display = "block"; // Afficher le conteneur de recettes
+  recipeCount.style.display = "block"; // Afficher le compteur de recettes
+  filteredRecipes.forEach(recipe => {
+    const recipeItem = document.getElementById(recipe.id);
+    if (recipeItem) {
+      recipeItem.style.display = "block";
+    }
+  });
+  recipeCount.textContent = `${filteredRecipes.length} recettes`;
+}
+
   displayRecipes();
 
   // Affiche uniquement les recettes filtrées
@@ -126,6 +143,7 @@ function filterRecipesByTags() {
     closeTag.addEventListener('click', function() {
       tagElement.style.display = "none";
       selectedIngredientsSet.delete(tagText);
+      filterRecipesByTags(); // Appel à la fonction de filtrage après la suppression d'un tag
     });
   }
 }

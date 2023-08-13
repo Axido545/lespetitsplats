@@ -173,7 +173,4 @@ searchBtn.addEventListener("mouseout", function(){
       }
     }
   });
-  
-
-
   displayIngredient()

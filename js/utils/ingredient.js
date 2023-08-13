@@ -63,16 +63,18 @@ function filterRecipesByTags() {
       recipe.ingredients.forEach(ingredient => {
         if (
           ingredient.ingredient.toLowerCase().includes(lowerCaseMyIngredient) &&
-          !selectedIngredientsSet.has(ingredient.ingredient)
+          !selectedIngredientsSet.has(ingredient.ingredient) &&
+          !uniqueIngredientsSet.has(ingredient.ingredient) // Vérifier si l'ingrédient n'est pas déjà dans l'ensemble
+
         ) {
-          uniqueIngredientsSet.add(ingredient.ingredient);
-        }
+          uniqueIngredientsSet.add(ingredient.ingredient.toLowerCase());        }
       });
     });
 
     uniqueIngredientsSet.forEach(ingredient => {
+      const suggestionText = ingredient.toLowerCase(); // Convertir en minuscules
       suggestionsHTML += `
-        <div class="suggestion" data-ingredient="${ingredient}">${ingredient}</div><br/>
+        <div class="suggestion" data-ingredient="${ingredient}">${suggestionText}</div><br/>
       `;
     });
 

@@ -1,7 +1,7 @@
 .gallery-recipes {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-gap: 90px;
+  grid-gap: 65px;
   grid-auto-rows: minmax(100px, auto);
   overflow: hidden;
   width: 100%;

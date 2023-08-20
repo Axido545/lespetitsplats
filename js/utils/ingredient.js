@@ -132,7 +132,6 @@ displayReciepes(filteredRecipes);
 });
   
   function createTag(tagText) {
-    // ... Votre code de création de tag ...
     
     const tagElement = document.createElement('div');
     tagElement.className = 'tag';
@@ -151,7 +150,8 @@ displayReciepes(filteredRecipes);
       tagElement.style.display = "none";
       selectedIngredientsSet.delete(tagText);
       filterRecipesByTags(); // Appel à la fonction de filtrage après la suppression d'un tag
-      displayFilteredRecipes(filterRecipesByTags())
+      // displayFilteredRecipes(filterRecipesByTags())
+      displayFilteredRecipes(displayedRecipes); // Afficher les recettes filtrées actualisées
     });
   }
 }

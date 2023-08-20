@@ -40,7 +40,7 @@ function displayFilteredRecipes(filteredRecipes) {
     recipeContainer.style.display = "none"; // Masquer le conteneur de recettes
     recipeCount.style.display = "none"; // Masquer le compteur de recettes
   } else {
-    recipeContainer.style.display = "flex"; // Afficher le conteneur de recettes
+    recipeContainer.style.display = "grid"; // Afficher le conteneur de recettes
     recipeCount.style.display = "block"; // Afficher le compteur de recettes
     filteredRecipes.forEach(recipe => {
       const recipeItem = document.getElementById(recipe.id);

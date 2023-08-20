@@ -1,12 +1,10 @@
 .gallery-recipes {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-gap: 90px;
+  grid-gap: 65px;
   grid-auto-rows: minmax(100px, auto);
   overflow: hidden;
   width: 100%;
-  margin-top: 74px;
-  margin-left: 30px;
   margin-right: 30px;
 }
 
@@ -19,7 +17,7 @@
 
 .recipe-article {
   background-color: white;
-  width: 100%;
+  width: 380px;
   border-radius: 21px;
   position: relative;
 }
@@ -62,7 +60,67 @@
 
 .message-error {
   display: none;
-  width: 667px;
   color: red;
   font-weight: bold;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.all-suggestions {
+  width: 195px;
+  background-color: white;
+  margin-top: 35px;
+  padding-left: 15px;
+  margin-left: -11px;
+  list-style-type: none;
+  z-index: 10;
+  padding-top: 0;
+  padding-bottom: 0;
+  position: absolute;
+  max-height: 200px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overflow: hidden;
+}
+
+.all-suggestions::before {
+  visibility: hidden; /* Cacher l'élément fantôme */
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: #ffd15b;
+  margin-top: 10px;
+
+  padding-left: 18px;
+  padding-right: 18px;
+  padding-top: 17px;
+  padding-bottom: 17px;
+  width: 167px;
+  position: relative;
+}
+
+.suggestion {
+  width: 195px;
+  margin-left: -15px;
+  padding-left: 15px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.suggestion:hover {
+  background-color: #ffd15b;
+}
+
+.close-tag {
+  right: 5px;
+  position: absolute;
+}
+
+.selected-tags {
+  margin-top: 30px;
+  margin-bottom: 30px;
 }

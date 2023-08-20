@@ -1,5 +1,6 @@
 import { recipes } from '../data/recipes.js';
 
+export const myInput =   document.getElementById('searchInput')
 
 
 // Fonction pour effectuer la recherche en fonction de la saisie de l'utilisateur

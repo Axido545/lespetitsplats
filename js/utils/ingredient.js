@@ -156,5 +156,3 @@ displayReciepes(filteredRecipes);
   }
 }
 
-
-

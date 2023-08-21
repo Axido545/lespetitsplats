@@ -1,21 +1,20 @@
 import { searchRecipes} from '../utils/boucle-for.js';
 import {recipes}  from '../data/recipes.js';
 import { displayBtnSearch } from '../layouts/btn-search.js';
-import { displayReciepes, maskRecipe } from '../layouts/display-reciepes.js';
+import { displayReciepes, maskReciepe } from '../layouts/display-reciepes.js';
 import {setupClearableInput} from '../layouts/btn-close.js';
-import {  displayIngredient  } from '../utils/ingredient.js';
+import { updateIngredientSuggestions, filterRecipesByTags, handleSearch, displayFilteredRecipes } from '../utils/ingredient.js';
 
-const recipeContainer = document.getElementById("recipeContainer");
+export const recipeContainer = document.getElementById("recipeContainer");
 const inputTwo = document.getElementById('ingredientSearch')
 recipeContainer.classList.add("gallery-recipes");
+export const selectedIngredientsSet = new Set(); // Utiliser un ensemble pour stocker les ingrédients sélectionnés
 
 const searchInput = document.getElementById('searchInput');
-export const recipeCount = document.querySelector("#recipeCount")
 export const messageError = document.querySelector(".message-error");
+export const recipeCount = document.querySelector("#recipeCount")
 
-
-displayReciepes()
-
+displayReciepes(recipes);
 
 document.addEventListener('keydown',function(event){
   if(event.key === 'Enter'){
@@ -23,6 +22,20 @@ document.addEventListener('keydown',function(event){
 
   }
 })
+
+// Chargement initial des recettes
+window.onload = function () {
+  displayReciepes(recipes);
+  displayBtnSearch()
+setupClearableInput(searchInput);
+setupClearableInput(inputTwo);
+
+filterRecipesByTags()
+
+updateIngredientSuggestions()
+handleSearch()
+
+};
 
   // Gestionnaire d'événement pour le formulaire de recherche
   searchInput.addEventListener('input', function (event) {
@@ -33,45 +46,48 @@ document.addEventListener('keydown',function(event){
     if (inputValue.length < 3) {
       console.log("moins de 3 caractères");
   
-      messageError.style.display = "block";
       messageError.textContent = "Veuillez entrer trois caractères minimum";
-      recipeCount.style.display ="none"
-      maskRecipe() 
+      // maskReciepe() 
     } else {
-      messageError.style.display = "none";
-      maskRecipe() 
+      messageError.textContent = "";
+      // maskReciepe() 
   
       const filteredRecipes = searchRecipes(inputValue);
   
       if (filteredRecipes.length === 0) {
-        messageError.style.display ="block"
-        recipeCount.style.display ="none"
+
+        // recipeCount.style.display ="none"
+
         messageError.textContent = `Aucune recette ne contient ‘${inputValue} ’ vous pouvez chercher « tarte aux pommes », « poisson », etc.`;
       } else {
-        messageError.style.display ="none"
+        // messageError.style.display ="none"
 
          // Affiche uniquement les recettes filtrées
     filteredRecipes.forEach(recipe => {
       const recipeItem = document.getElementById(recipe.id);
       if (recipeItem) {
+
         recipeItem.style.display = "block";
-      }
+      }filteredRecipes
     });
     recipeCount.style.display = "block";
 
     recipeCount.textContent = `${filteredRecipes.length} recettes`;
-      }
+
+    const suggestionsContainer = document.querySelector(".all-suggestions");
+
+
+
+    filterRecipesByTags()
+
+    updateIngredientSuggestions()
+    handleSearch()
+    displayFilteredRecipes()
+    console.log(handleSearch())
+  }
+
     }
   });
-
-// Chargement initial des recettes
-window.onload = function () {
-  displayReciepes(recipes);
-  displayBtnSearch()
-displayIngredient()
-setupClearableInput(searchInput);
-setupClearableInput(inputTwo);
-};
 
 
 

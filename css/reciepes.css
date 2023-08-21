@@ -59,7 +59,7 @@
 }
 
 .message-error {
-  display: none;
+  display: block;
   color: red;
   font-weight: bold;
   width: 100%;
@@ -78,9 +78,8 @@
   padding-bottom: 0;
   position: absolute;
   max-height: 200px;
-  overflow-y: auto;
+  overflow-y: scroll;
   overflow-x: hidden;
-  overflow: hidden;
 }
 
 .all-suggestions::before {

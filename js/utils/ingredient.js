@@ -37,7 +37,6 @@ export let displayedRecipes = searchRecipes(document.getElementById('searchInput
   suggestionsContainer.innerHTML = suggestionsHTML;
 
 }
-
   // Filtrer les recettes en fonction des recettes actuellement affichées
   function getDisplayedRecipeIds() {
     const displayedRecipeItems = document.querySelectorAll("article[style='display: block;']");
@@ -56,8 +55,6 @@ export let displayedRecipes = searchRecipes(document.getElementById('searchInput
     return filteredRecipes;
   }
 
-
-  
 // Fonction pour filtrer les recettes en fonction des ingrédients
 export function filterRecipesByIngredients(ingredientTags) {
   const filteredRecipes = [];
@@ -116,8 +113,7 @@ export function createTag(tagText) {
       tagElement.style.display = "none";
       selectedIngredientsSet.delete(tagText);
       filterRecipesByTags(); // Appel à la fonction de filtrage après la suppression d'un tag
-      // displayFilteredRecipes(filterRecipesByTags())
-      // displayFilteredRecipes(displayedRecipeIds); // Afficher les recettes filtrées actualisées
+
     });
   }
 
@@ -188,32 +184,17 @@ export function filterRecipesByTagAndDisplayRecipes(tag) {
 export function displayFilteredRecipes(filteredRecipeIds) {
   console.log("Affichage des recettes filtrées :", filteredRecipeIds);
 
-  const filtredRecipeContainer = document.getElementById("filtredRecipeContainer");
-  const allRecipeItems = document.querySelectorAll('article[style="display:block;"]'); // Get all recipe items
+  const allRecipeItems = document.querySelectorAll('article[style="display:block;"]'); 
 
-  // Loop through all recipe items and apply display settings based on filteredRecipeIds
   allRecipeItems.forEach(recipeItem => {
-    const recipeId = recipeItem.getAttribute("id"); // Assuming each article has a data-id attribute
+    const recipeId = recipeItem.getAttribute("id");
     if (filteredRecipeIds === recipeId) {
-      recipeItem.style.display = "block"; // Display the recipe item
+      recipeItem.style.display = "block"; 
     } else {
-      recipeItem.style.display = "none"; // Hide the recipe item
-    }
-  });
+      recipeItem.style.display = "none"; 
+  }
+});
 }
-
-// Créer un élément d'affichage pour une recette
-function createRecipeItem(recipe) {
-  // Crée un élément de recette (par exemple, un élément <article>) avec les détails de la recette
-  // Vous pouvez personnaliser ce code en fonction de la structure HTML que vous utilisez pour afficher les recettes
-  const recipeItem = document.createElement('article');
-  recipeItem.id = recipe.id;
-
-  // Ajoutez d'autres éléments HTML pour afficher les détails de la recette (image, nom, ingrédients, etc.)
-
-  return recipeItem;
-}
-
 
 // Chargement initial des recettes
 window.onload = function () {

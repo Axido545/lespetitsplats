@@ -29,9 +29,7 @@ window.onload = function () {
   displayBtnSearch()
 setupClearableInput(searchInput);
 setupClearableInput(inputTwo);
-
 filterRecipesByTags()
-
 // updateIngredientSuggestions()
 // handleSearch()
 
@@ -84,19 +82,14 @@ filterRecipesByTags()
 
     const suggestionsContainer = document.querySelector(".all-suggestions");
 
-
-
     filterRecipesByTags()
 
     updateIngredientSuggestions()
     handleSearch()
     displayFilteredRecipes(filteredRecipeIds)
   }
-
     }
   });
-
-
 
 // Réinitialiser les valeurs des champs d'entrée lors du chargement de la page
 window.addEventListener("load", function() {

@@ -180,20 +180,20 @@ export function filterRecipesByTagAndDisplayRecipes(tag) {
   });
 }
 
-
 export function displayFilteredRecipes(filteredRecipeIds) {
   console.log("Affichage des recettes filtrées :", filteredRecipeIds);
 
-  const allRecipeItems = document.querySelectorAll('article[style="display:block;"]'); 
+  const allRecipeItems = document.querySelectorAll("article"); 
 
   allRecipeItems.forEach(recipeItem => {
-    const recipeId = recipeItem.getAttribute("id");
-    if (filteredRecipeIds === recipeId) {
+    const recipeId = recipeItem.getAttribute("id"); 
+    if (filteredRecipeIds.includes(recipeId)) {
       recipeItem.style.display = "block"; 
     } else {
       recipeItem.style.display = "none"; 
-  }
-});
+    }
+  });
+
 }
 
 // Chargement initial des recettes

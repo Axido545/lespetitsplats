@@ -10,6 +10,9 @@ export function displayReciepes() {
       const articleRecipe = document.createElement('article');
       articleRecipe.classList.add("recipe-article", "position-relative", "col-4");
       articleRecipe.setAttribute("id", recipe.id)
+
+
+
       recipeContainer.appendChild(articleRecipe);
   
       const imgRecipe = document.createElement("img");

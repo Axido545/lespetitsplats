@@ -3,7 +3,7 @@ import {recipes}  from '../data/recipes.js';
 import { displayBtnSearch } from '../layouts/btn-search.js';
 import { displayReciepes, maskReciepe } from '../layouts/display-reciepes.js';
 import {setupClearableInput} from '../layouts/btn-close.js';
-import { updateIngredientSuggestions, filterRecipesByTags, handleSearch, displayFilteredRecipes } from '../utils/ingredient.js';
+import { updateIngredientSuggestions, filterRecipesByTags, handleSearch, displayFilteredRecipes,filterRecipeIdsByIngredients, filterRecipesByTagAndDisplayRecipes } from '../utils/ingredient.js';
 
 export const recipeContainer = document.getElementById("recipeContainer");
 const inputTwo = document.getElementById('ingredientSearch')
@@ -32,8 +32,8 @@ setupClearableInput(inputTwo);
 
 filterRecipesByTags()
 
-updateIngredientSuggestions()
-handleSearch()
+// updateIngredientSuggestions()
+// handleSearch()
 
 };
 
@@ -63,6 +63,14 @@ handleSearch()
         // messageError.style.display ="none"
 
          // Affiche uniquement les recettes filtrées
+         const searchBar = document.getElementById("ingredientSearch");
+         const searchInput = searchBar.value.toLowerCase();
+         const ingredientTags = searchInput.split(" ");
+         const filteredRecipeIds = filterRecipeIdsByIngredients(ingredientTags);
+         const recipesToShow = filteredRecipeIds.filter(id => displayedRecipes.includes(id));         console.log("IDs des recettes à afficher après recherche d'ingrédients :", recipesToShow);
+     
+         displayFilteredRecipes(recipesToShow);
+
     filteredRecipes.forEach(recipe => {
       const recipeItem = document.getElementById(recipe.id);
       if (recipeItem) {
@@ -82,8 +90,7 @@ handleSearch()
 
     updateIngredientSuggestions()
     handleSearch()
-    displayFilteredRecipes()
-    console.log(handleSearch())
+    displayFilteredRecipes(filteredRecipeIds)
   }
 
     }
@@ -95,4 +102,6 @@ handleSearch()
 window.addEventListener("load", function() {
   searchInput.value = ''; // Réinitialiser la valeur du champ de recherche principal
   inputTwo.value = ''; // Réinitialiser la valeur du champ de recherche d'ingrédients
+  updateIngredientSuggestions()
+
 });

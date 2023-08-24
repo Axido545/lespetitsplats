@@ -2,7 +2,6 @@ import { recipes } from '../data/recipes.js';
 
 export const myInput =   document.getElementById('searchInput')
 
-
 // Fonction pour effectuer la recherche en fonction de la saisie de l'utilisateur
 export function searchRecipes(keyword) {
   const filteredRecipes = [];
@@ -30,10 +29,6 @@ export function displayFilteredRecipes(filteredRecipes) {
   const allRecipeItems = document.querySelectorAll('.recipe-article');
 
   for (const recipeItem of allRecipeItems) {
-
-
-
-
     const recipeName = recipeItem.querySelector('.reciepe-name').textContent.trim();
     const recipeIngredients = recipeItem.querySelector('.ingredient-Item-name').textContent.trim();
     const recipeDescription = recipeItem.querySelector('.recipe-desc').textContent.trim();
@@ -51,8 +46,12 @@ export function displayFilteredRecipes(filteredRecipes) {
     });
 
     if (isRecipeIncluded) {
+      // recipeItem.classList.remove('hidden');
+
       recipeItem.style.display = 'block';
     } else {
+      // recipeItem.classList.add('hidden');
+
       recipeItem.style.display = 'none';
     }
   }

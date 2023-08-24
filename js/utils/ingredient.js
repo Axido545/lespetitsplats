@@ -3,6 +3,7 @@ import { selectedIngredientsSet  } from '../script/index.js';
 import { searchRecipes} from '../utils/boucle-for.js';
 import { displayReciepes, maskReciepe } from '../layouts/display-reciepes.js';
 
+
 const suggestionsContainer = document.querySelector(".all-suggestions");
 const tagContainer = document.querySelector(".selected-tags");
 const filteredRecipes = searchRecipes(document.getElementById('searchInput').value);
@@ -13,6 +14,8 @@ export let displayedRecipes = searchRecipes(document.getElementById('searchInput
    export function updateIngredientSuggestions() {
     console.log("Mise à jour des suggestions d'ingrédients");
   const ingredientsFromFilteredRecipes = new Set();
+
+
   displayedRecipes.forEach(recipeId => {
     const recipe = recipes.find(recipe => recipe.id === recipeId);
     if (recipe) {
@@ -21,6 +24,15 @@ export let displayedRecipes = searchRecipes(document.getElementById('searchInput
       });
     }
   });
+
+  // displayedRecipes.forEach(recipeId => {
+  //   const recipe = recipes.find(recipe => recipe.id === recipeId);
+  //   if (recipe) {
+  //     recipe.ingredients.forEach(ingredient => {
+  //       ingredientsFromFilteredRecipes.add(ingredient.ingredient.toLowerCase());
+  //     });
+  //   }
+  // });
 
   const filteredSuggestions = Array.from(ingredientsFromFilteredRecipes)
     .filter(ingredient => !selectedIngredientsSet.has(ingredient));
@@ -46,7 +58,9 @@ export let displayedRecipes = searchRecipes(document.getElementById('searchInput
   }
 
   // Fonction pour effectuer la recherche en fonction de la saisie de l'utilisateur dals le cjhamp ingredient
-  function searchRecipesTag(keyword) {
+ export  function searchRecipesTag() {
+  const keyword = document.getElementById('ingredientSearch').value;
+console.log(keyword)
     const lowerCaseKeyword = keyword.toLowerCase();
     const filteredRecipes = recipes.filter(recipe => {
       const lowerCaseIngredients = recipe.ingredients.map(ingredient => ingredient.ingredient.toLowerCase()).join(' ');
@@ -79,7 +93,7 @@ export function filterRecipesByTags() {
   const selectedIngredientsArray = Array.from(selectedIngredientsSet);
   const filteredRecipeIds = filterRecipeIdsByIngredients(selectedIngredientsArray);
   displayedRecipes = filteredRecipeIds; // Mettre à jour les recettes affichées
-  displayFilteredRecipes(filteredRecipeIds); // Mettre à jour l'affichage des recettes
+  displayFilteredRecipes(displayedRecipes); // Mettre à jour l'affichage des recettes
 }
 
 // Fonction de gestion de la barre de recherche
@@ -164,38 +178,84 @@ export function filterRecipeIdsByIngredients(ingredientTags) {
 }
 
 
-// Fonction pour filtrer les recettes par tag (ingrédient) et afficher les recettes correspondantes
-export function filterRecipesByTagAndDisplayRecipes(tag) {
+export function filterRecipesByTagAndDisplayRecipes(tag, filteredRecipeIds) {
   const displayedRecipeItems = document.querySelectorAll("article");
+
   displayedRecipeItems.forEach(recipeItem => {
     const recipeId = parseInt(recipeItem.id, 10);
     const recipe = recipes.find(recipe => recipe.id === recipeId);
-    console.log(displayedRecipeItems + "<========== yep")
+    
+    // if (filteredRecipeIds.includes(recipeId) && recipe) {
+    //   const hasTag = recipe.ingredients.some(item => item.ingredient.toLowerCase() === tag.toLowerCase());
 
-    if (recipe) {
-      const hasTag = recipe.ingredients.some(item => item.ingredient.toLowerCase() === tag.toLowerCase());
+    //   if (hasTag) {
+    //     // recipeItem.classList.remove('hidden');
 
-      recipeItem.style.display = hasTag ? "block" : "none";
-    }
-  });
+    //     recipeItem.style.display = "block";
+    //   } else {
+    //     // recipeItem.classList.add('hidden');
+
+    //     recipeItem.style.display = "none";
+    //   }
+    });
+
+
 }
+// // Fonction pour filtrer les recettes par tag (ingrédient) et afficher les recettes correspondantes
+// export function filterRecipesByTagAndDisplayRecipes(tag) {
+//   const displayedRecipeItems = document.querySelectorAll("article");
+//   displayedRecipeItems.forEach(recipeItem => {
+//     const recipeId = parseInt(recipeItem.id, 10);
+//     const recipe = recipes.find(recipe => recipe.id === recipeId);
+//     console.log(recipe + "<========== yep")
+//     console.log(recipeId + "<========== yep")
+
+
+//     if (recipe) {
+//       const hasTag = recipe.ingredients.some(item => item.ingredient.toLowerCase() === tag.toLowerCase());
+
+//       // recipeItem.style.display = hasTag ? "block" : "none";
+//     }
+//   });
+
+
+// }
+
 
 export function displayFilteredRecipes(filteredRecipeIds) {
-  console.log("Affichage des recettes filtrées :", filteredRecipeIds);
-
   const allRecipeItems = document.querySelectorAll("article"); 
 
-  allRecipeItems.forEach(recipeItem => {
-    const recipeId = recipeItem.getAttribute("id"); 
-    if (filteredRecipeIds.includes(recipeId)) {
-      recipeItem.style.display = "block"; 
-    } else {
-      recipeItem.style.display = "none"; 
-    }
+  const visibleRecipeItems = Array.from(allRecipeItems).filter(recipeItem => {
+    return getComputedStyle(recipeItem).display === "block";
   });
 
+  console.log("LALALA :", filteredRecipeIds);
+
+  visibleRecipeItems.forEach(recipeItem => {
+    const recipeId = parseInt(recipeItem.getAttribute("id"));
+
+    if (filteredRecipeIds.includes(recipeId)) {
+      recipeItem.style.display = "block"
+      // recipeItem.classList.remove('hidden');
+    } else {
+      recipeItem.style.display = "none"
+
+      // recipeItem.classList.add('hidden');
+    }
+
+
+    // if (filteredRecipeIds.includes(recipeId)) {
+    //   console.log(recipeId + " oui");
+    //   recipeItem.style.cssText = "display: block !important";  // Appliquer le style avec !important
+    // } else {
+    //   console.log(recipeId + " non");
+    //   recipeItem.style.cssText = "display: none !important";   // Appliquer le style avec !important
+    // }
+  });
 }
 
+
+  
 // Chargement initial des recettes
 window.onload = function () {
   console.log("Chargement initial des recettes");
@@ -203,4 +263,46 @@ window.onload = function () {
   // ...
 };
 
+const searchIngredient = document.getElementById("ingredientSearch");
 
+// searchIngredient.addEventListener('keyup', function() {
+//   const myIngredient = searchIngredient.value.trim();
+//   const lowerCaseMyIngredient = myIngredient.toLowerCase();
+
+
+//     // Filtrer les recettes affichées actuellement (déjà filtrées par tags)
+
+//   const result = displayedRecipes.filter(recipe => {
+//     return recipe.ingredients.some(ingredient =>
+//       ingredient.ingredient.toLowerCase().includes(lowerCaseMyIngredient)
+//     );
+//   });
+
+
+  // // Filtrer les recettes affichées actuellement (déjà filtrées par tags)
+  // const result = displayedRecipes.filter(recipe => {
+  //   return recipe.ingredients.some(ingredient =>
+  //     ingredient.ingredient.toLowerCase().includes(lowerCaseMyIngredient)
+  //   );
+  // });
+
+// });
+
+
+
+searchIngredient.addEventListener('keyup', function() {
+  const myIngredient = searchIngredient.value.trim();
+  const lowerCaseMyIngredient = myIngredient.toLowerCase();
+
+  // Filtrer les recettes affichées actuellement (déjà filtrées par tags)
+  const filteredRecipes = displayedRecipes.filter(recipe => {
+    return recipe.ingredients.some(ingredient =>
+      ingredient.ingredient.toLowerCase().includes(lowerCaseMyIngredient)
+    );
+  });
+
+  filteredRecipes.forEach(recipe => {
+    console.log("Recipe:", recipe);
+    console.log("Ingredients:", recipe.ingredients);
+  });
+});

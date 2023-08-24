@@ -3,7 +3,7 @@ import {recipes}  from '../data/recipes.js';
 import { displayBtnSearch } from '../layouts/btn-search.js';
 import { displayReciepes, maskReciepe } from '../layouts/display-reciepes.js';
 import {setupClearableInput} from '../layouts/btn-close.js';
-import { updateIngredientSuggestions, filterRecipesByTags, handleSearch, displayFilteredRecipes,filterRecipeIdsByIngredients, filterRecipesByTagAndDisplayRecipes } from '../utils/ingredient.js';
+import { updateIngredientSuggestions,searchRecipesTag, filterRecipesByTags, handleSearch,filterRecipeIdsByIngredients,displayFilteredRecipes, filterRecipesByTagAndDisplayRecipes } from '../utils/ingredient.js';
 
 export const recipeContainer = document.getElementById("recipeContainer");
 const inputTwo = document.getElementById('ingredientSearch')
@@ -29,7 +29,7 @@ window.onload = function () {
   displayBtnSearch()
 setupClearableInput(searchInput);
 setupClearableInput(inputTwo);
-filterRecipesByTags()
+// filterRecipesByTags()
 // updateIngredientSuggestions()
 // handleSearch()
 
@@ -74,6 +74,8 @@ filterRecipesByTags()
       if (recipeItem) {
 
         recipeItem.style.display = "block";
+        // recipeItem.classList.remove('hidden');
+
       }filteredRecipes
     });
     recipeCount.style.display = "block";
@@ -83,7 +85,7 @@ filterRecipesByTags()
     const suggestionsContainer = document.querySelector(".all-suggestions");
 
     filterRecipesByTags()
-
+    searchRecipesTag()
     updateIngredientSuggestions()
     handleSearch()
     displayFilteredRecipes(filteredRecipeIds)

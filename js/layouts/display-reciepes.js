@@ -92,7 +92,9 @@ export function displayReciepes() {
   export function maskReciepe() {
     const allRecipe = document.querySelectorAll("article");
     allRecipe.forEach(recipe => {
+
       recipe.style.display = "none";
+      // recipe.classList.add("hidden")
     });
   }
 

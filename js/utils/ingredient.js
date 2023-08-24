@@ -8,7 +8,7 @@ const suggestionsContainer = document.querySelector(".all-suggestions");
 const tagContainer = document.querySelector(".selected-tags");
 const filteredRecipes = searchRecipes(document.getElementById('searchInput').value);
 const displayedRecipeIds = []; // Tableau pour stocker les IDs des recettes affichées
-export let displayedRecipes = searchRecipes(document.getElementById('searchInput').value); // Initialisation de displayedRecipes avec les recettes correspondant à la recherche initiale
+export let displayedRecipes = searchRecipes(document.getElementById('searchInput').value); 
 
     // Fonction pour mettre à jour les suggestions d'ingrédients en fonction des recettes filtrées
    export function updateIngredientSuggestions() {
@@ -25,20 +25,9 @@ export let displayedRecipes = searchRecipes(document.getElementById('searchInput
     }
   });
 
-  // displayedRecipes.forEach(recipeId => {
-  //   const recipe = recipes.find(recipe => recipe.id === recipeId);
-  //   if (recipe) {
-  //     recipe.ingredients.forEach(ingredient => {
-  //       ingredientsFromFilteredRecipes.add(ingredient.ingredient.toLowerCase());
-  //     });
-  //   }
-  // });
-
   const filteredSuggestions = Array.from(ingredientsFromFilteredRecipes)
     .filter(ingredient => !selectedIngredientsSet.has(ingredient));
-
     console.log("Suggestions filtrées :", filteredSuggestions);
-
   let suggestionsHTML = "";
   filteredSuggestions.forEach(ingredient => {
     suggestionsHTML += `
@@ -74,9 +63,8 @@ export function filterRecipesByIngredients(ingredientTags) {
   const filteredRecipes = [];
 
   const displayedRecipeItems = document.querySelectorAll("article[style='display: block;']");
-  // const displayedRecipeItems = document.querySelectorAll("article"); // Supposons que chaque recette a une classe "recipe-item"
   displayedRecipeItems.forEach(recipeItem => {
-    const recipeIngredients = Array.from(recipeItem.querySelectorAll(".suggestion")); // Supposons que chaque ingrédient a une classe "ingredient"
+    const recipeIngredients = Array.from(recipeItem.querySelectorAll(".suggestion")); 
     const hasAllIngredients = ingredientTags.every(tag =>
       recipeIngredients.some(ingredient => ingredient.textContent.toLowerCase().includes(tag))
     );
@@ -138,8 +126,6 @@ export function addIngredientTag(tagText) {
   createTag(tagText);
   filterRecipesByTags(); // Mettre à jour le filtrage après avoir ajouté un tag
 }
-
-
   suggestionsContainer.addEventListener('click', function(event) {
     if (event.target.classList.contains('suggestion')) {
       const selectedIngredient = event.target.getAttribute('data-ingredient');
@@ -177,7 +163,6 @@ export function filterRecipeIdsByIngredients(ingredientTags) {
   
 }
 
-
 export function filterRecipesByTagAndDisplayRecipes(tag, filteredRecipeIds) {
   const displayedRecipeItems = document.querySelectorAll("article");
 
@@ -185,42 +170,10 @@ export function filterRecipesByTagAndDisplayRecipes(tag, filteredRecipeIds) {
     const recipeId = parseInt(recipeItem.id, 10);
     const recipe = recipes.find(recipe => recipe.id === recipeId);
     
-    // if (filteredRecipeIds.includes(recipeId) && recipe) {
-    //   const hasTag = recipe.ingredients.some(item => item.ingredient.toLowerCase() === tag.toLowerCase());
-
-    //   if (hasTag) {
-    //     // recipeItem.classList.remove('hidden');
-
-    //     recipeItem.style.display = "block";
-    //   } else {
-    //     // recipeItem.classList.add('hidden');
-
-    //     recipeItem.style.display = "none";
-    //   }
     });
 
 
 }
-// // Fonction pour filtrer les recettes par tag (ingrédient) et afficher les recettes correspondantes
-// export function filterRecipesByTagAndDisplayRecipes(tag) {
-//   const displayedRecipeItems = document.querySelectorAll("article");
-//   displayedRecipeItems.forEach(recipeItem => {
-//     const recipeId = parseInt(recipeItem.id, 10);
-//     const recipe = recipes.find(recipe => recipe.id === recipeId);
-//     console.log(recipe + "<========== yep")
-//     console.log(recipeId + "<========== yep")
-
-
-//     if (recipe) {
-//       const hasTag = recipe.ingredients.some(item => item.ingredient.toLowerCase() === tag.toLowerCase());
-
-//       // recipeItem.style.display = hasTag ? "block" : "none";
-//     }
-//   });
-
-
-// }
-
 
 export function displayFilteredRecipes(filteredRecipeIds) {
   const allRecipeItems = document.querySelectorAll("article"); 
@@ -236,26 +189,12 @@ export function displayFilteredRecipes(filteredRecipeIds) {
 
     if (filteredRecipeIds.includes(recipeId)) {
       recipeItem.style.display = "block"
-      // recipeItem.classList.remove('hidden');
     } else {
       recipeItem.style.display = "none"
-
-      // recipeItem.classList.add('hidden');
     }
-
-
-    // if (filteredRecipeIds.includes(recipeId)) {
-    //   console.log(recipeId + " oui");
-    //   recipeItem.style.cssText = "display: block !important";  // Appliquer le style avec !important
-    // } else {
-    //   console.log(recipeId + " non");
-    //   recipeItem.style.cssText = "display: none !important";   // Appliquer le style avec !important
-    // }
   });
 }
 
-
-  
 // Chargement initial des recettes
 window.onload = function () {
   console.log("Chargement initial des recettes");
@@ -264,31 +203,6 @@ window.onload = function () {
 };
 
 const searchIngredient = document.getElementById("ingredientSearch");
-
-// searchIngredient.addEventListener('keyup', function() {
-//   const myIngredient = searchIngredient.value.trim();
-//   const lowerCaseMyIngredient = myIngredient.toLowerCase();
-
-
-//     // Filtrer les recettes affichées actuellement (déjà filtrées par tags)
-
-//   const result = displayedRecipes.filter(recipe => {
-//     return recipe.ingredients.some(ingredient =>
-//       ingredient.ingredient.toLowerCase().includes(lowerCaseMyIngredient)
-//     );
-//   });
-
-
-  // // Filtrer les recettes affichées actuellement (déjà filtrées par tags)
-  // const result = displayedRecipes.filter(recipe => {
-  //   return recipe.ingredients.some(ingredient =>
-  //     ingredient.ingredient.toLowerCase().includes(lowerCaseMyIngredient)
-  //   );
-  // });
-
-// });
-
-
 
 searchIngredient.addEventListener('keyup', function() {
   const myIngredient = searchIngredient.value.trim();

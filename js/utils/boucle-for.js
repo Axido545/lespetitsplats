@@ -22,7 +22,7 @@ export function searchRecipes(keyword) {
   return filteredRecipes;
 }
 
-// Fonction pour afficher les recettes filtrées dans la console (remplacez ceci par votre propre logique d'affichage)
+// Fonction pour afficher les recettes filtrées
 export function displayFilteredRecipes(filteredRecipes) {
   console.log(filteredRecipes);
 
@@ -46,12 +46,8 @@ export function displayFilteredRecipes(filteredRecipes) {
     });
 
     if (isRecipeIncluded) {
-      // recipeItem.classList.remove('hidden');
-
       recipeItem.style.display = 'block';
     } else {
-      // recipeItem.classList.add('hidden');
-
       recipeItem.style.display = 'none';
     }
   }

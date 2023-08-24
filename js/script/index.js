@@ -29,9 +29,6 @@ window.onload = function () {
   displayBtnSearch()
 setupClearableInput(searchInput);
 setupClearableInput(inputTwo);
-// filterRecipesByTags()
-// updateIngredientSuggestions()
-// handleSearch()
 
 };
 
@@ -54,11 +51,8 @@ setupClearableInput(inputTwo);
   
       if (filteredRecipes.length === 0) {
 
-        // recipeCount.style.display ="none"
-
         messageError.textContent = `Aucune recette ne contient ‘${inputValue} ’ vous pouvez chercher « tarte aux pommes », « poisson », etc.`;
       } else {
-        // messageError.style.display ="none"
 
          // Affiche uniquement les recettes filtrées
          const searchBar = document.getElementById("ingredientSearch");

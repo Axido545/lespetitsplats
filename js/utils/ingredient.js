@@ -3,18 +3,16 @@ import { selectedIngredientsSet  } from '../script/index.js';
 import { searchRecipes} from '../utils/boucle-for.js';
 import { displayReciepes, maskReciepe } from '../layouts/display-reciepes.js';
 
-
 const suggestionsContainer = document.querySelector(".all-suggestions");
 const tagContainer = document.querySelector(".selected-tags");
 const filteredRecipes = searchRecipes(document.getElementById('searchInput').value);
 const displayedRecipeIds = []; // Tableau pour stocker les IDs des recettes affichées
 export let displayedRecipes = searchRecipes(document.getElementById('searchInput').value); 
 
-    // Fonction pour mettre à jour les suggestions d'ingrédients en fonction des recettes filtrées
-   export function updateIngredientSuggestions() {
-    console.log("Mise à jour des suggestions d'ingrédients");
+export function updateIngredientSuggestions() {
+  console.log("Mise à jour des suggestions d'ingrédients");
+  
   const ingredientsFromFilteredRecipes = new Set();
-
 
   displayedRecipes.forEach(recipeId => {
     const recipe = recipes.find(recipe => recipe.id === recipeId);
@@ -25,9 +23,13 @@ export let displayedRecipes = searchRecipes(document.getElementById('searchInput
     }
   });
 
+  const selectedIngredientsSet = new Set(); 
+  
   const filteredSuggestions = Array.from(ingredientsFromFilteredRecipes)
     .filter(ingredient => !selectedIngredientsSet.has(ingredient));
-    console.log("Suggestions filtrées :", filteredSuggestions);
+  
+  console.log("Suggestions filtrées :", filteredSuggestions);
+  
   let suggestionsHTML = "";
   filteredSuggestions.forEach(ingredient => {
     suggestionsHTML += `
@@ -35,9 +37,32 @@ export let displayedRecipes = searchRecipes(document.getElementById('searchInput
     `;
   });
 
+  const suggestionsContainer = document.querySelector(".all-suggestions"); // Ajout de cette ligne pour obtenir le conteneur des suggestions
+  
   suggestionsContainer.innerHTML = suggestionsHTML;
 
 }
+
+// pour l autocompletion de la barre ingredient
+const searchIngredient = document.getElementById("ingredientSearch");
+searchIngredient.addEventListener('input', function() { 
+  const myIngredient = searchIngredient.value.trim();
+  const lowerCaseMyIngredient = myIngredient.toLowerCase();
+  
+  const suggestions = document.querySelectorAll(".suggestion"); 
+
+  for (const suggestion of suggestions) {
+    const suggestionText = suggestion.textContent.toLowerCase();
+
+    if (suggestionText.includes(lowerCaseMyIngredient)) {  
+      suggestion.style.display = 'block';
+    } else {
+      suggestion.style.display = 'none';
+    }
+  }
+});
+
+
   // Filtrer les recettes en fonction des recettes actuellement affichées
   function getDisplayedRecipeIds() {
     const displayedRecipeItems = document.querySelectorAll("article[style='display: block;']");
@@ -115,7 +140,7 @@ export function createTag(tagText) {
       tagElement.style.display = "none";
       selectedIngredientsSet.delete(tagText);
       filterRecipesByTags(); // Appel à la fonction de filtrage après la suppression d'un tag
-
+      updateIngredientSuggestions(); // Met à jour les suggestions d'ingrédients
     });
   }
 
@@ -124,7 +149,7 @@ export function createTag(tagText) {
 export function addIngredientTag(tagText) {
   selectedIngredientsSet.add(tagText);
   createTag(tagText);
-  filterRecipesByTags(); // Mettre à jour le filtrage après avoir ajouté un tag
+  filterRecipesByTags(); // Mise à jour le filtrage après avoir ajouté un tag
 }
   suggestionsContainer.addEventListener('click', function(event) {
     if (event.target.classList.contains('suggestion')) {
@@ -160,6 +185,8 @@ export function filterRecipeIdsByIngredients(ingredientTags) {
   });
   console.log("IDs des recettes filtrées par ingrédients :", filteredRecipeIds);
   return filteredRecipeIds;
+
+
   
 }
 
@@ -182,7 +209,7 @@ export function displayFilteredRecipes(filteredRecipeIds) {
     return getComputedStyle(recipeItem).display === "block";
   });
 
-  console.log("LALALA :", filteredRecipeIds);
+  console.log("list des IDS affichées :", filteredRecipeIds);
 
   visibleRecipeItems.forEach(recipeItem => {
     const recipeId = parseInt(recipeItem.getAttribute("id"));
@@ -201,22 +228,3 @@ window.onload = function () {
   displayFilteredRecipes(displayedRecipes); // Afficher les recettes correspondant aux IDs filtrés
   // ...
 };
-
-const searchIngredient = document.getElementById("ingredientSearch");
-
-searchIngredient.addEventListener('keyup', function() {
-  const myIngredient = searchIngredient.value.trim();
-  const lowerCaseMyIngredient = myIngredient.toLowerCase();
-
-  // Filtrer les recettes affichées actuellement (déjà filtrées par tags)
-  const filteredRecipes = displayedRecipes.filter(recipe => {
-    return recipe.ingredients.some(ingredient =>
-      ingredient.ingredient.toLowerCase().includes(lowerCaseMyIngredient)
-    );
-  });
-
-  filteredRecipes.forEach(recipe => {
-    console.log("Recipe:", recipe);
-    console.log("Ingredients:", recipe.ingredients);
-  });
-});

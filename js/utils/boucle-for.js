@@ -23,8 +23,7 @@ export function searchRecipes(keyword) {
 }
 
 // Fonction pour afficher les recettes filtrées
-export function displayFilteredRecipes(filteredRecipes) {
-  console.log(filteredRecipes);
+export function displayFirstFilteredRecipes(filteredRecipes) {
 
   const allRecipeItems = document.querySelectorAll('.recipe-article');
 

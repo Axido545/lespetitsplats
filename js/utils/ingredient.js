@@ -1,5 +1,5 @@
 import { recipes } from '../data/recipes.js';
-import { selectedIngredientsSet  } from '../script/index.js';
+import { recipeCount, selectedIngredientsSet  } from '../script/index.js';
 import { searchRecipes} from '../utils/boucle-for.js';
 import { displayReciepes, maskReciepe } from '../layouts/display-reciepes.js';
 
@@ -10,7 +10,6 @@ const displayedRecipeIds = []; // Tableau pour stocker les IDs des recettes affi
 export let displayedRecipes = searchRecipes(document.getElementById('searchInput').value); 
 
 export function updateIngredientSuggestions() {
-  console.log("Mise à jour des suggestions d'ingrédients");
   
   const ingredientsFromFilteredRecipes = new Set();
 
@@ -28,7 +27,6 @@ export function updateIngredientSuggestions() {
   const filteredSuggestions = Array.from(ingredientsFromFilteredRecipes)
     .filter(ingredient => !selectedIngredientsSet.has(ingredient));
   
-  console.log("Suggestions filtrées :", filteredSuggestions);
   
   let suggestionsHTML = "";
   filteredSuggestions.forEach(ingredient => {
@@ -67,14 +65,13 @@ searchIngredient.addEventListener('input', function() {
   function getDisplayedRecipeIds() {
     const displayedRecipeItems = document.querySelectorAll("article[style='display: block;']");
     const displayedRecipeIds = Array.from(displayedRecipeItems).map(item => parseInt(item.getAttribute("id"), 10));
-    console.log("IDs des recettes actuellement affichées :", displayedRecipeIds);
+
     return displayedRecipeIds;
   }
 
   // Fonction pour effectuer la recherche en fonction de la saisie de l'utilisateur dals le cjhamp ingredient
  export  function searchRecipesTag() {
   const keyword = document.getElementById('ingredientSearch').value;
-console.log(keyword)
     const lowerCaseKeyword = keyword.toLowerCase();
     const filteredRecipes = recipes.filter(recipe => {
       const lowerCaseIngredients = recipe.ingredients.map(ingredient => ingredient.ingredient.toLowerCase()).join(' ');
@@ -121,28 +118,117 @@ export function handleSearch() {
   displayFilteredRecipes(filteredRecipeIds);
 }
 
-export function createTag(tagText) {
+// Tableau pour stocker les noms des tags
+const tagNamesArray = [];
+
+// export function createTag(tagText) {
     
+//     const tagElement = document.createElement('div');
+//     tagElement.className = 'tag';
+    
+//     const tagTextElement = document.createElement('span');
+//     tagTextElement.textContent = tagText;
+    
+//     const closeTag = document.createElement('i');
+//     closeTag.setAttribute("class", "fa-solid fa-xmark close-tag")
+    
+//     tagElement.appendChild(tagTextElement);
+//     tagElement.appendChild(closeTag);
+//     tagContainer.appendChild(tagElement);
+
+//       // Ajouter le nom du tag au tableau
+//   tagNamesArray.push(tagText);
+
+
+// }
+
+// Fonction pour mettre à jour le tableau après la suppression d'un tag
+function updateTagNamesArray(tagText) {
+  const index = tagNamesArray.indexOf(tagText);
+  if (index !== -1) {
+    tagNamesArray.splice(index, 1); // Supprimer le tag du tableau
+  }
+}
+    const closeTag = document.querySelector("close-tag")
+
+     export function createTag(tagText) {
     const tagElement = document.createElement('div');
     tagElement.className = 'tag';
     
     const tagTextElement = document.createElement('span');
+    tagTextElement.setAttribute("class", "tag-name");
     tagTextElement.textContent = tagText;
     
     const closeTag = document.createElement('i');
-    closeTag.setAttribute("class", "fa-solid fa-xmark close-tag")
+    closeTag.setAttribute("class", "fa-solid fa-xmark close-tag");
     
     tagElement.appendChild(tagTextElement);
     tagElement.appendChild(closeTag);
     tagContainer.appendChild(tagElement);
     
     closeTag.addEventListener('click', function() {
-      tagElement.style.display = "none";
-      selectedIngredientsSet.delete(tagText);
-      filterRecipesByTags(); // Appel à la fonction de filtrage après la suppression d'un tag
-      updateIngredientSuggestions(); // Met à jour les suggestions d'ingrédients
+        tagElement.style.display = "none";
+        selectedIngredientsSet.delete(tagText);
+        updateIngredientSuggestions();
+        ///////////////////////////////////////////////////////
+        const elementsArray = numberOfRecipes() 
+        console.log(elementsArray)
+        // if (elementsArray) {
+            if (elementsArray && elementsArray.length === 0) {
+              numberOfRecipes()
+                let newfilteredRecipeIds = [];
+                filteredRecipes.forEach(recipe => {
+                    newfilteredRecipeIds.push(recipe.id);
+                });
+                
+                const allRecipeItems = document.querySelectorAll("article"); 
+                allRecipeItems.forEach(recipeItem => {
+                    const recipeId = parseInt(recipeItem.getAttribute("id"));
+                    if (newfilteredRecipeIds.includes(recipeId)) {
+                        recipeItem.style.display = "block";
+                    } else {
+                        recipeItem.style.display = "none";
+                    }
+                });
+            }
+
+            // else {
+        //       numberOfRecipes()
+        //         alert('C\'est bon !');
+        //     }
+        // }
     });
-  }
+}
+
+
+
+    
+
+    function numberOfRecipes() {
+      const allRecipeItems = document.querySelectorAll("article"); 
+    
+      const visibleRecipeItems = Array.from(allRecipeItems).filter(recipeItem => {
+        return getComputedStyle(recipeItem).display === "block";
+      });
+    
+      const numberOfVisibleRecipes = visibleRecipeItems.length; // Compter le nombre d'éléments recettes visibles
+    
+      const recipeIdsArray = visibleRecipeItems.map(recipeItem => {
+        return parseInt(recipeItem.getAttribute("id"));
+      }); // Créer un tableau des IDs des éléments recettes visibles
+    
+      console.log("Nombre de recettes visibles :", numberOfVisibleRecipes);
+      console.log("Tableau des IDs des recettes visibles :", recipeIdsArray);
+      const recipeCount = document.getElementById("recipeCount")
+      recipeCount.textContent = recipeIdsArray.length +" recettes";
+    
+      return recipeIdsArray; // Retourner le tableau des IDs des recettes visibles
+      
+    }
+    
+    const visibleRecipeIds = numberOfRecipes();
+    console.log(visibleRecipeIds)
+    
 
 
 // Fonction pour ajouter un tag d'ingrédient
@@ -150,7 +236,9 @@ export function addIngredientTag(tagText) {
   selectedIngredientsSet.add(tagText);
   createTag(tagText);
   filterRecipesByTags(); // Mise à jour le filtrage après avoir ajouté un tag
+  numberOfRecipes()
 }
+
   suggestionsContainer.addEventListener('click', function(event) {
     if (event.target.classList.contains('suggestion')) {
       const selectedIngredient = event.target.getAttribute('data-ingredient');
@@ -162,6 +250,24 @@ export function addIngredientTag(tagText) {
       }
     }
   });
+
+  // Écouter le clic sur le tag et gérer la suppression
+tagContainer.addEventListener('click', function(event) {
+  if (event.target.classList.contains('close-tag')) {
+    const tagText = event.target.previousElementSibling.textContent;
+    updateTagNamesArray(tagText); // Mettre à jour le tableau
+    event.target.closest('.tag').remove(); // Supprimer le tag de l'interface
+  }
+
+});
+
+// // Écouter le clic sur un ingrédient pour ajouter un tag
+// ingredientContainer.addEventListener('click', function(event) {
+//   if (event.target.classList.contains('ingredient')) {
+//     const ingredientText = event.target.textContent;
+//     addTag(ingredientText); // Ajouter un tag
+//   }
+// });
 
 export function filterRecipeIdsByIngredients(ingredientTags) {
   const filteredRecipeIds = [];
@@ -176,14 +282,11 @@ export function filterRecipeIdsByIngredients(ingredientTags) {
       recipeIngredientNames.includes(tag)
     );
 
-    console.log(`Recette ${recipeId} - Ingrédients :`, recipeIngredientNames);
-    console.log(`Recette ${recipeId} - Correspondance d'ingrédients :`, hasAllIngredients);
 
     if (hasAllIngredients) {
       filteredRecipeIds.push(recipeId);
     }
   });
-  console.log("IDs des recettes filtrées par ingrédients :", filteredRecipeIds);
   return filteredRecipeIds;
 
 
@@ -209,7 +312,6 @@ export function displayFilteredRecipes(filteredRecipeIds) {
     return getComputedStyle(recipeItem).display === "block";
   });
 
-  console.log("list des IDS affichées :", filteredRecipeIds);
 
   visibleRecipeItems.forEach(recipeItem => {
     const recipeId = parseInt(recipeItem.getAttribute("id"));
@@ -224,7 +326,6 @@ export function displayFilteredRecipes(filteredRecipeIds) {
 
 // Chargement initial des recettes
 window.onload = function () {
-  console.log("Chargement initial des recettes");
   displayFilteredRecipes(displayedRecipes); // Afficher les recettes correspondant aux IDs filtrés
   // ...
 };

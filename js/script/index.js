@@ -36,10 +36,8 @@ setupClearableInput(inputTwo);
   searchInput.addEventListener('input', function (event) {
     event.preventDefault();
     const inputValue = searchInput.value.trim();
-    console.log("L'élément a changé :", inputValue);
 
     if (inputValue.length < 3) {
-      console.log("moins de 3 caractères");
   
       messageError.textContent = "Veuillez entrer trois caractères minimum";
       // maskReciepe() 
@@ -59,7 +57,7 @@ setupClearableInput(inputTwo);
          const searchInput = searchBar.value.toLowerCase();
          const ingredientTags = searchInput.split(" ");
          const filteredRecipeIds = filterRecipeIdsByIngredients(ingredientTags);
-         const recipesToShow = filteredRecipeIds.filter(id => displayedRecipes.includes(id));         console.log("IDs des recettes à afficher après recherche d'ingrédients :", recipesToShow);
+         const recipesToShow = filteredRecipeIds.filter(id => displayedRecipes.includes(id));
      
          displayFilteredRecipes(recipesToShow);
 

@@ -1,5 +1,5 @@
 import { recipes } from '../data/recipes.js';
-import { recipeCount, selectedIngredientsSet  } from '../script/index.js';
+import { recipeCount  } from '../script/index.js';
 import { searchRecipes} from '../utils/boucle-for.js';
 import { displayReciepes, maskReciepe } from '../layouts/display-reciepes.js';
 
@@ -8,6 +8,7 @@ const tagContainer = document.querySelector(".selected-tags");
 const filteredRecipes = searchRecipes(document.getElementById('searchInput').value);
 const displayedRecipeIds = []; // Tableau pour stocker les IDs des recettes affichées
 export let displayedRecipes = searchRecipes(document.getElementById('searchInput').value); 
+const selectedIngredientsSet = new Set();
 
 export function updateIngredientSuggestions() {
   
@@ -21,8 +22,6 @@ export function updateIngredientSuggestions() {
       });
     }
   });
-
-  const selectedIngredientsSet = new Set(); 
   
   const filteredSuggestions = Array.from(ingredientsFromFilteredRecipes)
     .filter(ingredient => !selectedIngredientsSet.has(ingredient));
@@ -46,7 +45,8 @@ const searchIngredient = document.getElementById("ingredientSearch");
 searchIngredient.addEventListener('input', function() { 
   const myIngredient = searchIngredient.value.trim();
   const lowerCaseMyIngredient = myIngredient.toLowerCase();
-  
+  console.log(lowerCaseMyIngredient)
+
   const suggestions = document.querySelectorAll(".suggestion"); 
 
   for (const suggestion of suggestions) {
@@ -116,6 +116,8 @@ export function handleSearch() {
   filterRecipesByTags();
   const filteredRecipeIds = filterRecipeIdsByIngredients(ingredientTags);
   displayFilteredRecipes(filteredRecipeIds);
+  updateIngredientSuggestions()
+  console.log( updateIngredientSuggestions())
 }
 
 // Tableau pour stocker les noms des tags
@@ -169,6 +171,9 @@ function updateTagNamesArray(tagText) {
     closeTag.addEventListener('click', function() {
         tagElement.style.display = "none";
         selectedIngredientsSet.delete(tagText);
+
+
+
         updateIngredientSuggestions();
         ///////////////////////////////////////////////////////
         const elementsArray = numberOfRecipes() 
@@ -237,17 +242,42 @@ export function addIngredientTag(tagText) {
   createTag(tagText);
   filterRecipesByTags(); // Mise à jour le filtrage après avoir ajouté un tag
   numberOfRecipes()
+  updateIngredientSuggestions() 
 }
 
   suggestionsContainer.addEventListener('click', function(event) {
     if (event.target.classList.contains('suggestion')) {
       const selectedIngredient = event.target.getAttribute('data-ingredient');
       if (!selectedIngredientsSet.has(selectedIngredient)) {
+         // Ajouter l'ingrédient aux ingrédients sélectionnés
+      selectedIngredientsSet.add(selectedIngredient);
+      
+
         addIngredientTag(selectedIngredient);
         filterRecipesByTags();
         updateIngredientSuggestions();
         filterRecipesByTagAndDisplayRecipes(selectedIngredient);
+
+
+ // Filtrer les suggestions en excluant les ingrédients déjà sélectionnés
+ const filteredSuggestions = Array.from(ingredientsFromFilteredRecipes)
+ .filter(ingredient => !selectedIngredientsSet.has(ingredient));
+
+// Générer le HTML mis à jour pour les suggestions
+let suggestionsHTML = "";
+filteredSuggestions.forEach(ingredient => {
+ suggestionsHTML += `
+   <li class="suggestion" data-ingredient="${ingredient}">${ingredient}</li>
+ `;
+});
+
+// Mettre à jour le contenu des suggestions dans le DOM
+suggestionsContainer.innerHTML = suggestionsHTML;
+
       }
+
+
+      
     }
   });
 
@@ -255,6 +285,26 @@ export function addIngredientTag(tagText) {
 tagContainer.addEventListener('click', function(event) {
   if (event.target.classList.contains('close-tag')) {
     const tagText = event.target.previousElementSibling.textContent;
+    
+    // Supprimer le tag des ingrédients sélectionnés
+    selectedIngredientsSet.delete(tagText);
+
+    
+    // Filtrer les suggestions en excluant les ingrédients déjà sélectionnés
+    const filteredSuggestions = Array.from(ingredientsFromFilteredRecipes)
+      .filter(ingredient => !selectedIngredientsSet.has(ingredient));
+
+    // Générer le HTML mis à jour pour les suggestions
+    let suggestionsHTML = "";
+    filteredSuggestions.forEach(ingredient => {
+      suggestionsHTML += `
+        <li class="suggestion" data-ingredient="${ingredient}">${ingredient}</li>
+      `;
+    });
+
+    // Mettre à jour le contenu des suggestions dans le DOM
+    suggestionsContainer.innerHTML = suggestionsHTML;
+
     updateTagNamesArray(tagText); // Mettre à jour le tableau
     event.target.closest('.tag').remove(); // Supprimer le tag de l'interface
   }

@@ -3,8 +3,8 @@ import {recipes}  from '../data/recipes.js';
 import { displayBtnSearch } from '../layouts/btn-search.js';
 import { displayReciepes, maskReciepe } from '../layouts/display-reciepes.js';
 import {setupClearableInput} from '../layouts/btn-close.js';
-import { updateIngredientSuggestions,searchRecipesTag, filterRecipesByTags, 
-  handleSearch,filterRecipeIdsByIngredients,displayFilteredRecipes,displayedRecipes } from '../utils/ingredient.js';
+import { updateAllSuggestions,searchRecipesTag, filterRecipesByTags, 
+  handleSearch,filterRecipeIdsByAllTags,displayFilteredRecipes,displayedRecipes } from '../utils/tags.js';
 
 export const recipeContainer = document.getElementById("recipeContainer");
 const inputTwo = document.getElementById('ingredientSearch')
@@ -67,7 +67,7 @@ setupClearableInput(inputTwo);
          const ustensileTags = searchInputUstensiles.split(" ");
 
 
-         const filteredRecipeIds = filterRecipeIdsByIngredients(ingredientTags, applianceTags, ustensileTags);
+         const filteredRecipeIds = filterRecipeIdsByAllTags(ingredientTags, applianceTags, ustensileTags);
          const recipesToShow = filteredRecipeIds.filter(id => displayedRecipes.includes(id));
      
          displayFilteredRecipes(recipesToShow);
@@ -88,7 +88,7 @@ setupClearableInput(inputTwo);
 
     filterRecipesByTags()
     searchRecipesTag()
-    updateIngredientSuggestions()
+    updateAllSuggestions()
     handleSearch()
     displayFilteredRecipes(filteredRecipeIds)
   }
@@ -99,6 +99,6 @@ setupClearableInput(inputTwo);
 window.addEventListener("load", function() {
   searchInput.value = ''; // Réinitialiser la valeur du champ de recherche principal
   inputTwo.value = ''; // Réinitialiser la valeur du champ de recherche d'ingrédients
-  updateIngredientSuggestions()
+  updateAllSuggestions()
 
 });

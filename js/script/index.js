@@ -3,7 +3,8 @@ import {recipes}  from '../data/recipes.js';
 import { displayBtnSearch } from '../layouts/btn-search.js';
 import { displayReciepes, maskReciepe } from '../layouts/display-reciepes.js';
 import {setupClearableInput} from '../layouts/btn-close.js';
-import { updateIngredientSuggestions,searchRecipesTag, filterRecipesByTags, handleSearch,filterRecipeIdsByIngredients,displayFilteredRecipes, filterRecipesByTagAndDisplayRecipes } from '../utils/ingredient.js';
+import { updateIngredientSuggestions,searchRecipesTag, filterRecipesByTags, 
+  handleSearch,filterRecipeIdsByIngredients,displayFilteredRecipes,displayedRecipes } from '../utils/ingredient.js';
 
 export const recipeContainer = document.getElementById("recipeContainer");
 const inputTwo = document.getElementById('ingredientSearch')
@@ -56,7 +57,15 @@ setupClearableInput(inputTwo);
          const searchBar = document.getElementById("ingredientSearch");
          const searchInput = searchBar.value.toLowerCase();
          const ingredientTags = searchInput.split(" ");
-         const filteredRecipeIds = filterRecipeIdsByIngredients(ingredientTags);
+         const searchBarAppliance = document.getElementById("applianceSearch");
+         const searchInputAppliance = searchBarAppliance.value.toLowerCase();
+         const applianceTags = searchInputAppliance.split(" ");
+         const searchBarUstensiles = document.getElementById("ustensilSearch");
+         const searchInputUstensiles = searchBarUstensiles.value.toLowerCase();
+         const ustensileTags = searchInputUstensiles.split(" ");
+
+
+         const filteredRecipeIds = filterRecipeIdsByIngredients(ingredientTags, applianceTags, ustensileTags);
          const recipesToShow = filteredRecipeIds.filter(id => displayedRecipes.includes(id));
      
          displayFilteredRecipes(recipesToShow);
@@ -74,7 +83,6 @@ setupClearableInput(inputTwo);
 
     recipeCount.textContent = `${filteredRecipes.length} recettes`;
 
-    const suggestionsContainer = document.querySelector(".all-suggestions");
 
     filterRecipesByTags()
     searchRecipesTag()

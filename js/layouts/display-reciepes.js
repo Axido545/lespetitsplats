@@ -67,11 +67,28 @@ export function displayReciepes() {
         }
   
       }
-  
+      
       const timeParagraph = document.createElement("p");
       timeParagraph.classList.add("reciepe-time");
       timeParagraph.textContent = `${recipe.time} min`;
       wrapTextRecipe.appendChild(timeParagraph);
+
+      const applianceInfo = document.createElement("span")
+      applianceInfo.setAttribute("class","hidden appliance-info")
+      applianceInfo.textContent = recipe.appliance;
+      // applianceInfo.setAttribute("class","hidden appliance-info")
+      wrapTextRecipe.appendChild(applianceInfo);
+
+
+      const ustensileInfo = document.createElement("span")
+    ustensileInfo.setAttribute("class","hidden ustensile-info")
+    ustensileInfo.textContent = recipe.ustensils;
+
+      // ustensileInfo.setAttribute("class","hidden ustensile-info")
+      wrapTextRecipe.appendChild(ustensileInfo);
+
+
+
   
     // Calcule du nombre de recettes
     const numberOfRecipes = recipes.length;

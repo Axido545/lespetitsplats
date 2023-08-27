@@ -66,7 +66,9 @@
   margin-top: 10px;
 }
 
-.all-suggestions {
+.all-suggestions,
+.all-suggestions-appliance,
+.all-suggestions-ustensiles {
   width: 195px;
   background-color: white;
   margin-top: 35px;
@@ -82,7 +84,9 @@
   overflow-x: hidden;
 }
 
-.all-suggestions::before {
+.all-suggestions::before,
+.all-suggestions-appliance::before,
+.all-suggestions-ustensiles::before {
   visibility: hidden; /* Cacher l'élément fantôme */
 }
 
@@ -102,7 +106,9 @@
   position: relative;
 }
 
-.suggestion {
+.suggestion,
+.suggestion-appliance,
+.suggestion-ustensiles {
   width: 195px;
   margin-left: -15px;
   padding-left: 15px;

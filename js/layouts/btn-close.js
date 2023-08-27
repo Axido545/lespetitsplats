@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (inputValue === '') {
             displayReciepes(); // Assurez-vous que displayReciepes est correctement défini
-            messageError.style.display = 'none';
+            messageError.style.display = 'block';
             recipeCount.style.display = 'block';
         } else if (inputValue.length >= 3) {
             const filteredRecipes = searchRecipes(inputValue);
@@ -45,8 +45,6 @@ document.addEventListener('DOMContentLoaded', function() {
             for (const recipeItem of allRecipeItems) {
                 recipeItem.style.display = 'none';
             }
-            messageError.style.display = 'none';
-            recipeCount.style.display = 'none';
         }
     });
 });

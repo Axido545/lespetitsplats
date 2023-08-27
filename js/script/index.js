@@ -39,7 +39,9 @@ setupClearableInput(inputTwo);
     const inputValue = searchInput.value.trim();
 
     if (inputValue.length < 3) {
-  
+      console.log('veuillez entrer 3 caractères')
+      messageError.style.display ="block";
+      recipeCount.style.display ="block"
       messageError.textContent = "Veuillez entrer trois caractères minimum";
       // maskReciepe() 
     } else {

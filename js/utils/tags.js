@@ -237,7 +237,6 @@ function updateTagNamesArray(tagText) {
 }
 
   
-    const visibleRecipeIds = numberOfRecipes();
 // Fonction pour ajouter un tag d'ingrédient
 export function addIngredientTag(tagText) {
   selectedIngredientsSet.add(tagText);

@@ -113,12 +113,9 @@ export function displayFilteredRecipes(filteredRecipes, filteredRecipeIds) {
     const isRecipeIncluded = filteredRecipes.includes(recipeId); // Utilisation de includes() pour vérifier l'inclusion
 
     let result = false; // Initialisez la variable à false
-    console.log(filteredRecipes  +  "  <======version3 de filyertedrecipes")
 
-    const myfilteredRecipes = filteredRecipes.includes(recipeId)
-    console.log(myfilteredRecipes)
 
-   myfilteredRecipes.forEach(recipe => {
+   filteredRecipes.forEach(recipe => {
       const lowerCaseName = recipe.name.toLowerCase();
       const lowerCaseIngredients = recipe.ingredients.join(' ').toLowerCase();
       const lowerCaseDescription = recipe.description.toLowerCase();

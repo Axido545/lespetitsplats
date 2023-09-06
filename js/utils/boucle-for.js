@@ -1,4 +1,6 @@
 import { recipes } from '../data/recipes.js';
+import { messageError, displayFilteredRecipes } from '../script/index.js';
+import { filterRecipeIdsByAllTags, filterRecipesByTags, searchRecipesTag, updateAllSuggestions, handleSearch } from './tags.js';
 
 export const myInput =   document.getElementById('searchInput')
 
@@ -22,33 +24,66 @@ export function searchRecipes(keyword) {
   return filteredRecipes;
 }
 
-// Fonction pour afficher les recettes filtrées
-export function displayFirstFilteredRecipes(filteredRecipes) {
 
-  const allRecipeItems = document.querySelectorAll('.recipe-article');
 
-  for (const recipeItem of allRecipeItems) {
-    const recipeName = recipeItem.querySelector('.reciepe-name').textContent.trim();
-    const recipeIngredients = recipeItem.querySelector('.ingredient-Item-name').textContent.trim();
-    const recipeDescription = recipeItem.querySelector('.recipe-desc').textContent.trim();
+  // Gestionnaire d'événement pour le formulaire de recherche
+  searchInput.addEventListener('input', function (event) {
+    event.preventDefault();
+    const inputValue = searchInput.value.trim();
 
-    const isRecipeIncluded = filteredRecipes.some(recipe => {
-      const lowerCaseName = recipe.name.toLowerCase();
-      const lowerCaseIngredients = recipe.ingredients.join(' ').toLowerCase();
-      const lowerCaseDescription = recipe.description.toLowerCase();
-
-      return (
-        lowerCaseName === recipeName.toLowerCase() ||
-        lowerCaseIngredients.includes(recipeIngredients.toLowerCase()) ||
-        lowerCaseDescription.includes(recipeDescription.toLowerCase())
-      );
-    });
-
-    if (isRecipeIncluded) {
-      recipeItem.style.display = 'block';
+    if (inputValue.length < 3) {
+      console.log('veuillez entrer 3 caractères')
+      messageError.style.display ="block";
+      recipeCount.style.display ="block"
+      messageError.textContent = "Veuillez entrer trois caractères minimum";
+      // maskReciepe() 
     } else {
-      recipeItem.style.display = 'none';
-    }
-  }
-}
+      messageError.textContent = "";
+      // maskReciepe() 
+  
+      const filteredRecipes = searchRecipes(inputValue);
+  
+      if (filteredRecipes.length === 0) {
 
+        messageError.textContent = `Aucune recette ne contient ‘${inputValue} ’ vous pouvez chercher « tarte aux pommes », « poisson », etc.`;
+      } else {
+
+         // Affiche uniquement les recettes filtrées
+         const searchBar = document.getElementById("ingredientSearch");
+         const searchInput = searchBar.value.toLowerCase();
+         const ingredientTags = searchInput.split(" ");
+         const searchBarAppliance = document.getElementById("applianceSearch");
+         const searchInputAppliance = searchBarAppliance.value.toLowerCase();
+         const applianceTags = searchInputAppliance.split(" ");
+         const searchBarUstensiles = document.getElementById("ustensilSearch");
+         const searchInputUstensiles = searchBarUstensiles.value.toLowerCase();
+         const ustensileTags = searchInputUstensiles.split(" ");
+
+
+         const filteredRecipeIds = filterRecipeIdsByAllTags(ingredientTags, applianceTags, ustensileTags);
+         const recipesToShow = filteredRecipeIds.filter(id => displayedRecipes.includes(id));
+     
+         displayFilteredRecipes(recipesToShow);
+
+    filteredRecipes.forEach(recipe => {
+      const recipeItem = document.getElementById(recipe.id);
+      if (recipeItem) {
+
+        recipeItem.style.display = "block";
+        // recipeItem.classList.remove('hidden');
+
+      }filteredRecipes
+    });
+    recipeCount.style.display = "block";
+
+    recipeCount.textContent = `${filteredRecipes.length} recettes`;
+
+
+    filterRecipesByTags()
+    searchRecipesTag()
+    updateAllSuggestions()
+    handleSearch()
+    displayFilteredRecipes(filteredRecipeIds)
+  }
+    }
+  });

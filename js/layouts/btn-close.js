@@ -1,6 +1,7 @@
 import { displayReciepes } from './display-reciepes.js';
-import { searchRecipes, displayFirstFilteredRecipes } from '../utils/boucle-for.js';
+import { searchRecipes } from '../utils/boucle-for.js';
 import { messageError } from '../script/index.js';
+import { displayFilteredRecipes } from '../script/index.js';
 
 export function setupClearableInput(inputParam) {
     const inputContainer = inputParam.parentElement;
@@ -39,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function() {
             recipeCount.style.display = 'block';
         } else if (inputValue.length >= 3) {
             const filteredRecipes = searchRecipes(inputValue);
-            displayFirstFilteredRecipes(filteredRecipes); // Assurez-vous que displayFilteredRecipes est correctement défini
+            displayFilteredRecipes(filteredRecipes); // Assurez-vous que displayFilteredRecipes est correctement défini
         } else {
             const allRecipeItems = document.querySelectorAll("article");
             for (const recipeItem of allRecipeItems) {

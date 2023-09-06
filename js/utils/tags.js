@@ -2,6 +2,7 @@ import { recipes } from '../data/recipes.js';
 import { recipeCount  } from '../script/index.js';
 import { searchRecipes} from './boucle-for.js';
 import { displayReciepes, maskReciepe } from '../layouts/display-reciepes.js';
+import { displayFilteredRecipes } from '../script/index.js';
 
 const suggestionsContainer = document.querySelector(".all-suggestions");
 const suggestionsContainerAppliance = document.querySelector(".all-suggestions-appliance");
@@ -172,8 +173,8 @@ export function handleSearch() {
 
   // Filtrer les recettes en fonction des balises et afficher les recettes correspondantes
   filterRecipesByTags();
-  const filteredRecipeIds = filterRecipeIdsByAllTags(ingredientTags, applianceTags, ustensileTags);
-  displayFilteredRecipes(filteredRecipeIds);
+  // const filteredRecipeIds = filterRecipeIdsByAllTags(ingredientTags, applianceTags, ustensileTags);
+  displayFilteredRecipes();
   updateAllSuggestions()
 }
 
@@ -235,24 +236,6 @@ function updateTagNamesArray(tagText) {
     });
 }
 
-    function numberOfRecipes() {
-      const allRecipeItems = document.querySelectorAll("article"); 
-    
-      const visibleRecipeItems = Array.from(allRecipeItems).filter(recipeItem => {
-        return getComputedStyle(recipeItem).display === "block";
-      });
-    
-      const numberOfVisibleRecipes = visibleRecipeItems.length; // Compte le nombre d'éléments recettes visibles
-    
-      const recipeIdsArray = visibleRecipeItems.map(recipeItem => {
-        return parseInt(recipeItem.getAttribute("id"));
-      }); // Création un tableau des IDs des éléments recettes visibles
-      const recipeCount = document.getElementById("recipeCount")
-      recipeCount.textContent = recipeIdsArray.length +" recettes";
-    
-      return recipeIdsArray; // Retourne le tableau des IDs des recettes visibles
-      
-    }
   
     const visibleRecipeIds = numberOfRecipes();
 // Fonction pour ajouter un tag d'ingrédient
@@ -456,27 +439,3 @@ export function filterRecipesByTagAndDisplayRecipes(tag, filteredRecipeIds) {
     const recipe = recipes.find(recipe => recipe.id === recipeId);
     });
 }
-
-export function displayFilteredRecipes(filteredRecipeIds) {
-  const allRecipeItems = document.querySelectorAll("article"); 
-
-  const visibleRecipeItems = Array.from(allRecipeItems).filter(recipeItem => {
-    return getComputedStyle(recipeItem).display === "block";
-  });
-
-  visibleRecipeItems.forEach(recipeItem => {
-    const recipeId = parseInt(recipeItem.getAttribute("id"));
-
-    if (filteredRecipeIds.includes(recipeId)) {
-      recipeItem.style.display = "block"
-    } else {
-      recipeItem.style.display = "none"
-    }
-  });
-}
-
-// Chargement initial des recettes
-window.onload = function () {
-  displayFilteredRecipes(displayedRecipes); // Afficher les recettes correspondant aux IDs filtrés
-  // ...
-};

@@ -90,17 +90,6 @@ export function displayReciepes() {
 
 
   
-    // Calcule du nombre de recettes
-    const numberOfRecipes = recipes.length;
-  
-
-    const recipeCountElement = document.getElementById("recipeCount");
-
-    // Affichage le nombre de recettes dans un élément HTML avec l'ID "recipeCount"
-    if (recipeCountElement) {
-      recipeCountElement.textContent = `${numberOfRecipes} recettes`;
-    }
-  
   }
   }
 

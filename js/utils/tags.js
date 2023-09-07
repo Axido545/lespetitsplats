@@ -1,6 +1,5 @@
 import { recipes } from '../data/recipes.js';
 import { searchRecipes} from './boucle-for.js';
-import { displayFilteredRecipes } from '../script/index.js';
 
 const suggestionsContainer = document.querySelector(".all-suggestions");
 const suggestionsContainerAppliance = document.querySelector(".all-suggestions-appliance");
@@ -9,7 +8,7 @@ const tagContainer = document.querySelector(".selected-tags");
 const filteredRecipes = searchRecipes(document.getElementById('searchInput').value);
 const displayedRecipeIds = []; // Tableau pour stocker les IDs des recettes affichées
 export let displayedRecipes = searchRecipes(document.getElementById('searchInput').value); 
-const selectedIngredientsSet = new Set();
+export const selectedIngredientsSet = new Set();
 export const selectedAppliancesSet = new Set();
 export const selectedUstensilesSet = new Set();
 const ingredientsFromFilteredRecipes = new Set();
@@ -88,6 +87,7 @@ searchAppliance.addEventListener('input', function() {
     return recipe.appliance.toLowerCase().includes(selectedAppliance);
   });
   displayFilteredRecipes(filteredRecipes);
+  numberOfRecipes()
 });
 // Écouter les changements de sélection d'ustensiles
 const searchUstensil = document.getElementById("ustensilSearch");
@@ -98,6 +98,7 @@ searchUstensil.addEventListener('input', function() {
     return recipe.ustensils.some(ustensil => ustensil.toLowerCase().includes(selectedUstensil));
   });
   displayFilteredRecipes(filteredRecipes);
+  numberOfRecipes()
 });
   // Filtre les recettes en fonction des recettes actuellement affichées
   function getDisplayedRecipeIds() {
@@ -155,6 +156,7 @@ export function filterRecipesByTags() {
   const filteredRecipeIds = filterRecipeIdsByAllTags(selectedIngredientsArray,selectedApplianceArray,selectedUstensilesArray );
   displayedRecipes = filteredRecipeIds; // Mettre à jour les recettes affichées
   displayFilteredRecipes(displayedRecipes); // Mettre à jour l'affichage des recettes
+  numberOfRecipes()
 }
 
 // Fonction de gestion de la barre de recherche
@@ -173,6 +175,7 @@ export function handleSearch() {
   filterRecipesByTags();
   // const filteredRecipeIds = filterRecipeIdsByAllTags(ingredientTags, applianceTags, ustensileTags);
   displayFilteredRecipes();
+  numberOfRecipes()
   updateAllSuggestions()
 }
 
@@ -209,13 +212,16 @@ function updateTagNamesArray(tagText) {
         selectedIngredientsSet.delete(tagText);
         selectedAppliancesSet.delete(tagText);
         selectedUstensilesSet.delete(tagText);
+        displayFilteredRecipes(filteredRecipes)
+        numberOfRecipes(filteredRecipes)
 
         updateAllSuggestions();
         ///////////////////////////////////////////////////////
-        const elementsArray = numberOfRecipes() 
+        const elementsArray = numberOfRecipes(filteredRecipes) 
         // if (elementsArray) {
             if (elementsArray && elementsArray.length === 0) {
-              numberOfRecipes()
+              numberOfRecipes(filteredRecipes)
+              displayedRecipes(filteredRecipes)
                 let newfilteredRecipeIds = [];
                 filteredRecipes.forEach(recipe => {
                     newfilteredRecipeIds.push(recipe.id);
@@ -242,7 +248,7 @@ export function addIngredientTag(tagText) {
   selectedUstensilesSet.add(tagText);
   createTag(tagText);
   filterRecipesByTags(); // Mes à jour le filtrage après avoir ajouté un tag
-  numberOfRecipes()
+  numberOfRecipes(filter)
   updateAllSuggestions() 
 }
 
@@ -436,3 +442,9 @@ export function filterRecipesByTagAndDisplayRecipes(tag, filteredRecipeIds) {
     const recipe = recipes.find(recipe => recipe.id === recipeId);
     });
 }
+
+
+// Réinitialiser les valeurs des champs d'entrée lors du chargement de la page
+window.addEventListener("load", function() {
+  searchIngredient.value = ''; // Réinitialiser la valeur du champ de recherche principal
+});

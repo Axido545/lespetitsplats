@@ -1,107 +1,44 @@
 import { searchRecipes} from '../utils/boucle-for.js';
 import {recipes}  from '../data/recipes.js';
-import { displayBtnSearch } from '../layouts/btn-search.js';
 import { displayReciepes } from '../layouts/display-reciepes.js';
-import {setupClearableInput} from '../layouts/btn-close.js';
-import { updateAllSuggestions,filterRecipeIdsByAllTags, selectedAppliancesSet, selectedUstensilesSet } from '../utils/tags.js';
+import {filterRecipeIdsByAllTags, selectedAppliancesSet, selectedUstensilesSet, selectedIngredientsSet } from '../utils/tags.js';
 
 export const recipeContainer = document.getElementById("recipeContainer");
-const inputTwo = document.getElementById('ingredientSearch')
 recipeContainer.classList.add("gallery-recipes");
-export const selectedIngredientsSet = new Set(); // Utiliser un ensemble pour stocker les ingrédients sélectionnés
 
-const searchInput = document.getElementById('searchInput');
 export const messageError = document.querySelector(".message-error");
-export const recipeCount = document.querySelector("#recipeCount")
 
+async function getRecipe(){
+let newDataReciepes = recipes;
+return newDataReciepes;
+}
 
-displayReciepes(recipes);
+async function init(){
+  let dataReciepes = await getRecipe();
+  displayDataReciepes(dataReciepes)
+  numberOfRecipes()
+}
 
+export function displayDataReciepes(dataReciepes) {
 
+  dataReciepes.forEach(elt => {
+displayReciepes(elt)
+    
+  });
 
+}
 
-// Chargement initial des recettes
-window.onload = function () {
-  displayReciepes(recipes);
-  displayBtnSearch()
-setupClearableInput(searchInput);
-setupClearableInput(inputTwo);
+export function numberOfRecipes(){
+    // Calcule du nombre de recettes
+    const numberOfRecipes = recipes.length;
+    const recipeCountElement = document.getElementById("recipeCount");
 
-};
-
-// Réinitialiser les valeurs des champs d'entrée lors du chargement de la page
-window.addEventListener("load", function() {
-  searchInput.value = ''; // Réinitialiser la valeur du champ de recherche principal
-  inputTwo.value = ''; // Réinitialiser la valeur du champ de recherche d'ingrédients
-  updateAllSuggestions()
-
-});
-
-
-export function displayFilteredRecipes() {
-  const filteredRecipes1 = searchRecipes(document.getElementById('searchInput').value);
-  console.log(filteredRecipes1)
-  const selectedIngredientsArray = Array.from(selectedIngredientsSet);
-  const selectedApplianceArray = Array.from(selectedAppliancesSet);
-  const selectedUstensilesArray = Array.from(selectedUstensilesSet);
-  const filteredRecipeIds = filterRecipeIdsByAllTags(selectedIngredientsArray,selectedApplianceArray,selectedUstensilesArray );
-
-
-
-  const allRecipeItems = document.querySelectorAll('article');
-
-  allRecipeItems.forEach(recipeItem => {
-    const recipeId = parseInt(recipeItem.getAttribute('id'));
-
-    const recipeName = recipeItem.querySelector('.reciepe-name').textContent.trim();
-    const recipeIngredients = recipeItem.querySelector('.ingredient-Item-name').textContent.trim();
-    const recipeDescription = recipeItem.querySelector('.recipe-desc').textContent.trim();
-
-    // const isRecipeIncluded = filteredRecipes.includes(recipeId); // Utilisation de includes() pour vérifier l'inclusion
-
-    let result = false; // Initialisez la variable à false
-
-
-   filteredRecipes1.forEach(recipe => {
-      const lowerCaseName = recipe.name.toLowerCase();
-      const lowerCaseIngredients = recipe.ingredients.join(' ').toLowerCase();
-      const lowerCaseDescription = recipe.description.toLowerCase();
-
-      if (
-        (lowerCaseName === recipeName.toLowerCase() ||
-          lowerCaseIngredients.includes(recipeIngredients.toLowerCase()) ||
-          lowerCaseDescription.includes(recipeDescription.toLowerCase())) &&
-        filteredRecipeIds.includes(recipeId)
-      ) {
-        result = true; // Mettez la variable à true si une correspondance est trouvée
-      }
-    });
-
-    if (result) {
-      recipeItem.style.display = 'block';
-    } else {
-      recipeItem.style.display = 'none';
+    // Affichage le nombre de recettes dans un élément HTML avec l'ID "recipeCount"
+    if (recipeCountElement) {
+      recipeCountElement.textContent = `${numberOfRecipes} recettes`;
     }
-  });
 }
+init()
 
 
-function numberOfRecipes() {
-  const allRecipeItems = document.querySelectorAll("article"); 
-
-  const visibleRecipeItems = Array.from(allRecipeItems).filter(recipeItem => {
-    return getComputedStyle(recipeItem).display === "block";
-  });
-
-  const numberOfVisibleRecipes = visibleRecipeItems.length; // Compte le nombre d'éléments recettes visibles
-
-  const recipeIdsArray = visibleRecipeItems.map(recipeItem => {
-    return parseInt(recipeItem.getAttribute("id"));
-  }); // Création un tableau des IDs des éléments recettes visibles
-  const recipeCount = document.getElementById("recipeCount")
-  recipeCount.textContent = recipeIdsArray.length +" recettes";
-
-  return recipeIdsArray; // Retourne le tableau des IDs des recettes visibles
-  
-}
 

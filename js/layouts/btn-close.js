@@ -37,7 +37,6 @@ document.addEventListener('DOMContentLoaded', function() {
         if (inputValue === '') {
             displayReciepes(); // Assurez-vous que displayReciepes est correctement défini
             messageError.style.display = 'block';
-            recipeCount.style.display = 'block';
         } else if (inputValue.length >= 3) {
             const filteredRecipes = searchRecipes(inputValue);
             displayFilteredRecipes(filteredRecipes); // Assurez-vous que displayFilteredRecipes est correctement défini

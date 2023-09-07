@@ -1,5 +1,5 @@
 import { recipes } from '../data/recipes.js';
-import { messageError, displayFilteredRecipes } from '../script/index.js';
+import { messageError } from '../script/index.js';
 import { filterRecipeIdsByAllTags, filterRecipesByTags, searchRecipesTag, updateAllSuggestions, handleSearch } from './tags.js';
 
 export const myInput =   document.getElementById('searchInput')
@@ -24,7 +24,10 @@ export function searchRecipes(keyword) {
   return filteredRecipes;
 }
 
-
+// Réinitialiser les valeurs des champs d'entrée lors du chargement de la page
+window.addEventListener("load", function() {
+  searchInput.value = ''; // Réinitialiser la valeur du champ de recherche principal
+});
 
   // Gestionnaire d'événement pour le formulaire de recherche
   searchInput.addEventListener('input', function (event) {
@@ -34,7 +37,6 @@ export function searchRecipes(keyword) {
     if (inputValue.length < 3) {
       console.log('veuillez entrer 3 caractères')
       messageError.style.display ="block";
-      recipeCount.style.display ="block"
       messageError.textContent = "Veuillez entrer trois caractères minimum";
       // maskReciepe() 
     } else {
@@ -74,9 +76,7 @@ export function searchRecipes(keyword) {
 
       }filteredRecipes
     });
-    recipeCount.style.display = "block";
 
-    recipeCount.textContent = `${filteredRecipes.length} recettes`;
 
 
     filterRecipesByTags()
@@ -96,3 +96,5 @@ document.addEventListener('keydown',function(event){
 
   }
 })
+
+// 

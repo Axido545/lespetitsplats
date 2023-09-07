@@ -3,8 +3,7 @@ import {recipes}  from '../data/recipes.js';
 import { displayBtnSearch } from '../layouts/btn-search.js';
 import { displayReciepes } from '../layouts/display-reciepes.js';
 import {setupClearableInput} from '../layouts/btn-close.js';
-import { updateAllSuggestions,searchRecipesTag, filterRecipesByTags, 
-  handleSearch,filterRecipeIdsByAllTags,displayedRecipes } from '../utils/tags.js';
+import { updateAllSuggestions,filterRecipeIdsByAllTags, selectedAppliancesSet, selectedUstensilesSet } from '../utils/tags.js';
 
 export const recipeContainer = document.getElementById("recipeContainer");
 const inputTwo = document.getElementById('ingredientSearch')
@@ -18,12 +17,8 @@ export const recipeCount = document.querySelector("#recipeCount")
 
 displayReciepes(recipes);
 
-document.addEventListener('keydown',function(event){
-  if(event.key === 'Enter'){
-    event.preventDefault();
 
-  }
-})
+
 
 // Chargement initial des recettes
 window.onload = function () {
@@ -43,63 +38,15 @@ window.addEventListener("load", function() {
 });
 
 
-// // Fonction pour afficher les recettes filtrées
-// export function displayFirstFilteredRecipes(filteredRecipes) {
-
-//   const allRecipeItems = document.querySelectorAll('.recipe-article');
-
-//   for (const recipeItem of allRecipeItems) {
-//     const recipeName = recipeItem.querySelector('.reciepe-name').textContent.trim();
-//     const recipeIngredients = recipeItem.querySelector('.ingredient-Item-name').textContent.trim();
-//     const recipeDescription = recipeItem.querySelector('.recipe-desc').textContent.trim();
-
-//     const isRecipeIncluded = filteredRecipes.some(recipe => {
-//       const lowerCaseName = recipe.name.toLowerCase();
-//       const lowerCaseIngredients = recipe.ingredients.join(' ').toLowerCase();
-//       const lowerCaseDescription = recipe.description.toLowerCase();
-
-//       return (
-//         lowerCaseName === recipeName.toLowerCase() ||
-//         lowerCaseIngredients.includes(recipeIngredients.toLowerCase()) ||
-//         lowerCaseDescription.includes(recipeDescription.toLowerCase())
-//       );
-//     });
-
-//     if (isRecipeIncluded) {
-//       recipeItem.style.display = 'block';
-//     } else {
-//       recipeItem.style.display = 'none';
-//     }
-//   }
-// }
+export function displayFilteredRecipes() {
+  const filteredRecipes1 = searchRecipes(document.getElementById('searchInput').value);
+  console.log(filteredRecipes1)
+  const selectedIngredientsArray = Array.from(selectedIngredientsSet);
+  const selectedApplianceArray = Array.from(selectedAppliancesSet);
+  const selectedUstensilesArray = Array.from(selectedUstensilesSet);
+  const filteredRecipeIds = filterRecipeIdsByAllTags(selectedIngredientsArray,selectedApplianceArray,selectedUstensilesArray );
 
 
-
-// export function displayFilteredRecipes(filteredRecipeIds) {
-//   const allRecipeItems = document.querySelectorAll("article"); 
-
-//   const visibleRecipeItems = Array.from(allRecipeItems).filter(recipeItem => {
-//     return getComputedStyle(recipeItem).display === "block";
-//   });
-
-//   visibleRecipeItems.forEach(recipeItem => {
-//     const recipeId = parseInt(recipeItem.getAttribute("id"));
-
-//     if (filteredRecipeIds.includes(recipeId)) {
-//       recipeItem.style.display = "block"
-//     } else {
-//       recipeItem.style.display = "none"
-//     }
-//   });
-// }
-
-// // Chargement initial des recettes
-// window.onload = function () {
-//   displayFilteredRecipes(displayedRecipes); // Afficher les recettes correspondant aux IDs filtrés
-//   // ...
-// };
-
-export function displayFilteredRecipes(filteredRecipes, filteredRecipeIds) {
 
   const allRecipeItems = document.querySelectorAll('article');
 
@@ -110,12 +57,12 @@ export function displayFilteredRecipes(filteredRecipes, filteredRecipeIds) {
     const recipeIngredients = recipeItem.querySelector('.ingredient-Item-name').textContent.trim();
     const recipeDescription = recipeItem.querySelector('.recipe-desc').textContent.trim();
 
-    const isRecipeIncluded = filteredRecipes.includes(recipeId); // Utilisation de includes() pour vérifier l'inclusion
+    // const isRecipeIncluded = filteredRecipes.includes(recipeId); // Utilisation de includes() pour vérifier l'inclusion
 
     let result = false; // Initialisez la variable à false
 
 
-   filteredRecipes.forEach(recipe => {
+   filteredRecipes1.forEach(recipe => {
       const lowerCaseName = recipe.name.toLowerCase();
       const lowerCaseIngredients = recipe.ingredients.join(' ').toLowerCase();
       const lowerCaseDescription = recipe.description.toLowerCase();
@@ -158,21 +105,3 @@ function numberOfRecipes() {
   
 }
 
-
-// const filteredRecipes = searchRecipes(document.getElementById('searchInput').value);
-
-// const filteredRecipeIds = filterRecipeIdsByAllTags(selectedIngredientsArray,selectedApplianceArray,selectedUstensilesArray );
-
-// export function displayFilteredRecipes(filyertedrecipes, filteredRecipeIds) {
-//   const allRecipeItems = document.querySelectorAll('article');
-
-//   allRecipeItems.forEach(recipeItem => {
-//     const recipeId = parseInt(recipeItem.getAttribute('id'));
-
-//     if (filteredRecipeIds.includes(recipeId)) {
-//       recipeItem.style.display = 'block';
-//     } else {
-//       recipeItem.style.display = 'none';
-//     }
-//   });
-// }

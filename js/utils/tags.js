@@ -1,7 +1,5 @@
 import { recipes } from '../data/recipes.js';
-import { recipeCount  } from '../script/index.js';
 import { searchRecipes} from './boucle-for.js';
-import { displayReciepes, maskReciepe } from '../layouts/display-reciepes.js';
 import { displayFilteredRecipes } from '../script/index.js';
 
 const suggestionsContainer = document.querySelector(".all-suggestions");
@@ -12,8 +10,8 @@ const filteredRecipes = searchRecipes(document.getElementById('searchInput').val
 const displayedRecipeIds = []; // Tableau pour stocker les IDs des recettes affichées
 export let displayedRecipes = searchRecipes(document.getElementById('searchInput').value); 
 const selectedIngredientsSet = new Set();
-const selectedAppliancesSet = new Set();
-const selectedUstensilesSet = new Set();
+export const selectedAppliancesSet = new Set();
+export const selectedUstensilesSet = new Set();
 const ingredientsFromFilteredRecipes = new Set();
 const appareilsFromFilteredRecipes = new Set();
 const ustensilFromFilteredRecipes = new Set();

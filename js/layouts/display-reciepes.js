@@ -7,6 +7,7 @@ export function displayReciepes() {
     recipeContainer.innerHTML = ''; // Efface le contenu précédent
   
     for (let recipe of recipes) {
+      // for(var i = 0; i< recipes.length ; i++){
       const articleRecipe = document.createElement('article');
       articleRecipe.classList.add("recipe-article", "position-relative", "col-4");
       articleRecipe.setAttribute("id", recipe.id)

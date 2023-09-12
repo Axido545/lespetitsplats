@@ -1,11 +1,10 @@
 import {recipes}  from '../data/recipes.js';
 import { displayReciepes } from '../layouts/display-reciepes.js';
-import {FilteredReciepesFirstInput } from '../utils/boucle-for.js';
+import {displayFirstFilteredRecipes } from '../utils/boucle-for.js';
 
 // import {filterRecipeIdsByAllTags, selectedAppliancesSet, selectedUstensilesSet, selectedIngredientsSet } from '../utils/tags.js';
 
-export const recipeContainer = document.getElementById("recipeContainer");
-recipeContainer.classList.add("gallery-recipes");
+
 
 export const messageError = document.querySelector(".message-error");
 
@@ -15,20 +14,24 @@ return newDataReciepes;
 }
 
 export async function init(){
-  let dataReciepes = await getRecipe();
-  FilteredReciepesFirstInput()
-
+  var dataReciepes = await getRecipe();
   displayDataReciepes(dataReciepes)
-  numberOfRecipes()
+  // numberOfRecipes()
 }
 
 export function displayDataReciepes(dataReciepes) {
-
+  displayFirstFilteredRecipes(dataReciepes);
+  const recipeContainer = document.getElementById("recipeContainer");
+  recipeContainer.classList.add("gallery-recipes");
+  while(recipeContainer.firstChild){
+    recipeContainer.removeChild(recipeContainer.firstChild)
+  }
+  console.log(dataReciepes)
+  numberOfRecipes(dataReciepes.length);
   dataReciepes.forEach(elt => {
-displayReciepes(elt)
-    
+    // displayReciepes(elt)
+recipeContainer.appendChild(displayReciepes(elt));
   });
-
 }
 
 export function numberOfRecipes(){

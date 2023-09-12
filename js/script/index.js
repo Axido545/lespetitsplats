@@ -1,20 +1,23 @@
-import { searchRecipes} from '../utils/boucle-for.js';
 import {recipes}  from '../data/recipes.js';
 import { displayReciepes } from '../layouts/display-reciepes.js';
-import {filterRecipeIdsByAllTags, selectedAppliancesSet, selectedUstensilesSet, selectedIngredientsSet } from '../utils/tags.js';
+import {FilteredReciepesFirstInput } from '../utils/boucle-for.js';
+
+// import {filterRecipeIdsByAllTags, selectedAppliancesSet, selectedUstensilesSet, selectedIngredientsSet } from '../utils/tags.js';
 
 export const recipeContainer = document.getElementById("recipeContainer");
 recipeContainer.classList.add("gallery-recipes");
 
 export const messageError = document.querySelector(".message-error");
 
-async function getRecipe(){
+export async function getRecipe(){
 let newDataReciepes = recipes;
 return newDataReciepes;
 }
 
-async function init(){
+export async function init(){
   let dataReciepes = await getRecipe();
+  FilteredReciepesFirstInput()
+
   displayDataReciepes(dataReciepes)
   numberOfRecipes()
 }

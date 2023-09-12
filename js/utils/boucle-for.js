@@ -2,7 +2,7 @@ import { recipes } from '../data/recipes.js';
 import { messageError,displayDataReciepes, numberOfRecipes } from '../script/index.js';
 import { maskReciepe } from '../layouts/display-reciepes.js';
 // import { filterRecipeIdsByAllTags, filterRecipesByTags, searchRecipesTag, updateAllSuggestions, handleSearch, displayedRecipes } from './tags.js';
-displayDataReciepes(dataReciepes)
+
 // Fonction pour effectuer la recherche en fonction de la saisie de l'utilisateur
 export function searchRecipes(keyword) {
   const filteredRecipes = [];
@@ -26,7 +26,7 @@ export function searchRecipes(keyword) {
 export const myInput =   document.getElementById('searchInput')
 
 
-export function FilteredReciepesFirstInput (dataReciepes) {
+export function FilteredReciepesFirstInput () {
   const myInput =   document.getElementById('searchInput')
   myInput.addEventListener("input", function(){
     // console.log(myInput.value.split("").length)
@@ -42,7 +42,6 @@ export function FilteredReciepesFirstInput (dataReciepes) {
         // maskReciepe()
     } else {
       messageError.textContent = ``;
-      console.log(dataReciepes)
       // displayDataReciepes(dataReciepes)
 // const filteredRecipes = searchRecipes(document.getElementById('searchInput').value);
 // console.log(filteredRecipes)

@@ -3,21 +3,21 @@
 import {recipes}  from '../data/recipes.js';
 
 /// Fonction pour afficher les recettes 
-export function displayReciepes() {
-    recipeContainer.innerHTML = ''; // Efface le contenu précédent
+export function displayReciepes(data) {
+    // recipeContainer.innerHTML = ''; // Efface le contenu précédent
+    const { id, image, name, servings, ingredients, time, description,  appliance, ustensils } = data;
   
-    for (let recipe of recipes) {
       // for(var i = 0; i< recipes.length ; i++){
       const articleRecipe = document.createElement('article');
       articleRecipe.classList.add("recipe-article", "position-relative", "col-4");
-      articleRecipe.setAttribute("id", recipe.id)
+      articleRecipe.setAttribute("id", id)
 
-      recipeContainer.appendChild(articleRecipe);
+      // recipeContainer.appendChild(articleRecipe);
   
       const imgRecipe = document.createElement("img");
       imgRecipe.classList.add("img-recette", "img-fluid");
-      imgRecipe.setAttribute("src", `asset/imgs_recettes/${recipe.image}`);
-      imgRecipe.setAttribute("alt", recipe.name);
+      imgRecipe.setAttribute("src", `asset/imgs_recettes/${image}`);
+      imgRecipe.setAttribute("alt", name);
       articleRecipe.appendChild(imgRecipe);
   
       const wrapTextRecipe = document.createElement("section");
@@ -26,7 +26,7 @@ export function displayReciepes() {
   
       const titleRecipe = document.createElement("h2");
       titleRecipe.classList.add("reciepe-name", "mb-3");
-      titleRecipe.textContent = recipe.name;
+      titleRecipe.textContent = name;
       wrapTextRecipe.appendChild(titleRecipe);
   
       const subTitlRecipeRec = document.createElement("h3");
@@ -35,7 +35,7 @@ export function displayReciepes() {
       wrapTextRecipe.appendChild(subTitlRecipeRec);
   
       const recipeDesc = document.createElement("p");
-      recipeDesc.textContent = recipe.description;
+      recipeDesc.textContent = description;
       recipeDesc.setAttribute("class","recipe-desc")
       wrapTextRecipe.appendChild(recipeDesc);
   
@@ -47,7 +47,7 @@ export function displayReciepes() {
       ingredientsList.setAttribute("class","row row-cols-2")
       wrapTextRecipe.appendChild(ingredientsList);
   
-      for (const ingredient of recipe.ingredients) {
+      for (const ingredient of ingredients) {
         const { ingredient: name, quantity, unit = "" } = ingredient;
   
         const ingredientBlock = document.createElement("div")
@@ -71,27 +71,27 @@ export function displayReciepes() {
       
       const timeParagraph = document.createElement("p");
       timeParagraph.classList.add("reciepe-time");
-      timeParagraph.textContent = `${recipe.time} min`;
+      timeParagraph.textContent = `${time} min`;
       wrapTextRecipe.appendChild(timeParagraph);
 
       const applianceInfo = document.createElement("span")
       applianceInfo.setAttribute("class","hidden appliance-info")
-      applianceInfo.textContent = recipe.appliance;
+      applianceInfo.textContent = appliance;
       // applianceInfo.setAttribute("class","hidden appliance-info")
       wrapTextRecipe.appendChild(applianceInfo);
 
 
       const ustensileInfo = document.createElement("span")
     ustensileInfo.setAttribute("class","hidden ustensile-info")
-    ustensileInfo.textContent = recipe.ustensils;
+    ustensileInfo.textContent = ustensils;
 
       // ustensileInfo.setAttribute("class","hidden ustensile-info")
       wrapTextRecipe.appendChild(ustensileInfo);
 
 
 
+      return articleRecipe;
   
-  }
   }
 
 

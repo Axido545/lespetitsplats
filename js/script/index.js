@@ -29,8 +29,8 @@ export function displayDataReciepes(dataReciepes) {
   console.log(dataReciepes)
   numberOfRecipes(dataReciepes.length);
   dataReciepes.forEach(elt => {
-    // displayReciepes(elt)
 recipeContainer.appendChild(displayReciepes(elt));
+
   });
 }
 

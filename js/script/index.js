@@ -1,6 +1,6 @@
 import {recipes}  from '../data/recipes.js';
 import { displayReciepes } from '../layouts/display-reciepes.js';
-import {displayFirstFilteredRecipes } from '../utils/boucle-for.js';
+import {bigSearchBar } from '../utils/boucle-for.js';
 
 // import {filterRecipeIdsByAllTags, selectedAppliancesSet, selectedUstensilesSet, selectedIngredientsSet } from '../utils/tags.js';
 
@@ -16,11 +16,11 @@ return newDataReciepes;
 export async function init(){
   var dataReciepes = await getRecipe();
   displayDataReciepes(dataReciepes)
-  // numberOfRecipes()
+  numberOfRecipes()
 }
 
 export function displayDataReciepes(dataReciepes) {
-  displayFirstFilteredRecipes(dataReciepes);
+  bigSearchBar(dataReciepes);
   const recipeContainer = document.getElementById("recipeContainer");
   recipeContainer.classList.add("gallery-recipes");
   while(recipeContainer.firstChild){
@@ -34,14 +34,17 @@ recipeContainer.appendChild(displayReciepes(elt));
   });
 }
 
-export function numberOfRecipes(){
-    // Calcule du nombre de recettes
-    const numberOfRecipes = recipes.length;
+export function numberOfRecipes(elt){
+if(elt===undefined){
+  recipeCountElement.textContent = `50 recettes`;
+
+
+}
     const recipeCountElement = document.getElementById("recipeCount");
 
     // Affichage le nombre de recettes dans un élément HTML avec l'ID "recipeCount"
     if (recipeCountElement) {
-      recipeCountElement.textContent = `${numberOfRecipes} recettes`;
+      recipeCountElement.textContent = `${elt} recettes`;
     }
 }
 init()

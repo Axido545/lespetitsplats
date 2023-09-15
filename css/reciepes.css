@@ -59,7 +59,6 @@
 }
 
 .message-error {
-  display: block;
   color: red;
   font-weight: bold;
   width: 100%;

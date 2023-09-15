@@ -1,5 +1,6 @@
 import { recipes } from '../data/recipes.js';
 import { displayDataReciepes, messageError, numberOfRecipes } from '../script/index.js';
+import { displaySuggestions } from './tags.js';
 
 export const myInput =   document.getElementById('searchInput')
 
@@ -57,6 +58,7 @@ export function bigSearchBar() {
     }
 displayDataReciepes(filteredRecipes)
 numberOfRecipes(filteredRecipes.length)
+displaySuggestions(filteredRecipes)
   });
 }
 

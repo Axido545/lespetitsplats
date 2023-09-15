@@ -1,10 +1,8 @@
 import {recipes}  from '../data/recipes.js';
 import { displayReciepes } from '../layouts/display-reciepes.js';
 import {bigSearchBar } from '../utils/boucle-for.js';
-
 // import {filterRecipeIdsByAllTags, selectedAppliancesSet, selectedUstensilesSet, selectedIngredientsSet } from '../utils/tags.js';
-
-
+import { displaySuggestions } from '../utils/tags.js';
 
 export const messageError = document.querySelector(".message-error");
 
@@ -17,6 +15,7 @@ export async function init(){
   var dataReciepes = await getRecipe();
   displayDataReciepes(dataReciepes)
   numberOfRecipes()
+  displaySuggestions()
 }
 
 export function displayDataReciepes(dataReciepes) {
@@ -26,7 +25,7 @@ export function displayDataReciepes(dataReciepes) {
   while(recipeContainer.firstChild){
     recipeContainer.removeChild(recipeContainer.firstChild)
   }
-  console.log(dataReciepes)
+  // console.log(dataReciepes)
   numberOfRecipes(dataReciepes.length);
   dataReciepes.forEach(elt => {
 recipeContainer.appendChild(displayReciepes(elt));

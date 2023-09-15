@@ -35,12 +35,13 @@ recipeContainer.appendChild(displayReciepes(elt));
 }
 
 export function numberOfRecipes(elt){
+  const recipeCountElement = document.getElementById("recipeCount");
+
 if(elt===undefined){
   recipeCountElement.textContent = `50 recettes`;
 
 
 }
-    const recipeCountElement = document.getElementById("recipeCount");
 
     // Affichage le nombre de recettes dans un élément HTML avec l'ID "recipeCount"
     if (recipeCountElement) {

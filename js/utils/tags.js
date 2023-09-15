@@ -33,4 +33,27 @@ export function displaySuggestions() {
   // Insétion la liste dans un élément HTML de votre choix (par exemple, un élément avec l'id "suggestions-container")
   const suggestionsContainer = document.querySelector(".all-suggestions");
   suggestionsContainer.innerHTML = `<ul>${suggestionsHTML}</ul>`;
+
+
+//auto completion
+  // Ajout du gestionnaire d'événement pour l'autocomplétion
+  const inputSuggestion = document.getElementById("ingredientSearch");
+  inputSuggestion.addEventListener("input", function() {
+    const searchTerm = inputSuggestion.value.toLowerCase().trim();
+    const filteredIngredients = uniqueIngredients.filter(ingredient =>
+      ingredient.includes(searchTerm)
+    );
+
+    // Affichez les ingrédients filtrés en tant qu'autocomplétion
+    const autocompleteList = document.querySelector(".all-suggestions");
+    autocompleteList.innerHTML = "";
+
+    filteredIngredients.forEach(ingredient => {
+      const listItem = document.createElement("li");
+      listItem.textContent = ingredient;
+      listItem.classList.add("suggestion");
+      listItem.dataset.ingredient = ingredient;
+      autocompleteList.appendChild(listItem);
+    });
+  });
 }

@@ -27,15 +27,23 @@ export function searchRecipes(keyword) {
 export function bigSearchBar() {
   const filteredRecipes = [];
 
+  
+
   myInput.addEventListener('input', function () {
-    const inputValue = myInput.value.trim().toLowerCase();
+    const clearIcon = document.querySelector('.clear-icon');
+const inputValue = myInput.value.trim().toLowerCase();
     filteredRecipes.length = 0; // Réinitialise la liste des recettes filtrées
 
     if (inputValue.length === 0) {
       messageError.textContent = "";
+      clearIcon.style.display ="none";
+      numberOfRecipes(filteredRecipes.length)
     } else if (inputValue.length < 3) {
+      clearIcon.style.display ="block"
       messageError.textContent = "Veuillez entrer trois caractères minimum";
     } else {
+      clearIcon.style.display ="block"
+      numberOfRecipes(filteredRecipes.length)
       for (const recipe of recipes) {
         const lowerCaseName = recipe.name.toLowerCase();
         const lowerCaseIngredients = recipe.ingredients.join(' ').toLowerCase();
@@ -52,6 +60,7 @@ export function bigSearchBar() {
 
       if (filteredRecipes.length === 0) {
         messageError.textContent = `Aucune recette ne contient ‘${inputValue} ’ vous pouvez chercher « tarte aux pommes », « poisson », etc.`;
+      numberOfRecipes(filteredRecipes.length)
       } else {
         messageError.textContent = "";
       }
@@ -59,6 +68,21 @@ export function bigSearchBar() {
 displayDataReciepes(filteredRecipes)
 numberOfRecipes(filteredRecipes.length)
 displaySuggestions(filteredRecipes)
+
+
+
+
   });
+
 }
 
+if(myInput.value !== ""){
+  console.log("ya du contenu dans l'input")
+}
+
+// Réinitialise les valeurs des champs d'entrée lors du chargement de la page
+window.addEventListener("load", function() {
+const myInput = document.getElementById('searchInput');
+myInput.value = ""; // Réinitialise la valeur du champ de recherche principal
+
+});

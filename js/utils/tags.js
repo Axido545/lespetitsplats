@@ -1,5 +1,25 @@
 
 
+// Fonction pour retirer les pluriels si une forme singulière existe
+function removePluralIfSingularExists(ingredients) {
+  const uniqueIngredients = [];
+
+  ingredients.forEach(ingredient => {
+    const ingredientLowerCase = ingredient.toLowerCase().trim();
+    const singularForm = ingredientLowerCase.endsWith('s')
+      ? ingredientLowerCase.slice(0, -1) // Retire le "s" final
+      : ingredientLowerCase;
+
+          // Vérifie si la forme singulière existe déjà dans le tableau uniqueIngredients
+    if (!uniqueIngredients.includes(singularForm)) {
+      uniqueIngredients.push(singularForm);
+    }
+  });
+
+  return uniqueIngredients;
+}
+
+
 
 export function displaySuggestions() {
   // Sélection tous les éléments avec la classe "ingredient-Item-name"
@@ -50,3 +70,11 @@ export function displaySuggestions() {
     });
   });
 }
+
+// Réinitialise les valeurs des champs d'entrée lors du chargement de la page
+window.addEventListener("load", function() {
+  const inputSuggestion = document.getElementById("ingredientSearch");
+
+  inputSuggestion.value = ''; // Réinitialise la valeur du champ de recherche principal
+  
+  });

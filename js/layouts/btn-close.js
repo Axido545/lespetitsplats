@@ -1,24 +1,39 @@
 import { displayReciepes } from './display-reciepes.js';
 import { searchRecipes } from '../utils/boucle-for.js';
 import { messageError } from '../script/index.js';
-import { displayFilteredRecipes } from '../script/index.js';
+import { displayDataReciepes, getRecipe } from '../script/index.js';
 
-export function setupClearableInput(inputParam) {
-    const inputContainer = inputParam.parentElement;
-    const clearIcon = inputContainer.querySelector('.clear-icon');
+getRecipe()
+var dataReciepes = await getRecipe();
 
-    clearIcon.addEventListener('click', function () {
-        inputParam.value = '';
-        inputParam.dispatchEvent(new Event('input'));
-    });
+export function setupClearableInput() {
 
-    inputParam.addEventListener('input', function () {
-        if (inputParam.value.trim() !== '') {
+    const clearIcon = document.getElementById('clearInput');
+    const inputOne = document.getElementById('searchInput')
+    clearIcon.style.display = "none"
+
+
+
+        clearIcon.addEventListener('input', function () {
+            console.log(inputOne.value)
+
+        if (inputOne.value.trim() !== "") {
             clearIcon.style.display = 'block';
         } else {
             clearIcon.style.display = 'none';
         }
     });
+
+    clearIcon.addEventListener('click', function () {
+        inputOne.value =  "";
+    clearIcon.style.display = "none"
+        displayDataReciepes(dataReciepes)
+
+    });
+
+
+
+
 }
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -35,11 +50,11 @@ document.addEventListener('DOMContentLoaded', function() {
         const inputValue = myInput.value.trim();
 
         if (inputValue === '') {
-            displayReciepes(); // Assurez-vous que displayReciepes est correctement défini
+            displayReciepes(); 
             messageError.style.display = 'block';
         } else if (inputValue.length >= 3) {
             const filteredRecipes = searchRecipes(inputValue);
-            displayFilteredRecipes(filteredRecipes); // Assurez-vous que displayFilteredRecipes est correctement défini
+            displayDataReciepes(filteredRecipes); 
         } else {
             const allRecipeItems = document.querySelectorAll("article");
             for (const recipeItem of allRecipeItems) {

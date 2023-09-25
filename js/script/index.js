@@ -2,7 +2,7 @@ import {recipes}  from '../data/recipes.js';
 import { displayReciepes } from '../layouts/display-reciepes.js';
 import {bigSearchBar } from '../utils/boucle-for.js';
 // import {filterRecipeIdsByAllTags, selectedAppliancesSet, selectedUstensilesSet, selectedIngredientsSet } from '../utils/tags.js';
-import { displaySuggestions } from '../utils/tags.js';
+import { newTags, displaySuggestions } from '../utils/tags.js';
 import { setupClearableInput } from '../layouts/btn-close.js';
 
 export const messageError = document.querySelector(".message-error");
@@ -18,7 +18,8 @@ export async function init(){
   numberOfRecipes()
   setupClearableInput()
   displaySuggestions()
-}
+  newTags()
+ }
 
 export function displayDataReciepes(dataReciepes) {
   bigSearchBar(dataReciepes);

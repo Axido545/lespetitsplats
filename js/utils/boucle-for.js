@@ -27,8 +27,7 @@ export function searchRecipes(keyword) {
 export function bigSearchBar() {
   const filteredRecipes = [];
 
-  
-
+  const myInput =   document.getElementById('searchInput')
   myInput.addEventListener('input', function () {
     const clearIcon = document.querySelector('.clear-icon');
 const inputValue = myInput.value.trim().toLowerCase();

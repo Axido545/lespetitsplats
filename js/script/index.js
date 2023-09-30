@@ -19,10 +19,12 @@ export async function init(){
   setupClearableInput()
   displaySuggestions()
   newTags()
+
  }
 
 export function displayDataReciepes(dataReciepes) {
   bigSearchBar(dataReciepes);
+
   const recipeContainer = document.getElementById("recipeContainer");
   recipeContainer.classList.add("gallery-recipes");
   while(recipeContainer.firstChild){
@@ -44,11 +46,7 @@ export function numberOfRecipes(elt){
 if(elt===undefined){
   recipeCountElement.textContent = `50 recettes`;
 
-
-}
-
-    // Affichage le nombre de recettes dans un élément HTML avec l'ID "recipeCount"
-    if (elt) {
+} else {
       recipeCountElement.textContent = `${elt} recettes`;
     } 
 }

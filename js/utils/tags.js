@@ -39,18 +39,20 @@ export function removePluralIfSingularExists(ingredients, appareils, ustensiles)
           }
         });
 
+        ustensiles.forEach(ustensil => {
+          const ustensilLowerCase = ustensil.toLowerCase().trim();
+          ustensilLowerCase.split(',').forEach(item => {
+            const singularFormUstensil = item.endsWith('s')
+              ? item.slice(0, -1)
+              : item;
+        
+            // uniqueUstensiles.add(singularFormUstensil);
+            if (!uniqueUstensiles.includes(singularFormUstensil)) {
+              uniqueUstensiles.push(singularFormUstensil);
+            }
 
-          ustensiles.forEach(ustensil => {
-            const ustensilLowerCase = ustensil.toLowerCase().trim();
-            const singularFormUstensil = ustensilLowerCase.endsWith('s')
-              ? ustensilLowerCase.slice(0, -1) // Retire le "s" final
-              : ustensilLowerCase;
-      
-
-  if (!uniqueUstensiles.includes(singularFormUstensil)) {
-    uniqueUstensiles.push(singularFormUstensil);
-  }
-});
+          });
+        });
   return uniqueIngredients;
 }
 
@@ -95,13 +97,19 @@ export function displaySuggestions() {
   const suggestionsHTMLappareil =
 
   uniqueAppareils.map(appareil => `
-    <li class="suggestion" data-ingredient="${appareil}">${appareil}</li>
+    <li class="suggestion" data-appareil="${appareil}">${appareil}</li>
   `).join("");
 
-  const suggestionsHTMLustensil =
-  uniqueUstensiles.map(ustensil => `
-    <li class="suggestion" data-ingredient="${ustensil}">${ustensil}</li>
-  `).join("");
+  // const suggestionsHTMLustensil =
+  // uniqueUstensiles.map(ustensil => `
+  //   <li class="suggestion" data-ustensile="${ustensil}">${ustensil}</li>
+  // `).join("");
+
+
+  const suggestionsHTMLustensil = uniqueUstensiles
+  .map(ustensil => ustensil.split(',').map(item => item.trim()))
+  .map(ustensilList => ustensilList.map(item => `<li class="suggestion" data-ingredient="${item}">${item}</li>`).join(''))
+  .join("");
 
   // Insertion de la liste dans un élément HTML 
   const suggestionsContainerIngredient = document.querySelector(".suggestions-ingredient");

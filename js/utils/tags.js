@@ -39,20 +39,18 @@ export function removePluralIfSingularExists(ingredients, appareils, ustensiles)
           }
         });
 
-        ustensiles.forEach(ustensil => {
-          const ustensilLowerCase = ustensil.toLowerCase().trim();
-          ustensilLowerCase.split(',').forEach(item => {
-            const singularFormUstensil = item.endsWith('s')
-              ? item.slice(0, -1)
-              : item;
-        
-            // uniqueUstensiles.add(singularFormUstensil);
-            if (!uniqueUstensiles.includes(singularFormUstensil)) {
-              uniqueUstensiles.push(singularFormUstensil);
-            }
 
-          });
-        });
+          ustensiles.forEach(ustensil => {
+            const ustensilLowerCase = ustensil.toLowerCase().trim();
+            const singularFormUstensil = ustensilLowerCase.endsWith('s')
+              ? ustensilLowerCase.slice(0, -1) // Retire le "s" final
+              : ustensilLowerCase;
+      
+
+  if (!uniqueUstensiles.includes(singularFormUstensil)) {
+    uniqueUstensiles.push(singularFormUstensil);
+  }
+});
   return uniqueIngredients;
 }
 
@@ -97,29 +95,31 @@ export function displaySuggestions() {
   const suggestionsHTMLappareil =
 
   uniqueAppareils.map(appareil => `
-    <li class="suggestion" data-appareil="${appareil}">${appareil}</li>
+    <li class="suggestion" data-ingredient="${appareil}">${appareil}</li>
   `).join("");
 
-  // const suggestionsHTMLustensil =
-  // uniqueUstensiles.map(ustensil => `
-  //   <li class="suggestion" data-ustensile="${ustensil}">${ustensil}</li>
-  // `).join("");
+  // const suggestionsHTMLustensile =
+  uniqueUstensiles.map(ustensile => `
+    <li class="suggestion" data-ingredient="${ustensile}">${ustensile}</li>
+  `).join("");
 
+  const suggestionsHTMLustensile = uniqueUstensiles.map(ustensile =>
+    ustensile.split(',').map(item => item.trim()))
+  .map(ustensilList => ustensilList.map(item => `
+  <li class="suggestion" data-ingredient="${item}">${item}</li>
+  `).join(""));
+  
 
-  const suggestionsHTMLustensil = uniqueUstensiles
-  .map(ustensil => ustensil.split(',').map(item => item.trim()))
-  .map(ustensilList => ustensilList.map(item => `<li class="suggestion" data-ingredient="${item}">${item}</li>`).join(''))
-  .join("");
 
   // Insertion de la liste dans un élément HTML 
-  const suggestionsContainerIngredient = document.querySelector(".suggestions-ingredient");
+  const suggestionsContainerIngredient = document.querySelector(".suggestions-ingredients");
   suggestionsContainerIngredient.innerHTML = `<ul>${suggestionsHTMLingredient}</ul>`;
 
   const suggestionsContainerAppareil = document.querySelector(".suggestions-appareils");
   suggestionsContainerAppareil.innerHTML = `<ul>${suggestionsHTMLappareil}</ul>`;
 
-  const suggestionsContainerUstensil = document.querySelector(".suggestions-ustensiles");
-  suggestionsContainerUstensil.innerHTML = `<ul>${suggestionsHTMLustensil}</ul>`;
+  const suggestionsContainerUstensile = document.querySelector(".suggestions-ustensiles");
+  suggestionsContainerUstensile.innerHTML = `<ul>${suggestionsHTMLustensile}</ul>`;
 
 
   // Ajout du gestionnaire d'événement pour l'autocomplétion

@@ -64,9 +64,9 @@
   margin-top: 10px;
 }
 
-.all-suggestions,
-.all-suggestions-appliance,
-.all-suggestions-ustensiles {
+.suggestions-ingredients,
+.suggestions-appareils,
+.suggestions-ustensiles {
   width: 195px;
   background-color: white;
   margin-top: 35px;

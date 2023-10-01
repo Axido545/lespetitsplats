@@ -66,7 +66,7 @@ const inputValue = myInput.value.trim().toLowerCase();
     }
 displayDataReciepes(filteredRecipes)
 numberOfRecipes(filteredRecipes.length)
-displaySuggestions(filteredRecipes)
+// displaySuggestions(filteredRecipes)
 
 
 

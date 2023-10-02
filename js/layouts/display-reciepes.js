@@ -3,9 +3,9 @@
 import {recipes}  from '../data/recipes.js';
 
 /// Fonction pour afficher les recettes 
-export function displayReciepes(data) {
+export function displayReciepes(recipes) {
     // recipeContainer.innerHTML = ''; // Efface le contenu précédent
-    const { id, image, name, servings, ingredients, time, description,  appliance, ustensils } = data;
+    const { id, image, name, servings, ingredients, time, description,  appliance, ustensils } = recipes;
   
       // for(var i = 0; i< recipes.length ; i++){
       const articleRecipe = document.createElement('article');

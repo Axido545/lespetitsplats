@@ -8,8 +8,6 @@ const uniqueIngredients = [];
 const uniqueAppareils = [];
 const uniqueUstensiles = [];
 
-
-
 // Fonction pour retirer les pluriels si une forme singulière existe
 export function removePluralIfSingularExists(ingredients, appareils, ustensiles) {
   uniqueIngredients.length = 0;

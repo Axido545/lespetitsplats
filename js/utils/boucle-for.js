@@ -1,6 +1,6 @@
 import { recipes } from '../data/recipes.js';
 import { displayDataReciepes, messageError, numberOfRecipes } from '../script/index.js';
-import { displaySuggestions } from './tags.js';
+// import { displaySuggestions } from './tags.js';
 import {mySearch} from './searchreciepes.js';
 
 export const myInput =   document.getElementById('searchInput')
@@ -45,12 +45,11 @@ const inputValue = myInput.value.trim().toLowerCase();
       mySearch()
       clearIcon.style.display ="block"
           messageError.textContent = "";
-          console.log(mySearch(filteredRecipes))
     }
   });
 
 }
-
+// mySearch()
 // Réinitialise les valeurs des champs d'entrée lors du chargement de la page
 window.addEventListener("load", function() {
 const myInput = document.getElementById('searchInput');

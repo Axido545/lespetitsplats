@@ -1,9 +1,8 @@
-import {recipes}  from '../data/recipes.js';
-import { displayReciepes } from '../layouts/display-reciepes.js';
-import {bigSearchBar } from '../utils/boucle-for.js';
-// import {filterRecipeIdsByAllTags, selectedAppliancesSet, selectedUstensilesSet, selectedIngredientsSet } from '../utils/tags.js';
-// import { newTags, displaySuggestions } from '../utils/tags.js';
-import { setupClearableInput } from '../layouts/btn-close.js';
+import {recipes}  from '../Data/recipes.js';
+import { displayReciepes } from './display-reciepes.js';
+import {bigSearchBar } from '../Functions/boucle-for.js';
+import { newTags } from '../Functions/tags.js';
+// import { setupClearableInput } from './btn-close.js';
 
 export const messageError = document.querySelector(".message-error");
 
@@ -18,21 +17,18 @@ export async function init(){
   numberOfRecipes()
   // displaySuggestions()
     bigSearchBar(dataReciepes);
-
-  setupClearableInput()
-  // newTags()
+  // setupClearableInput()
+  // newTagsActive()
 
  }
 
 export function displayDataReciepes(dataReciepes) {
-  // bigSearchBar(dataReciepes);
-
+newTags(dataReciepes)
   const recipeContainer = document.getElementById("recipeContainer");
   recipeContainer.classList.add("gallery-recipes");
   while(recipeContainer.firstChild){
     recipeContainer.removeChild(recipeContainer.firstChild)
   }
-  // console.log(dataReciepes)
   numberOfRecipes(dataReciepes.length);
   dataReciepes.forEach(elt => {
 recipeContainer.appendChild(displayReciepes(elt));
@@ -41,15 +37,11 @@ recipeContainer.appendChild(displayReciepes(elt));
 }
 
 export function numberOfRecipes(elt){
-
-
   const recipeCountElement = document.getElementById("recipeCount");
-
 if(elt===undefined){
   recipeCountElement.textContent = `50 recettes`;
-
 } else {
-      recipeCountElement.textContent = `${elt} recettes`;
+      recipeCountElement.innerHTML = `<span id="NumberRecip">${elt}</span> recettes`;
     } 
 }
 init()

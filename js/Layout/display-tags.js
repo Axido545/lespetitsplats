@@ -80,21 +80,20 @@
 //   }
   
 export function displayTags(element,name,id,isSelected) {
-    const options = document.querySelector(".option-search");
+    const suggestions = document.getElementById("suggestions-ingredients");
     const li = document.createElement("li");
+    li.setAttribute('class','suggestion ')
+    li.setAttribute("name",name);
+
     if(isSelected){
-        const cliqueCroix = document.createElement("i");
+        const crossTag = document.createElement("i");
         const content = document.createElement("span");
-        cliqueCroix.classList.add("fa-solid","fa-xmark");
-        console.log(cliqueCroix);
+        crossTag.classList.add("fa-solid","fa-xmark");
         content.textContent = element;
-        li.appendChild(cliqueCroix);
+        li.appendChild(crossTag);
         li.appendChild(content);
-        console.log(li)
         li.classList.add("selected");
-        console.log(li);
     }    
     li.textContent = element;
-    li.setAttribute("name",name);
-    options.appendChild(li);
+    suggestions.appendChild(li);
 }

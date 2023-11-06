@@ -64,17 +64,17 @@
   margin-top: 10px;
 }
 
-.suggestions-ingredients,
-.suggestions-appareils,
-.suggestions-ustensiles {
+#suggestions-ingredients,
+#suggestions-appareils,
+#suggestions-ustensiles {
   width: 195px;
   background-color: white;
-  margin-top: 35px;
+  margin-top: 2.3 rem;
   padding-left: 15px;
   margin-left: -11px;
   list-style-type: none;
   z-index: 10;
-  padding-top: 0;
+  padding-top: 40px;
   padding-bottom: 0;
   position: absolute;
   max-height: 200px;

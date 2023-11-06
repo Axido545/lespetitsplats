@@ -4,26 +4,6 @@ import { displayDataReciepes, messageError, numberOfRecipes } from '../Layout/in
 import { firstInputValue, IngredientInputValue } from "./getvalues.js";
 export const myInput =   document.getElementById('searchInput')
 
-// Fonction pour effectuer la recherche en fonction de la saisie de l'utilisateur
-// export function searchRecipes(keyword) {
-//   const filteredRecipes = [];
-//   for (const recipe of recipes) {
-//     const lowerCaseKeyword = keyword.toLowerCase();
-//     const lowerCaseName = recipe.name.toLowerCase();
-//     const lowerCaseIngredients = recipe.ingredients.join(' ').toLowerCase();
-//     const lowerCaseDescription = recipe.description.toLowerCase();
-
-//     if (
-//       lowerCaseName.includes(lowerCaseKeyword) ||
-//       lowerCaseIngredients.includes(lowerCaseKeyword) ||
-//       lowerCaseDescription.includes(lowerCaseKeyword)
-//     ) {
-//       filteredRecipes.push(recipe);
-//     }
-//   }
-//   return filteredRecipes;
-// }
-
 export function bigSearchBar(myrecipesdata) {
   const myInput = document.getElementById('searchInput');
   const clearIcon = document.querySelector('.clear-icon');
@@ -31,9 +11,10 @@ export function bigSearchBar(myrecipesdata) {
 
   myInput.addEventListener('input', function () {
     const inputValue = myInput.value.trim().toLowerCase()
+    console.log(inputValue)
     clearIcon.style.display = "none";
-mySearch(myrecipesdata)
-
+  mySearch(myrecipesdata)
+console.log(mySearch(myrecipesdata))
     if (inputValue.length === 0) {
       messageError.textContent = "";
       clearIcon.style.display = "none";
@@ -46,19 +27,18 @@ mySearch(myrecipesdata)
       messageError.textContent = "";
 
        if(recicontainer.textContent === ""){
-        messageError.textContent = `« Aucune recette ne contient ${inputValue}  vous pouvez chercher «
+        messageError.textContent = `« Aucune recette ne contient « ${inputValue} »  vous pouvez chercher «
         tarte aux pommes », « poisson », etc.`;
        }
       mySearch(myrecipesdata)
     }
   });
-
-
 }
 
 export function mySearch(myrecipesdata) {
   const filteredRecipes = [];
-  const keywords = firstInputValue();
+  const firstInputValues = firstInputValue();
+  const ingredientInputValues = IngredientInputValue();
 
   for (let i = 0; i < myrecipesdata.length; i++) {
     const recipe = myrecipesdata[i];
@@ -66,19 +46,27 @@ export function mySearch(myrecipesdata) {
     const recipeIngredients = recipe.ingredients.map(ingredient => ingredient.ingredient.toLowerCase());
     const recipeDescription = recipe.description.toLowerCase();
 
-    // Filtrer par inputKeywords
-    const containsKeywords = keywords.every(keyword => {
-      const keywordLowerCase = keyword.toLowerCase();
+    // // Filtrer par firstInputValues
+    const containsFirstInputValues = firstInputValues.every(firstInputValue => {
+
+      const keywordLowerCase = firstInputValue.toLowerCase();
       return recipeName.includes(keywordLowerCase) ||
         recipeIngredients.some(ingredient => ingredient.includes(keywordLowerCase)) ||
         recipeDescription.includes(keywordLowerCase);
+    
+    })
+    const containsIngredientsInput = ingredientInputValues.length === 0 || ingredientInputValues.every(ingredient => {
+      return recipe.ingredients.some(recipeIngredient => recipeIngredient.ingredient.toLowerCase().includes(ingredient.toLowerCase()));
     });
 
-    if (containsKeywords) {
+    if (containsFirstInputValues 
+      // && containsIngredientsInput 
+      ) {
       // Stocker la recette filtrée
       filteredRecipes.push(recipe);
     }
   }
+  console.log(filteredRecipes)
   displayDataReciepes(filteredRecipes);
 }
 
@@ -88,3 +76,4 @@ window.addEventListener("load", function() {
   const myInput = document.getElementById('searchInput');
   myInput.value = ""; 
   });
+

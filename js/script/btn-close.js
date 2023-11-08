@@ -1,5 +1,5 @@
 // import { displayReciepes } from './display-reciepes.js';
-// // import { searchRecipes } from '../Functions/boucle-for.js';
+// // import { searchRecipes } from '../utils/boucle-for.js';
 // import { messageError } from './index.js';
 // import { displayDataReciepes, getRecipe } from './index.js';
 

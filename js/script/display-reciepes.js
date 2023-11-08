@@ -1,6 +1,6 @@
 
 
-import {recipes}  from '../Data/recipes.js';
+import {recipes}  from '../data/recipes.js';
 
 /// Fonction pour afficher les recettes 
 export function displayReciepes(recipes) {

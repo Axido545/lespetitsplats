@@ -1,5 +1,6 @@
-import { recipes } from '../Data/recipes.js';
-import { displayDataReciepes, messageError, numberOfRecipes } from '../Layout/index.js';
+import { recipes } from '../data/recipes.js';
+import { displayDataReciepes, messageError, numberOfRecipes } from '../script/index.js';
+
 // import { displaySuggestions } from './tags.js';
 import { firstInputValue, IngredientInputValue } from "./getvalues.js";
 export const myInput =   document.getElementById('searchInput')
@@ -13,8 +14,6 @@ export function bigSearchBar(myrecipesdata) {
     const inputValue = myInput.value.trim().toLowerCase()
     console.log(inputValue)
     clearIcon.style.display = "none";
-  mySearch(myrecipesdata)
-console.log(mySearch(myrecipesdata))
     if (inputValue.length === 0) {
       messageError.textContent = "";
       clearIcon.style.display = "none";
@@ -69,8 +68,6 @@ export function mySearch(myrecipesdata) {
   console.log(filteredRecipes)
   displayDataReciepes(filteredRecipes);
 }
-
-
 // Réinitialise les valeurs des champs d'entrée lors du chargement de la page
 window.addEventListener("load", function() {
   const myInput = document.getElementById('searchInput');

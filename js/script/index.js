@@ -1,7 +1,8 @@
-import {recipes}  from '../Data/recipes.js';
+import {recipes}  from '../data/recipes.js';
 import { displayReciepes } from './display-reciepes.js';
-import {bigSearchBar } from '../Functions/boucle-for.js';
-import { newTags } from '../Functions/tags.js';
+import {bigSearchBar } from '../utils/boucle-for.js';
+// import { displays } from '../utils/tags.js';
+import { DeleteSuggestions, displaySuggestions } from '../utils/suggestions.js';
 // import { setupClearableInput } from './btn-close.js';
 
 export const messageError = document.querySelector(".message-error");
@@ -23,7 +24,7 @@ export async function init(){
  }
 
 export function displayDataReciepes(dataReciepes) {
-newTags(dataReciepes)
+displaySuggestions(dataReciepes)
   const recipeContainer = document.getElementById("recipeContainer");
   recipeContainer.classList.add("gallery-recipes");
   while(recipeContainer.firstChild){

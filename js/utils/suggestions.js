@@ -1,112 +1,70 @@
+export let myIngredientsArray = []; // Variable globale pour stocker les ingrédients
+// Globale >> parce qu'elle est déclarée en dehors d'une fonction
+// Accessible depuis nimporte quel endroit on script du module
+// c'est utile pour être partager 
 
+export function displaySuggestions(myRecipesdata) {
+  console.log('Data at the start:', myRecipesdata);
+//variable local
+  let currentIngredientsArray = [];
+  myRecipesdata.forEach(recipe => {
 
-export function displaySuggestions(recipes2) {
-  if (!Array.isArray(recipes2)) {
-    // console.error("recipes2 n'est pas un tableau." + recipes2);
-    recipes2 = recipes2.split('\n'); // Si les ingrédients sont séparés par des sauts de ligne
+// pour chaque recette on extrait les ingredient
+    let ingredients = recipe.ingredients;
 
-    return;
-  }
-  let myIngredientsArray = [];
-  recipes2.forEach(recipes => {
-    let ingredients = recipes.ingredients
-
+// Et pour chaque ingredients on extrait le nom de l'ingrédient :
     ingredients.forEach(ingredient => {
-                 let ingredientName = ingredient.ingredient;
-                 if(!myIngredientsArray.some(function(element) {  
-                      return element.toLowerCase()=== ingredientName.toLowerCase();
-                    })){
-                      myIngredientsArray.push(ingredientName);
-                 }
-  })
+      let ingredientName = ingredient.ingredient;
+
+//on vérifie si l'ingrédient n'est pas déjà présent pour pas faire de doubon
+// La méthode some() permet de vérifier justement 
+      // if (!myIngredientsArray.some(function (element) {
+      //   return element.toLowerCase() === ingredientName.toLowerCase();
+      // })) {
+      //   // si l'ingrédient trouvé n'est pas dans la liste on l'integre
+      //   myIngredientsArray.push(ingredientName);
+      // }
+         // On vérifie si l'ingrédient n'est pas déjà présent pour ne pas faire de doublon
+         if (!currentIngredientsArray.some(function (element) {
+          return element.toLowerCase() === ingredientName.toLowerCase();
+        })) {
+          // Si l'ingrédient n'est pas dans la liste, on l'ajoute à la variable locale
+          currentIngredientsArray.push(ingredientName);
+        }
+    });
+  });
+
+  // Affiche les ingrédients dès le chargement de la page
+  // Oon met en argument = la variable qui contient le tableau des ingrédient et le nom de l'id ou l'on souhaite afficher les ingrédients
+  
+  afficheListeSuggestions(currentIngredientsArray, "suggestions-ingredients");
+
+  // récupération du champs de recherche
   const ingredientSearch = document.getElementById("ingredientSearch");
-ingredientSearch.addEventListener("input", function (){
-    let filteredIngredient = myIngredientsArray.filter(function(element) {
-        return element.toLowerCase().includes(ingredientSearch.value.toLowerCase());
-      });
-      updateSuggestion(filteredIngredient,"ingredients","suggestions-ingredients");
-      AddSuggestions("ingredients");
-})
-})
-
-// deleteTags();
-updateSuggestion(myIngredientsArray,"ingredients","suggestions-ingredients")
-}
 
 
+  // ajout de l'écouteur d''évènement sur l'input
+  ingredientSearch.addEventListener("input", function () {
+//Système d'autocomplétion 
 
-export function updateSuggestion(list,name,id){
-  const optionsIsuggestionsIngredients = document.getElementById(id);
-  while (optionsIsuggestionsIngredients.firstChild) {
-    optionsIsuggestionsIngredients.removeChild(optionsIsuggestionsIngredients.firstChild);
-  }
-  //Créer une fonction pour supprimer enfant
-  //on tri par ordre alphabétique
-   list.sort(function(a, b) {
-      return a.localeCompare(b);
-  });
-  list.forEach(element => {
-    var isSelected = verifSuggestions(name,element);
-    // displaySuggestions(element,name,id,isSelected);
- });
-}
+    let filteredIngredient = currentIngredientsArray.filter(function (element) {
+return element.toLowerCase().includes(ingredientSearch.value.toLowerCase());   });
 
-
-//Cette fonction permet d'ajout le event listener sur chaque element d'une nouvelle liste
-export function AddSuggestions(name){
-  const listElement = document.getElementsByName(name);
-  listElement.forEach(element => {
-      element.addEventListener("click", function(){
-        if(element.classList.contains("selected") || element.id =="tagElement"){
-          console.log("supprimer")
-          DeleteSuggestions(element.textContent,name);
-        }
-        else {
-          ajoutLocalStorage(element.textContent,name);
-        }
-        filterRecipesByKeyword(recipes);
-      });
+    afficheListeSuggestions(filteredIngredient, "suggestions-ingredients");
   });
 }
 
-export function DeleteSuggestions(tag,name){
-  var SuggestionsArray = localStorage.getItem(name);
-  if (SuggestionsArray!=null){
-      console.log(SuggestionsArray);
-      var SuggestionsArraySplit = SuggestionsArray.split("||");
-      var SuggestionsArray2 = SuggestionsArray.split("");
-      console.log(tableauSplit2.length);
 
-      if (SuggestionsArraySplit.length === 1 ){
-          localStorage.removeItem(name);
-      }
-      else {
-          var newSuggestionsArray = SuggestionsArraySplit.filter(function(element) {
-              return element !== tag;
-          });
-          var newSuggestionsArrayJoin = newSuggestionsArray.join("||");
-          console.log(newSuggestionsArrayJoin);
-          localStorage.setItem(name,newSuggestionsArrayJoin);
-      }
-  }   
+
+
+export function afficheListeSuggestions(elements, containerId) {
+  const container = document.getElementById(containerId);
+    // Efface le contenu existant de l'élément
+    container.innerHTML = "";
+  elements.forEach(element => {
+        const newSuggestion = document.createElement("li");
+        newSuggestion.setAttribute("class", "suggestion");
+        newSuggestion.innerHTML = element;
+        container.appendChild(newSuggestion);
+  });
 }
-
-//Check si la valeur est présente
-export function verifSuggestions(name,tag){
-  var Suggestions = localStorage.getItem(name);
-  if(Suggestions == null){
-      return false;
-  }
-  else {
-      var tableauSplit = Suggestions.split("||");
-
-      if (tableauSplit.includes(tag)){
-          return true;
-      }
-      else {
-          return false;
-      }  
-  }   
-} 
-
-

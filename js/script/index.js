@@ -2,7 +2,7 @@ import {recipes}  from '../data/recipes.js';
 import { displayReciepes } from './display-reciepes.js';
 import {bigSearchBar } from '../utils/boucle-for.js';
 // import { displays } from '../utils/tags.js';
-import { DeleteSuggestions, displaySuggestions } from '../utils/suggestions.js';
+import { displaySuggestions } from '../utils/suggestions.js';
 // import { setupClearableInput } from './btn-close.js';
 
 export const messageError = document.querySelector(".message-error");

@@ -26,6 +26,8 @@ function ArrayLowerCase(inputString){
   // }
 
 
+
+
   export function IngredientInputValue() {
     var tableauRecupere = localStorage.getItem("ingredients");
     if(tableauRecupere == null){

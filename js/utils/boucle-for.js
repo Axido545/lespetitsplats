@@ -3,7 +3,7 @@ import { displayDataReciepes, messageError, numberOfRecipes } from '../script/in
 
 // import { displaySuggestions } from './tags.js';
 import { firstInputValue, IngredientInputValue } from "./getvalues.js";
-import { myIngredientsArray, afficheListeSuggestions } from './suggestions.js';
+import {  afficheListeSuggestions } from './suggestions.js';
 
 
 export const myInput =   document.getElementById('searchInput')

@@ -1,7 +1,4 @@
-export let myIngredientsArray = []; // Variable globale pour stocker les ingrédients
-// Globale >> parce qu'elle est déclarée en dehors d'une fonction
-// Accessible depuis nimporte quel endroit on script du module
-// c'est utile pour être partager 
+import { addTag } from "./tags.js";
 
 export function displaySuggestions(myRecipesdata) {
   console.log('Data at the start:', myRecipesdata);
@@ -55,8 +52,6 @@ return element.toLowerCase().includes(ingredientSearch.value.toLowerCase());   }
 }
 
 
-
-
 export function afficheListeSuggestions(elements, containerId) {
   const container = document.getElementById(containerId);
     // Efface le contenu existant de l'élément
@@ -65,6 +60,11 @@ export function afficheListeSuggestions(elements, containerId) {
         const newSuggestion = document.createElement("li");
         newSuggestion.setAttribute("class", "suggestion");
         newSuggestion.innerHTML = element;
+
+    newSuggestion.addEventListener("click", function(){
+addTag(element)
+    });
+
         container.appendChild(newSuggestion);
   });
 }

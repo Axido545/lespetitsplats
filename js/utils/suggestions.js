@@ -2,9 +2,9 @@ import { addTag} from "./tags.js";
 import { getRecipe } from "../script/index.js";
 import { updateTagsArray } from "./getvalues.js";
 
-
+// Fonction pour afficher les suggestions
 export function displaySuggestions(myRecipesdata) {
-  // Variable locale
+  // Variable locale liste des ingrédients
   let currentIngredientsArray = [];
   
   myRecipesdata.forEach(recipe => {
@@ -43,6 +43,7 @@ export function displaySuggestions(myRecipesdata) {
   });
 }
 
+// mise a jour des 
 export function afficheListeSuggestions(elements, containerId) {
   const container = document.getElementById(containerId);
 

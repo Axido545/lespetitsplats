@@ -115,7 +115,8 @@
   list-style-type: none;
 }
 
-.suggestion:hover {
+.suggestion:hover,
+.suggestion-active {
   background-color: #ffd15b;
 }
 

@@ -58,9 +58,10 @@ export function afficheListeSuggestions(elements, containerId) {
     newSuggestion.addEventListener("click", function(){
       addTag(element);
       updateTagsArray()
-
+      newSuggestion.classList.toggle("suggestion-active");
     });
 
     container.appendChild(newSuggestion);
   });
 }
+

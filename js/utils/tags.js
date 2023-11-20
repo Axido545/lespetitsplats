@@ -6,14 +6,24 @@ const myrecipesdata = getRecipe()
 
 
 export function addTag(tagText) {
-  // Vérifier si le tag existe dans le conteneur pour éviter les doublons
-  if(!tagExists(tagText)){
-
-    // Ajout un élément de tag
-    const tag = document.createElement("div");
-    tag.className = "tag";
-    tag.textContent = tagText;
+  // Vérifier si la suggestion a la classe "suggestion-active"
+  const suggestion = document.querySelector(".suggestion-active");
+  const tagsContainer = document.getElementById("selected-tags");
   
+  if (suggestion) {
+ // Vérifier si la suggestion active a déjà un tag associé
+ const existingTag = tagsContainer.querySelector(".tag");
+ if (existingTag) {
+
+   // Supprimer le tag existant
+   removeTag(existingTag);
+   updateTagsArray();
+ } else {
+   // Ajouter un élément de tag
+   const tag = document.createElement("div");
+   tag.className = "tag";
+   tag.textContent = tagText;
+
     // pour supprimer tag 
     //Ajoute la x
     const removeButton = document.createElement("i");
@@ -33,6 +43,7 @@ export function addTag(tagText) {
     // on ajoute le tag a cet élément
     
     tagsContainer.appendChild(tag);
+  }
   }
 }
   // Ajoutez une fonction pour supprimer un tag

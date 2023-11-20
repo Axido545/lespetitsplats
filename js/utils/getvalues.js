@@ -39,3 +39,10 @@ function ArrayLowerCase(inputString){
     }
   }
 
+
+// récupere le tableau des tags
+  export function updateTagsArray() {
+  const selectedTags = Array.from(document.querySelectorAll('.tag')).map(tag => tag.textContent);
+  console.log(selectedTags)
+  return selectedTags
+}

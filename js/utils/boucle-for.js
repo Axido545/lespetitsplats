@@ -45,6 +45,7 @@ export function bigSearchBar(myrecipesdata) {
 
 
 export function mySearch(myrecipesdata) {
+  console.log(myrecipesdata)
   const filteredRecipes = [];
   const firstInputValues = firstInputValue();
   const ingredientInputValues = IngredientInputValue();

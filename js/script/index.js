@@ -1,7 +1,6 @@
 import {recipes}  from '../data/recipes.js';
 import { displayReciepes } from './display-reciepes.js';
 import {bigSearchBar } from '../utils/boucle-for.js';
-// import { displays } from '../utils/tags.js';
 import { displaySuggestions } from '../utils/suggestions.js';
 // import { setupClearableInput } from './btn-close.js';
 
@@ -18,6 +17,9 @@ export async function init(){
   numberOfRecipes()
   // displaySuggestions()
     bigSearchBar(dataReciepes);
+    // filterRecipesByTags(dataReciepes);
+
+
   // setupClearableInput()
   // newTagsActive()
 
@@ -25,6 +27,7 @@ export async function init(){
 
 export function displayDataReciepes(dataReciepes) {
 displaySuggestions(dataReciepes)
+
   const recipeContainer = document.getElementById("recipeContainer");
   recipeContainer.classList.add("gallery-recipes");
   while(recipeContainer.firstChild){

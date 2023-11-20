@@ -1,4 +1,8 @@
 
+import { updateTagsArray } from "./getvalues.js";
+
+import { getRecipe } from "../script/index.js";
+const myrecipesdata = getRecipe()
 export function addTag(tagText) {
     // Ajout un élément de tag
     const tag = document.createElement("div");
@@ -12,8 +16,8 @@ export function addTag(tagText) {
 
     // écoute clic x
     removeButton.addEventListener("click", function () {
-//
       removeTag(tag);
+      updateTagsArray()
     });
   
 // ou ajoute le bouton x au tag
@@ -30,3 +34,45 @@ export function addTag(tagText) {
     // Supprime le tag de l'interface utilisateur
     tag.parentNode.removeChild(tag);
   }
+
+//   // Fonction pour filtrer les recettes par les tags actuels
+// export function filterRecipesByTags() {
+//   const selectedTags = Array.from(document.querySelectorAll('.tag')).map(tag => tag.textContent);
+//   console.log(selectedTags)
+//   const filteredRecipes = [];
+//   // const firstInputValues = firstInputValue();
+//   // const ingredientInputValues = IngredientInputValue();// faire une recherche par tag avec le tag selectionné
+// for (let i = 0; i < myrecipesdata.length; i++) {
+//   const recipe = myrecipesdata[i];
+//   const recipeIngredients = recipe.ingredients.map(ingredient => ingredient.ingredient.toLowerCase());
+
+
+
+//   // selectedTags = selectedTags.every(selectedTag => {
+//   //   const keywordLowerCase = selectedTag.toLowerCase();
+//   //   return recipeIngredients.some(ingredient => ingredient.includes(keywordLowerCase)) 
+//   // })
+//   // const containsIngredientsInput = ingredientInputValues.length === 0 || ingredientInputValues.every(ingredient => {
+//   //   return recipe.ingredients.some(recipeIngredient => recipeIngredient.ingredient.toLowerCase().includes(ingredient.toLowerCase()));
+//   // });
+
+//   const containsAllSelectedTags = selectedTags.every(selectedTag => {
+//     const keywordLowerCase = selectedTag.toLowerCase();
+//     return recipeIngredients.some(ingredient => ingredient.includes(keywordLowerCase));
+//   });
+
+
+//   if (containsAllSelectedTags) {
+//     // Stocker la recette filtrée
+//     filteredRecipes.push(recipe);
+//   }
+// }
+
+//   console.log('Recettes filtrées par tags :', filteredRecipes);
+//   return filteredRecipes;
+
+// }
+
+
+
+

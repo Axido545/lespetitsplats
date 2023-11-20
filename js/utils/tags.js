@@ -12,12 +12,16 @@ export function addTag(tagText) {
   
   if (suggestion) {
  // Vérifier si la suggestion active a déjà un tag associé
- const existingTag = tagsContainer.querySelector(".tag");
+ const existingTag = findTagByName(tagText);
  if (existingTag) {
 
    // Supprimer le tag existant
    removeTag(existingTag);
    updateTagsArray();
+
+// Retirer la class suggestion active de la suggestion
+suggestion.classList.remove("suggestion-active")
+
  } else {
    // Ajouter un élément de tag
    const tag = document.createElement("div");
@@ -33,6 +37,8 @@ export function addTag(tagText) {
     removeButton.addEventListener("click", function () {
       removeTag(tag);
       updateTagsArray()
+        // Retirer la classe suggestion-active de la suggestion
+        suggestion.classList.remove("suggestion-active");
     });
   
 // ou ajoute le bouton x au tag
@@ -67,3 +73,18 @@ function tagExists(tagText) {
   return false;
 }
 
+
+// Fonction pour trouver le tag par son nom
+function findTagByName(tagText) {
+  const tagsContainer = document.getElementById("selected-tags");
+  const existingTags = tagsContainer.querySelectorAll(".tag");
+
+  // Vérifier si le tag existe déjà
+  for (const tag of existingTags) {
+    if (tag.textContent === tagText) {
+      return tag;
+    }
+  }
+
+  return null;
+}

@@ -58,7 +58,8 @@ export function afficheListeSuggestions(elements, containerId) {
     newSuggestion.addEventListener("click", function(){
       addTag(element);
       updateTagsArray()
-      newSuggestion.classList.toggle("suggestion-active");
+ // Ajouter la classe suggestion-active à la suggestion
+ newSuggestion.classList.add("suggestion-active");
     });
 
     container.appendChild(newSuggestion);

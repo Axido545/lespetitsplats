@@ -1,6 +1,7 @@
-import { addTag} from "./tags.js";
-import { getRecipe } from "../script/index.js";
+import { addTag, removeTag} from "./tags.js";
+import { getRecipe, displayDataReciepes } from "../script/index.js";
 import { updateTagsArray } from "./getvalues.js";
+// import { filterRecipesByTags } from "./boucle-for.js";
 
 // Fonction pour afficher les suggestions
 export function displaySuggestions(myRecipesdata) {
@@ -42,8 +43,6 @@ export function displaySuggestions(myRecipesdata) {
     afficheListeSuggestions(filteredIngredient, "suggestions-ingredients");
   });
 }
-
-// mise a jour des 
 export function afficheListeSuggestions(elements, containerId) {
   const container = document.getElementById(containerId);
 
@@ -56,10 +55,39 @@ export function afficheListeSuggestions(elements, containerId) {
     newSuggestion.innerHTML = element;
 
     newSuggestion.addEventListener("click", function(){
-      addTag(element);
-      updateTagsArray()
- // Ajouter la classe suggestion-active à la suggestion
- newSuggestion.classList.add("suggestion-active");
+      // Vérifie si la suggestion a la classe suggestion-active
+      const isActive = newSuggestion.classList.contains("suggestion-active");
+
+      // Si la suggestion est active, supprimer la classe et l'image
+      if (isActive) {
+        newSuggestion.classList.remove("suggestion-active");
+        const existingImage = newSuggestion.querySelector('img');
+        if (existingImage) {
+          existingImage.remove();
+        }
+
+removeTag(element,newSuggestion)
+console.log(element+ ","+newSuggestion)
+      } else {
+        // Ajouter la classe suggestion-active à la suggestion
+        newSuggestion.classList.add("suggestion-active");
+
+        // Vérifie si une image est déjà présente dans la suggestion
+        const existingImage = newSuggestion.querySelector('img');
+        if (!existingImage) {
+          // Ajouter l'image uniquement si aucune image n'est présente
+          var img = document.createElement('img');
+          img.src = './asset/croix-suggestion.png';
+          img.alt = 'fermer la suggestion';
+          img.classList.add('close-suggestion'); 
+          newSuggestion.appendChild(img);
+        }
+
+        // Ajouter le tag et mettre à jour les autres éléments
+        addTag(element);
+        updateTagsArray();
+        // filterRecipesByTags() si nécessaire
+      }
     });
 
     container.appendChild(newSuggestion);

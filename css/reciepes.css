@@ -113,11 +113,16 @@
   padding-top: 10px;
   padding-bottom: 10px;
   list-style-type: none;
+  position: relative;
 }
 
 .suggestion:hover,
 .suggestion-active {
   background-color: #ffd15b;
+}
+
+.suggestion-active {
+  font-weight: 600;
 }
 
 .close-tag {
@@ -136,4 +141,11 @@
 
 ul {
   padding-left: 0;
+}
+
+.close-suggestion {
+  position: absolute;
+  right: 25px;
+  top: 50%;
+  transform: translateY(-50%);
 }

@@ -1,26 +1,25 @@
 
 import { updateTagsArray } from "./getvalues.js";
 
-import { getRecipe } from "../script/index.js";
-const myrecipesdata = getRecipe()
-
 
 export function addTag(tagText) {
-  // Vérifier si la suggestion a la classe "suggestion-active"
-  const suggestion = document.querySelector(".suggestion-active");
+  const suggestionActive = document.querySelector(".suggestion-active");
   const tagsContainer = document.getElementById("selected-tags");
-  
-  if (suggestion) {
- // Vérifier si la suggestion active a déjà un tag associé
+
+
+  // Vérifie si la suggestion a la classe "suggestion-active"
+  if (suggestionActive) {
+ 
  const existingTag = findTagByName(tagText);
- if (existingTag) {
 
-   // Supprimer le tag existant
-   removeTag(existingTag);
-   updateTagsArray();
+  if (existingTag) {
 
-// Retirer la class suggestion active de la suggestion
-suggestion.classList.remove("suggestion-active")
+// Supprime le tag existant
+removeTag(existingTag,suggestionActive);
+updateTagsArray();
+
+// Retire la class suggestion active de la suggestion
+suggestionActive.classList.remove("suggestion-active")
 
  } else {
    // Ajouter un élément de tag
@@ -35,28 +34,42 @@ suggestion.classList.remove("suggestion-active")
 
     // écoute clic x
     removeButton.addEventListener("click", function () {
-      removeTag(tag);
+            removeTag(tag.textContent, suggestionActive);
       updateTagsArray()
-        // Retirer la classe suggestion-active de la suggestion
-        suggestion.classList.remove("suggestion-active");
+
     });
   
 // ou ajoute le bouton x au tag
     tag.appendChild(removeButton);
-  
-    // On récupère l élément on l'on veut que le tag soit
-    const tagsContainer = document.getElementById("selected-tags");
-    // on ajoute le tag a cet élément
-    
-    tagsContainer.appendChild(tag);
+   // on ajoute le tag a cet élément
+   tagsContainer.appendChild(tag);
   }
   }
 }
-  // Ajoutez une fonction pour supprimer un tag
-  function removeTag(tag) {
-    // Supprime le tag de l'interface utilisateur
-    tag.parentNode.removeChild(tag);
+// Ajoutez une fonction pour supprimer un tag
+export function removeTag(tagText, suggestion) {
+  // Trouver et supprimer le tag associé
+  const tags = document.querySelectorAll('.tag');
+  tags.forEach(tag => {
+    if (tag.textContent === tagText) {
+      // Vérifier si l'élément tag et son parent existent
+      if (tag && tag.parentNode) {
+        tag.parentNode.removeChild(tag);
+      }
+    }
+  });
+
+  // Supprime la suggestion-active et l'image si la suggestion est présente
+  if (suggestion && suggestion.classList && suggestion.classList.contains("suggestion-active")) {
+    suggestion.classList.remove("suggestion-active");
+    const existingImage = suggestion.querySelector('.close-suggestion');
+    if (existingImage && existingImage.parentNode) {
+      existingImage.parentNode.removeChild(existingImage);
+    }
   }
+}
+
+
 
 // Fonction pour vérifier si le tag existe déjà dans le conteneur
 function tagExists(tagText) {
@@ -74,7 +87,7 @@ function tagExists(tagText) {
 }
 
 
-// Fonction pour trouver le tag par son nom
+// Fonction pour trouver le tag s'il existe déjà
 function findTagByName(tagText) {
   const tagsContainer = document.getElementById("selected-tags");
   const existingTags = tagsContainer.querySelectorAll(".tag");

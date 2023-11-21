@@ -2,7 +2,7 @@ import { recipes } from '../data/recipes.js';
 import { displayDataReciepes, messageError, numberOfRecipes } from '../script/index.js';
 
 // import { displaySuggestions } from './tags.js';
-import { firstInputValue, IngredientInputValue } from "./getvalues.js";
+import { firstInputValue, IngredientInputValue, updateTagsArray } from "./getvalues.js";
 import {  afficheListeSuggestions } from './suggestions.js';
 
 
@@ -49,6 +49,7 @@ export function mySearch(myrecipesdata) {
   const filteredRecipes = [];
   const firstInputValues = firstInputValue();
   const ingredientInputValues = IngredientInputValue();
+  const tagValues = updateTagsArray();
 
   for (let i = 0; i < myrecipesdata.length; i++) {
     const recipe = myrecipesdata[i];
@@ -64,13 +65,22 @@ export function mySearch(myrecipesdata) {
         recipeIngredients.some(ingredient => ingredient.includes(keywordLowerCase)) ||
         recipeDescription.includes(keywordLowerCase);
     })
-    const containsIngredientsInput = ingredientInputValues.length === 0 || ingredientInputValues.every(ingredient => {
-      return recipe.ingredients.some(recipeIngredient => recipeIngredient.ingredient.toLowerCase().includes(ingredient.toLowerCase()));
+
+
+
+    const containsTags = tagValues.length === 0 || tagValues.every(tagValue => {
+      // Vérifiez si le tag est présent dans les ingrédients
+      const tagLowerCase = tagValue.toLowerCase();
+      return recipeIngredients.some(ingredient => ingredient.includes(tagLowerCase))
+
+    //   return recipe.ingredients.some(ingredient => {
+    //     const ingredientTags = ingredient.tags.map(tagLowerCase => tagLowerCase.toLowerCase());
+    //     return ingredientTags.includes(tagLowerCase);
+    //   });
     });
 
-    if (containsFirstInputValues 
-      // && containsIngredientsInput
-      ) {
+if (containsFirstInputValues
+  && containsTags) {
       // Stocker la recette filtrée
       filteredRecipes.push(recipe);
     }
@@ -80,8 +90,6 @@ export function mySearch(myrecipesdata) {
   console.log('Recettes filtrés :', filteredRecipes); 
   return filteredRecipes;
 }
-
-
 
 // Réinitialise les valeurs des champs d'entrée lors du chargement de la page
 window.addEventListener("load", function() {
@@ -102,3 +110,21 @@ window.addEventListener("load", function() {
     });
     return filteredIngredients;
   }
+  // export function filterRecipesByTags(dataReciepes) {
+  //   const selectedTags = updateTagsArray();
+  
+  //   // Si aucun tag n'est sélectionné, retourne toutes les recettes
+  //   if (selectedTags.length === 0) {
+  //     return dataReciepes;
+  //   }
+  
+  //   // Filtre les recettes qui contiennent au moins un ingrédient correspondant à un tag
+  //   const filteredRecipes = dataReciepes.filter(recipe =>
+  //     recipe.ingredients.some(ingredient =>
+  //       selectedTags.includes(ingredient.ingredient.toLowerCase())
+  //     )
+  //   );
+  // console.log("aaaaaaaaa :" + filteredRecipes )
+  //   return filteredRecipes;
+  // }
+  

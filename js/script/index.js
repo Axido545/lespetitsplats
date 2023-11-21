@@ -1,8 +1,10 @@
 import {recipes}  from '../data/recipes.js';
 import { displayReciepes } from './display-reciepes.js';
-import {bigSearchBar } from '../utils/boucle-for.js';
+import {bigSearchBar, 
+  // filterRecipesByTags 
+} from '../utils/boucle-for.js';
 import { displaySuggestions } from '../utils/suggestions.js';
-// import { setupClearableInput } from './btn-close.js';
+import { setupClearableInput } from './btn-close.js';
 
 export const messageError = document.querySelector(".message-error");
 
@@ -17,11 +19,11 @@ export async function init(){
   numberOfRecipes()
   // displaySuggestions()
     bigSearchBar(dataReciepes);
-    // filterRecipesByTags(dataReciepes);
 
-
-  // setupClearableInput()
+  setupClearableInput()
   // newTagsActive()
+
+
 
  }
 

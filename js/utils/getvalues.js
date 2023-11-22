@@ -15,31 +15,6 @@ function ArrayLowerCase(inputString){
   return ArrayLowerCase;
 }
 
-  // export function IngredientInputValue() {
-  //   const inputArray = localStorage.getItem("ingredients");
-  //     if(inputArray == null){
-  //       return [];
-  //     } else {
-  //       const inputArraySplit = inputArray.split("||");
-  //       return inputArraySplit;
-  //     }
-  // }
-
-
-
-
-  export function IngredientInputValue() {
-    var tableauRecupere = localStorage.getItem("ingredients");
-    if(tableauRecupere == null){
-      return [];
-    }
-    else {
-      var tableauSplit = tableauRecupere.split("||");
-      return tableauSplit;
-    }
-  }
-
-
 // récupere le tableau des tags
   export function updateTagsArray() {
   const selectedTags = Array.from(document.querySelectorAll('.tag')).map(tag => tag.textContent);

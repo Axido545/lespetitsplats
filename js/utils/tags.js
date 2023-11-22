@@ -7,19 +7,20 @@ export async function addTag(tagText) {
   const suggestionActive = document.querySelector(".suggestion-active");
   const tagsContainer = document.getElementById("selected-tags");
 
-
   // Vérifie si la suggestion a la classe "suggestion-active"
   if (suggestionActive) {
- const existingTag = findTagByName(tagText);
+//  const existingTag = findTagByName(tagText);
+const existingTags = updateTagsArray();
 
-  if (existingTag) {
+  if (existingTags.includes(tagText)) {
 // Supprime le tag existant
-removeTag(existingTag,suggestionActive);
-updateTagsArray();
-
+removeTag(tagText,suggestionActive);
+// updateTagsArray();
+const updatedData = await fetchData();
+filterRecipesByTags(updatedData);
 
 // Retire la class suggestion active de la suggestion
-suggestionActive.classList.remove("suggestion-active")
+// suggestionActive.classList.remove("suggestion-active")
 
  } else {
    // Ajouter un élément de tag
@@ -33,20 +34,11 @@ suggestionActive.classList.remove("suggestion-active")
     removeButton.className = "fa-solid fa-xmark close-tag";
 
     // écoute clic x
-    removeButton.addEventListener("click", function () {
+    removeButton.addEventListener("click", async  function () {
             removeTag(tag.textContent, suggestionActive);
-      updateTagsArray();
-
-
-(async () => {
-    const data = await fetchData();
-    filterRecipesByTags(data);
-  })();
-
-
-
-
-
+      // updateTagsArray();
+      const updatedData = await fetchData();
+      filterRecipesByTags(updatedData);
     });
   
 // ou ajoute le bouton x au tag
@@ -62,7 +54,7 @@ export function removeTag(tagText, suggestion) {
   const tags = document.querySelectorAll('.tag');
   tags.forEach(tag => {
     if (tag.textContent === tagText) {
-      // Vérifier si l'élément tag et son parent existent
+      // Vérifie si l'élément tag et son parent existent
       if (tag && tag.parentNode) {
         tag.parentNode.removeChild(tag);
       }
@@ -77,37 +69,4 @@ export function removeTag(tagText, suggestion) {
       existingImage.parentNode.removeChild(existingImage);
     }
   }
-}
-
-
-
-// Fonction pour vérifier si le tag existe déjà dans le conteneur
-function tagExists(tagText) {
-  const tagsContainer = document.getElementById("selected-tags");
-  const existingTags = tagsContainer.querySelectorAll(".tag");
-
-  // Vérifie si le tag existe déjà
-  for (const tag of existingTags) {
-    if (tag.textContent === tagText) {
-      return true;
-    }
-  }
-
-  return false;
-}
-
-
-// Fonction pour trouver le tag s'il existe déjà
-function findTagByName(tagText) {
-  const tagsContainer = document.getElementById("selected-tags");
-  const existingTags = tagsContainer.querySelectorAll(".tag");
-
-  // Vérifier si le tag existe déjà
-  for (const tag of existingTags) {
-    if (tag.textContent === tagText) {
-      return tag;
-    }
-  }
-
-  return null;
 }

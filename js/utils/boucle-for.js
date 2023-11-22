@@ -1,18 +1,13 @@
 import { recipes } from '../data/recipes.js';
-import { displayDataReciepes, messageError, getRecipe } from '../script/index.js';
-const myrecipesdata = getRecipe();
-// import { displaySuggestions } from './tags.js';
-import { firstInputValue, IngredientInputValue, updateTagsArray } from "./getvalues.js";
+import { displayDataReciepes, messageError } from '../script/index.js';
+import { firstInputValue, updateTagsArray } from "./getvalues.js";
 import {  afficheListeSuggestions } from './suggestions.js';
-
 
 export const myInput =   document.getElementById('searchInput')
 
 export function bigSearchBar(myrecipesdata) {
-  const myInput = document.getElementById('searchInput');
   const clearIcon = document.querySelector('.clear-icon');
   const recicontainer = document.getElementById("recipeContainer")
-  const ingredientSearch = document.getElementById("ingredientSearch")
 
   myInput.addEventListener('input', function () {
     const inputValue = myInput.value.trim().toLowerCase()
@@ -40,9 +35,6 @@ export function bigSearchBar(myrecipesdata) {
   });
 }
 
-
-
-
 export function mySearch(myrecipesdata) {
   console.log(myrecipesdata)
   const filteredRecipes = [];
@@ -64,8 +56,7 @@ export function mySearch(myrecipesdata) {
         recipeDescription.includes(keywordLowerCase);
     })
 
-
-
+        // // Filtrer par tag
     const containsTags = tagValues.length === 0 || tagValues.every(tagValue => {
       // Vérifiez si le tag est présent dans les ingrédients
       const tagLowerCase = tagValue.toLowerCase();
@@ -88,18 +79,15 @@ if (containsFirstInputValues
 
 // Réinitialise les valeurs des champs d'entrée lors du chargement de la page
 window.addEventListener("load", function() {
-  const myInput = document.getElementById('searchInput');
+  // const myInput = document.getElementById('searchInput');
   myInput.value = ""; 
   });
 
-
   export function filterRecipesByTags(data) {
-    console.log(data + '=== c l element dont on parle')
-    
-      console.log('Filtering recipes by tags...'); 
+    console.log(JSON.stringify(data, null, 2) + '=== c l element dont on parle')
       const filteredRecipes = [];
       const globalSelectedTags = updateTagsArray();  
-      console.log('Selected Tags:', globalSelectedTags);
+      console.log('Tag selectionné:', globalSelectedTags);
     
       // Vérifie si le tableau qui contient les tags est vide: renvoie les recettes sans filtrage
       if (globalSelectedTags.length === 0) {
@@ -108,22 +96,17 @@ window.addEventListener("load", function() {
     
       data.forEach(recipe => {
         const recipeIngredients = recipe.ingredients.map(ingredient => ingredient.ingredient.toLowerCase());
-        console.log('Recipe Ingredients:', recipeIngredients);
+        console.log('Ingredients:', recipeIngredients);
         const containsAllTags = globalSelectedTags.every(selectedTag => {
           const tagLowerCase = selectedTag.toLowerCase();
           return recipeIngredients.some(ingredient => ingredient.includes(tagLowerCase));
         });
     
-        console.log('Contains All Tags:', containsAllTags);
-    
+        console.log('contient tous les tags:', containsAllTags);
         if (containsAllTags) {
           filteredRecipes.push(recipe);
         }
-    
-    
       });
-    
-    
     
       displayDataReciepes(filteredRecipes);
       console.log('Recettes filtrées :', filteredRecipes);

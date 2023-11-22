@@ -10,8 +10,6 @@ export async function fetchData() {
   return data
 }
 
-
-
 // Fonction pour afficher les suggestions
 export function displaySuggestions(myRecipesdata) {
   // Variable locale liste des ingrédients
@@ -63,7 +61,8 @@ export function afficheListeSuggestions(elements, containerId) {
     newSuggestion.setAttribute("class", "suggestion");
     newSuggestion.innerHTML = element;
 
-    newSuggestion.addEventListener("click", function(){
+    newSuggestion.addEventListener("click", function(event){
+      event.stopPropagation();
       // Vérifie si la suggestion a la classe suggestion-active
       const isActive = newSuggestion.classList.contains("suggestion-active");
 
@@ -108,8 +107,6 @@ console.log(element+ ","+newSuggestion)
         updateTagsArray();
         filterRecipesByTags(data)
       })();
-
-
       }
     });
 

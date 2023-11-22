@@ -1,7 +1,8 @@
 import { displayReciepes } from './display-reciepes.js';
-import { mySearch } from '../utils/boucle-for.js';
+import { filterRecipesByTags, mySearch } from '../utils/boucle-for.js';
 import { messageError } from './index.js';
 import { displayDataReciepes, getRecipe } from './index.js';
+import { displaySuggestions } from '../utils/suggestions.js';
 
 getRecipe()
 var dataReciepes = await getRecipe();
@@ -25,7 +26,10 @@ export function setupClearableInput() {
     clearIcon.addEventListener('click', function () {
         inputOne.value =  "";
     clearIcon.style.display = "none"
-        displayDataReciepes(dataReciepes)
+        // displayDataReciepes(dataReciepes)
+        mySearch(dataReciepes)
+        displaySuggestions(dataReciepes)
+        filterRecipesByTags(dataReciepes)
 
     });
 

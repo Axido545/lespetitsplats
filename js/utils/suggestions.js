@@ -1,7 +1,7 @@
 import { addTag, removeTag} from "./tags.js";
-import { getRecipe, displayDataReciepes } from "../script/index.js";
+import { getRecipe } from "../script/index.js";
 import { updateTagsArray } from "./getvalues.js";
-import { filterRecipesByTags } from "./boucle-for.js";
+import { filterRecipesByTags, mySearch } from "./boucle-for.js";
 
 export async function fetchData() {
   const data = await getRecipe();
@@ -61,7 +61,7 @@ export function afficheListeSuggestions(elements, containerId) {
     newSuggestion.setAttribute("class", "suggestion");
     newSuggestion.innerHTML = element;
 
-    newSuggestion.addEventListener("click", function(event){
+    newSuggestion.addEventListener("click", async function(event){
       event.stopPropagation();
       // Vérifie si la suggestion a la classe suggestion-active
       const isActive = newSuggestion.classList.contains("suggestion-active");
@@ -75,13 +75,10 @@ export function afficheListeSuggestions(elements, containerId) {
         }
 
 removeTag(element,newSuggestion)
-
-(async () => {
-  const data = await fetchData();
-  filterRecipesByTags(data);
-})();
-
+const data = await fetchData();
 filterRecipesByTags(data)
+
+
 
 console.log(element+ ","+newSuggestion)
       } else {
@@ -105,7 +102,9 @@ console.log(element+ ","+newSuggestion)
         // Ajouter le tag et mettre à jour les autres éléments
         addTag(element);
         updateTagsArray();
+        displaySuggestions(data);
         filterRecipesByTags(data)
+        mySearch(data)
       })();
       }
     });

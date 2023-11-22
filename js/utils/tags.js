@@ -1,7 +1,7 @@
 
 import { updateTagsArray } from "./getvalues.js";
-import { filterRecipesByTags } from "./boucle-for.js";
-import { fetchData } from "./suggestions.js";
+import { filterRecipesByTags, mySearch } from "./boucle-for.js";
+import { fetchData, displaySuggestions } from "./suggestions.js";
 
 export async function addTag(tagText) {
   const suggestionActive = document.querySelector(".suggestion-active");
@@ -16,11 +16,9 @@ const existingTags = updateTagsArray();
 // Supprime le tag existant
 removeTag(tagText,suggestionActive);
 // updateTagsArray();
-const updatedData = await fetchData();
-filterRecipesByTags(updatedData);
-
-// Retire la class suggestion active de la suggestion
-// suggestionActive.classList.remove("suggestion-active")
+const data = await fetchData();
+filterRecipesByTags(data);
+displaySuggestions(data);
 
  } else {
    // Ajouter un élément de tag
@@ -37,8 +35,10 @@ filterRecipesByTags(updatedData);
     removeButton.addEventListener("click", async  function () {
             removeTag(tag.textContent, suggestionActive);
       // updateTagsArray();
-      const updatedData = await fetchData();
-      filterRecipesByTags(updatedData);
+      const data = await fetchData();
+      filterRecipesByTags(data);
+      displaySuggestions(data);
+
     });
   
 // ou ajoute le bouton x au tag
@@ -48,9 +48,9 @@ filterRecipesByTags(updatedData);
   }
   }
 }
-// Ajoutez une fonction pour supprimer un tag
-export function removeTag(tagText, suggestion) {
-  // Trouver et supprimer le tag associé
+
+export async function removeTag(tagText, suggestion) {
+  // recup element
   const tags = document.querySelectorAll('.tag');
   tags.forEach(tag => {
     if (tag.textContent === tagText) {
@@ -69,4 +69,19 @@ export function removeTag(tagText, suggestion) {
       existingImage.parentNode.removeChild(existingImage);
     }
   }
+
+  // // Ajoutez une vérification pour afficher toutes les recettes si aucun tag et aucun texte dans l'input
+  const tagsContainer = document.getElementById("selected-tags");
+  const inputSearch = document.getElementById("ingredientSearch");
+
+  const remainingTags = tagsContainer.querySelectorAll('.tag');
+  if (remainingTags.length === 0 && inputSearch.value.trim() === "") {
+    // Aucun tag restant et aucun texte dans l'input, affiche toutes les recettes
+    const data = await fetchData();
+    displaySuggestions(data);
+    filterRecipesByTags(data);
+    mySearch(data)
+  }
+
+  
 }

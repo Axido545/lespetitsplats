@@ -124,5 +124,6 @@ window.addEventListener("load", function() {
           }
         });
       });
+      console.log(filteredIngredients)
       return filteredIngredients;
     }

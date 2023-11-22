@@ -17,6 +17,7 @@ export async function init(){
   var dataReciepes = await getRecipe();
   displayDataReciepes(dataReciepes)
   numberOfRecipes()
+  // filterRecipesByTags(dataReciepes) 
   // displaySuggestions()
     bigSearchBar(dataReciepes);
 

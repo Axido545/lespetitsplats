@@ -1,7 +1,16 @@
 import { addTag, removeTag} from "./tags.js";
 import { getRecipe, displayDataReciepes } from "../script/index.js";
 import { updateTagsArray } from "./getvalues.js";
-// import { filterRecipesByTags } from "./boucle-for.js";
+import { filterRecipesByTags } from "./boucle-for.js";
+
+export async function fetchData() {
+  const data = await getRecipe();
+  console.log("Valeur de data :", data);
+  // Vous pouvez utiliser la valeur de data ici
+  return data
+}
+
+
 
 // Fonction pour afficher les suggestions
 export function displaySuggestions(myRecipesdata) {
@@ -49,7 +58,7 @@ export function afficheListeSuggestions(elements, containerId) {
   // Efface le contenu existant de l'élément
   container.innerHTML = "";
 
-  elements.forEach(element => {
+  elements.forEach(async (element) => {
     const newSuggestion = document.createElement("li");
     newSuggestion.setAttribute("class", "suggestion");
     newSuggestion.innerHTML = element;
@@ -67,6 +76,14 @@ export function afficheListeSuggestions(elements, containerId) {
         }
 
 removeTag(element,newSuggestion)
+
+(async () => {
+  const data = await fetchData();
+  filterRecipesByTags(data);
+})();
+
+filterRecipesByTags(data)
+
 console.log(element+ ","+newSuggestion)
       } else {
         // Ajouter la classe suggestion-active à la suggestion
@@ -83,14 +100,19 @@ console.log(element+ ","+newSuggestion)
           newSuggestion.appendChild(img);
         }
 
+        (async () => {
+          const data = await fetchData();
+
         // Ajouter le tag et mettre à jour les autres éléments
         addTag(element);
         updateTagsArray();
-        // filterRecipesByTags() si nécessaire
+        filterRecipesByTags(data)
+      })();
+
+
       }
     });
 
     container.appendChild(newSuggestion);
   });
 }
-

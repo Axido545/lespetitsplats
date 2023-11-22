@@ -1,22 +1,22 @@
 
 import { updateTagsArray } from "./getvalues.js";
+import { filterRecipesByTags } from "./boucle-for.js";
+import { fetchData } from "./suggestions.js";
 
-
-export function addTag(tagText) {
+export async function addTag(tagText) {
   const suggestionActive = document.querySelector(".suggestion-active");
   const tagsContainer = document.getElementById("selected-tags");
 
 
   // Vérifie si la suggestion a la classe "suggestion-active"
   if (suggestionActive) {
- 
  const existingTag = findTagByName(tagText);
 
   if (existingTag) {
-
 // Supprime le tag existant
 removeTag(existingTag,suggestionActive);
 updateTagsArray();
+
 
 // Retire la class suggestion active de la suggestion
 suggestionActive.classList.remove("suggestion-active")
@@ -35,7 +35,17 @@ suggestionActive.classList.remove("suggestion-active")
     // écoute clic x
     removeButton.addEventListener("click", function () {
             removeTag(tag.textContent, suggestionActive);
-      updateTagsArray()
+      updateTagsArray();
+
+
+(async () => {
+    const data = await fetchData();
+    filterRecipesByTags(data);
+  })();
+
+
+
+
 
     });
   

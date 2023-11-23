@@ -37,35 +37,26 @@ export function bigSearchBar(myrecipesdata) {
 
 export function mySearch(myrecipesdata, inputText) {
   console.log(myrecipesdata);
-  /************************boucle for */
-  const filteredRecipes = [];
-  const tagValues = updateTagsArray();
-
-  for (let i = 0; i < myrecipesdata.length; i++) {
-    const recipe = myrecipesdata[i];
-
-    if (recipe.name.toLowerCase().includes(inputText)) {
-      filteredRecipes.push(recipe);
-      continue;
-    } else if (recipe.description.toLowerCase().includes(inputText)) {
-      filteredRecipes.push(recipe);
-      continue;
+  /************************boucle filter TODO*/
+  const filteredRecipes = myrecipesdata.filter((recipe) => {
+    if (recipe.name.toLowerCase().indexOf(inputText) > 0) {
+      return true;
+    } else if (recipe.description.toLowerCase().indexOf(inputText) > 0) {
+      return true;
     } else {
-      for (let j = 0; j < recipe.ingredients.length; j++) {
-        if (
-          recipe.ingredients[j].ingredient.toLowerCase().includes(inputText)
-        ) {
-          filteredRecipes.push(recipe);
-          break;
-        }
-      }
+      // trouver les ingredient
+      // Input text present
+      // map find
+      const ingredients = recipe.ingredients.map(
+        (ingredient) => ingredient.ingredient
+      );
+      return ingredients.find(
+        (ingredient) => ingredient.toLowerCase().indexOf(inputText) > 0
+      );
     }
-    /************************ fin boucle for */
+  });
+  /************************ fin boucle filter */
 
-    const recipeIngredients = recipe.ingredients.map((ingredient) =>
-      ingredient.ingredient.toLowerCase()
-    );
-  }
   displayDataReciepes(filteredRecipes);
 
   console.log("Recettes filtrés :", filteredRecipes);

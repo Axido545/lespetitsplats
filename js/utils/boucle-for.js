@@ -28,56 +28,43 @@ export function bigSearchBar(myrecipesdata) {
         messageError.textContent = `« Aucune recette ne contient « ${inputValue} »  vous pouvez chercher «
         tarte aux pommes », « poisson », etc.`;
       }
-      const filteredRecipes = mySearch(myrecipesdata);
+      const filteredRecipes = mySearch(myrecipesdata, inputValue);
       const filteredIngredient = getIngredientFromRecipes(filteredRecipes);
       afficheListeSuggestions(filteredIngredient, "suggestions-ingredients");
     }
   });
 }
 
-export function mySearch(myrecipesdata) {
+export function mySearch(myrecipesdata, inputText) {
   console.log(myrecipesdata);
+  /************************boucle for */
   const filteredRecipes = [];
-  const firstInputValues = firstInputValue();
   const tagValues = updateTagsArray();
 
   for (let i = 0; i < myrecipesdata.length; i++) {
     const recipe = myrecipesdata[i];
-    const recipeName = recipe.name.toLowerCase();
+
+    if (recipe.name.toLowerCase().includes(inputText)) {
+      filteredRecipes.push(recipe);
+      continue;
+    } else if (recipe.description.toLowerCase().includes(inputText)) {
+      filteredRecipes.push(recipe);
+      continue;
+    } else {
+      for (let j = 0; j < recipe.ingredients.length; j++) {
+        if (
+          recipe.ingredients[j].ingredient.toLowerCase().includes(inputText)
+        ) {
+          filteredRecipes.push(recipe);
+          break;
+        }
+      }
+    }
+    /************************ fin boucle for */
+
     const recipeIngredients = recipe.ingredients.map((ingredient) =>
       ingredient.ingredient.toLowerCase()
     );
-    const recipeDescription = recipe.description.toLowerCase();
-
-    // // Filtrer par firstInputValues
-    const containsFirstInputValues = firstInputValues.every(
-      (firstInputValue) => {
-        const keywordLowerCase = firstInputValue.toLowerCase();
-        return (
-          recipeName.includes(keywordLowerCase) ||
-          recipeIngredients.some((ingredient) =>
-            ingredient.includes(keywordLowerCase)
-          ) ||
-          recipeDescription.includes(keywordLowerCase)
-        );
-      }
-    );
-
-    // // Filtrer par tag
-    const containsTags =
-      tagValues.length === 0 ||
-      tagValues.every((tagValue) => {
-        // Vérifiez si le tag est présent dans les ingrédients
-        const tagLowerCase = tagValue.toLowerCase();
-        return recipeIngredients.some((ingredient) =>
-          ingredient.includes(tagLowerCase)
-        );
-      });
-
-    if (containsFirstInputValues && containsTags) {
-      // Stocker la recette filtrée
-      filteredRecipes.push(recipe);
-    }
   }
   displayDataReciepes(filteredRecipes);
 

@@ -1,17 +1,17 @@
-import { recipes } from '../data/recipes.js';
-import { displayDataReciepes, messageError } from '../script/index.js';
+import { recipes } from "../data/recipes.js";
+import { displayDataReciepes, messageError } from "../script/index.js";
 import { firstInputValue, updateTagsArray } from "./getvalues.js";
-import {  afficheListeSuggestions } from './suggestions.js';
+import { afficheListeSuggestions } from "./suggestions.js";
 
-export const myInput =   document.getElementById('searchInput')
+export const myInput = document.getElementById("searchInput");
 
 export function bigSearchBar(myrecipesdata) {
-  const clearIcon = document.querySelector('.clear-icon');
-  const recicontainer = document.getElementById("recipeContainer")
+  const clearIcon = document.querySelector(".clear-icon");
+  const recicontainer = document.getElementById("recipeContainer");
 
-  myInput.addEventListener('input', function () {
-    const inputValue = myInput.value.trim().toLowerCase()
-    console.log(inputValue)
+  myInput.addEventListener("input", function () {
+    const inputValue = myInput.value.trim().toLowerCase();
+    console.log(inputValue);
     clearIcon.style.display = "none";
     if (inputValue.length === 0) {
       messageError.textContent = "";
@@ -24,19 +24,19 @@ export function bigSearchBar(myrecipesdata) {
       clearIcon.style.display = "block";
       messageError.textContent = "";
 
-       if(recicontainer.textContent === ""){
+      if (recicontainer.textContent === "") {
         messageError.textContent = `« Aucune recette ne contient « ${inputValue} »  vous pouvez chercher «
         tarte aux pommes », « poisson », etc.`;
-       }
-       const filteredRecipes = mySearch(myrecipesdata)
-       const filteredIngredient = getIngredientFromRecipes(filteredRecipes)
-       afficheListeSuggestions(filteredIngredient, "suggestions-ingredients");
+      }
+      const filteredRecipes = mySearch(myrecipesdata);
+      const filteredIngredient = getIngredientFromRecipes(filteredRecipes);
+      afficheListeSuggestions(filteredIngredient, "suggestions-ingredients");
     }
   });
 }
 
 export function mySearch(myrecipesdata) {
-  console.log(myrecipesdata)
+  console.log(myrecipesdata);
   const filteredRecipes = [];
   const firstInputValues = firstInputValue();
   const tagValues = updateTagsArray();
@@ -44,86 +44,97 @@ export function mySearch(myrecipesdata) {
   for (let i = 0; i < myrecipesdata.length; i++) {
     const recipe = myrecipesdata[i];
     const recipeName = recipe.name.toLowerCase();
-    const recipeIngredients = recipe.ingredients.map(ingredient => ingredient.ingredient.toLowerCase());
+    const recipeIngredients = recipe.ingredients.map((ingredient) =>
+      ingredient.ingredient.toLowerCase()
+    );
     const recipeDescription = recipe.description.toLowerCase();
 
-
     // // Filtrer par firstInputValues
-    const containsFirstInputValues = firstInputValues.every(firstInputValue => {
-      const keywordLowerCase = firstInputValue.toLowerCase();
-      return recipeName.includes(keywordLowerCase) ||
-        recipeIngredients.some(ingredient => ingredient.includes(keywordLowerCase)) ||
-        recipeDescription.includes(keywordLowerCase);
-    })
+    const containsFirstInputValues = firstInputValues.every(
+      (firstInputValue) => {
+        const keywordLowerCase = firstInputValue.toLowerCase();
+        return (
+          recipeName.includes(keywordLowerCase) ||
+          recipeIngredients.some((ingredient) =>
+            ingredient.includes(keywordLowerCase)
+          ) ||
+          recipeDescription.includes(keywordLowerCase)
+        );
+      }
+    );
 
-        // // Filtrer par tag
-    const containsTags = tagValues.length === 0 || tagValues.every(tagValue => {
-      // Vérifiez si le tag est présent dans les ingrédients
-      const tagLowerCase = tagValue.toLowerCase();
-      return recipeIngredients.some(ingredient => ingredient.includes(tagLowerCase))
+    // // Filtrer par tag
+    const containsTags =
+      tagValues.length === 0 ||
+      tagValues.every((tagValue) => {
+        // Vérifiez si le tag est présent dans les ingrédients
+        const tagLowerCase = tagValue.toLowerCase();
+        return recipeIngredients.some((ingredient) =>
+          ingredient.includes(tagLowerCase)
+        );
+      });
 
-
-    });
-
-if (containsFirstInputValues
-  && containsTags) {
+    if (containsFirstInputValues && containsTags) {
       // Stocker la recette filtrée
       filteredRecipes.push(recipe);
     }
   }
   displayDataReciepes(filteredRecipes);
 
-  console.log('Recettes filtrés :', filteredRecipes); 
+  console.log("Recettes filtrés :", filteredRecipes);
   return filteredRecipes;
 }
 
 // Réinitialise les valeurs des champs d'entrée lors du chargement de la page
-window.addEventListener("load", function() {
+window.addEventListener("load", function () {
   // const myInput = document.getElementById('searchInput');
-  myInput.value = ""; 
+  myInput.value = "";
+});
+
+export function filterRecipesByTags(data) {
+  console.log(JSON.stringify(data, null, 2) + "=== c l element dont on parle");
+  const filteredRecipes = [];
+  const globalSelectedTags = updateTagsArray();
+  console.log("Tag selectionné:", globalSelectedTags);
+
+  // Vérifie si le tableau qui contient les tags est vide: renvoie les recettes sans filtrage
+  if (globalSelectedTags.length === 0) {
+    return recipes;
+  }
+
+  data.forEach((recipe) => {
+    const recipeIngredients = recipe.ingredients.map((ingredient) =>
+      ingredient.ingredient.toLowerCase()
+    );
+    console.log("Ingredients:", recipeIngredients);
+    const containsAllTags = globalSelectedTags.every((selectedTag) => {
+      const tagLowerCase = selectedTag.toLowerCase();
+      return recipeIngredients.some((ingredient) =>
+        ingredient.includes(tagLowerCase)
+      );
+    });
+
+    console.log("contient tous les tags:", containsAllTags);
+    if (containsAllTags) {
+      filteredRecipes.push(recipe);
+    }
   });
 
-  export function filterRecipesByTags(data) {
-    console.log(JSON.stringify(data, null, 2) + '=== c l element dont on parle')
-      const filteredRecipes = [];
-      const globalSelectedTags = updateTagsArray();  
-      console.log('Tag selectionné:', globalSelectedTags);
-    
-      // Vérifie si le tableau qui contient les tags est vide: renvoie les recettes sans filtrage
-      if (globalSelectedTags.length === 0) {
-        return recipes;
-      }
-    
-      data.forEach(recipe => {
-        const recipeIngredients = recipe.ingredients.map(ingredient => ingredient.ingredient.toLowerCase());
-        console.log('Ingredients:', recipeIngredients);
-        const containsAllTags = globalSelectedTags.every(selectedTag => {
-          const tagLowerCase = selectedTag.toLowerCase();
-          return recipeIngredients.some(ingredient => ingredient.includes(tagLowerCase));
-        });
-    
-        console.log('contient tous les tags:', containsAllTags);
-        if (containsAllTags) {
-          filteredRecipes.push(recipe);
-        }
-      });
-    
-      displayDataReciepes(filteredRecipes);
-      console.log('Recettes filtrées :', filteredRecipes);
-      return filteredRecipes;
-    }
-    
-    export function getIngredientFromRecipes(filteredRecipes) {
+  displayDataReciepes(filteredRecipes);
+  console.log("Recettes filtrées :", filteredRecipes);
+  return filteredRecipes;
+}
 
-      const filteredIngredients = [];
-      filteredRecipes.forEach(recipe => {
-        recipe.ingredients.forEach(ingredient => {
-          const ingredientName = ingredient.ingredient.toLowerCase();
-          if (!filteredIngredients.includes(ingredientName)) {
-            filteredIngredients.push(ingredientName);
-          }
-        });
-      });
-      console.log(filteredIngredients)
-      return filteredIngredients;
-    }
+export function getIngredientFromRecipes(filteredRecipes) {
+  const filteredIngredients = [];
+  filteredRecipes.forEach((recipe) => {
+    recipe.ingredients.forEach((ingredient) => {
+      const ingredientName = ingredient.ingredient.toLowerCase();
+      if (!filteredIngredients.includes(ingredientName)) {
+        filteredIngredients.push(ingredientName);
+      }
+    });
+  });
+  console.log(filteredIngredients);
+  return filteredIngredients;
+}

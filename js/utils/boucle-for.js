@@ -39,7 +39,6 @@ export function mySearch(myrecipesdata, inputText) {
   console.log(myrecipesdata);
   /************************boucle for */
   const filteredRecipes = [];
-  const tagValues = updateTagsArray();
 
   for (let i = 0; i < myrecipesdata.length; i++) {
     const recipe = myrecipesdata[i];
@@ -60,12 +59,9 @@ export function mySearch(myrecipesdata, inputText) {
         }
       }
     }
-    /************************ fin boucle for */
-
-    const recipeIngredients = recipe.ingredients.map((ingredient) =>
-      ingredient.ingredient.toLowerCase()
-    );
   }
+
+  /************************ fin boucle for */
   displayDataReciepes(filteredRecipes);
 
   console.log("Recettes filtrés :", filteredRecipes);

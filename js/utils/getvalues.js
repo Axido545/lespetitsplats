@@ -1,23 +1,22 @@
-export function firstInputValue(){
-  const FirstinputValue = document.getElementById("searchInput").value;
-  if (FirstinputValue.length > 2){
-    var elts = ArrayLowerCase(FirstinputValue);
-    return elts;
-  }
-  return [];
-}
+/******const*******/
+export const recipeContainer = document.getElementById("recipeContainer");
 
-function ArrayLowerCase(inputString){
-  const inputArray = inputString.split(" ");
-  const ArrayLowerCase = inputArray.map(element => {
-    return element.toLowerCase();
-  });
-  return ArrayLowerCase;
-}
+export const ingredientSearch = document.getElementById("ingredientSearch");
+
+export const clearIcon = document.querySelector(".clear-icon");
+export const messageError = document.querySelector(".message-error");
+export const recipeCountElement = document.getElementById("recipeCount");
+
+export const tagsContainer = document.getElementById("selected-tags");
+export const suggestionActive = document.querySelector(".suggestion-active");
+
+/******functions*******/
 
 // récupere le tableau des tags
-  export function updateTagsArray() {
-  const selectedTags = Array.from(document.querySelectorAll('.tag')).map(tag => tag.textContent);
-  console.log(selectedTags)
-  return selectedTags
+export function updateTagsArray() {
+  const selectedTags = Array.from(document.querySelectorAll(".tag")).map(
+    (tag) => tag.textContent
+  );
+  console.log(selectedTags);
+  return selectedTags;
 }

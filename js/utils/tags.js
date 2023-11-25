@@ -178,20 +178,18 @@ export async function removeTag(tagText, suggestion) {
   const inputSearch = document.getElementById("ingredientSearch");
 
   const remainingTags = tagsContainer.querySelectorAll(".tag");
-  if (remainingTags.length === 0 && inputSearch.value.trim() === "") {
+  const inputText = inputSearch.value.trim().toLowerCase(); // Récupère la valeur de l'input
+
+  if (remainingTags.length === 0 && inputText === "") {
     // Aucun tag restant et aucun texte dans l'input, affiche toutes les recettes
     const data = await fetchData();
     displaySuggestions(data);
     filterRecipesByTags(data);
-
-    inputText = document
-      .getElementById("searchInput")
-      .value.trim()
-      .toLowerCase();
-    if (inputText != "") {
-      mySearch(data, inputText);
-    } else {
-      displayDataReciepes(data);
-    }
+    displayDataReciepes(data);
+  } else {
+    // Des tags restants ou un texte dans l'input, filtre les recettes avec mySearch
+    const data = await fetchData();
+    const filteredRecipes = mySearch(data, inputText);
+    displayDataReciepes(filteredRecipes);
   }
 }

@@ -8,6 +8,8 @@
 }
 
 .img-recette {
+  /* max-width: 380px;
+  height: 253px; */
   width: 380px;
   height: 253px;
   border-radius: 21px 21px 0 0;

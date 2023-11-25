@@ -132,6 +132,8 @@ export async function addTag(tagText) {
         const data = await fetchData();
         filterRecipesByTags(data);
         displaySuggestions(data);
+        const inputSearch = document.getElementById("searchInput");
+        const inputText = inputSearch.value.trim().toLowerCase();
 
         inputText = document
           .getElementById("searchInput")
@@ -173,12 +175,11 @@ export async function removeTag(tagText, suggestion) {
     }
   }
 
-  // // Ajoutez une vérification pour afficher toutes les recettes si aucun tag et aucun texte dans l'input
   const tagsContainer = document.getElementById("selected-tags");
-  const inputSearch = document.getElementById("ingredientSearch");
+  const inputSearch = document.getElementById("searchInput");
 
   const remainingTags = tagsContainer.querySelectorAll(".tag");
-  const inputText = inputSearch.value.trim().toLowerCase(); // Récupère la valeur de l'input
+  const inputText = inputSearch.value.trim().toLowerCase();
 
   if (remainingTags.length === 0 && inputText === "") {
     // Aucun tag restant et aucun texte dans l'input, affiche toutes les recettes

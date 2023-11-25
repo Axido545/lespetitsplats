@@ -96,12 +96,10 @@ export function afficheListeSuggestions(elements, containerId) {
         const data = await fetchData(); // Assurez-vous que fetchData est correctement défini
         // displaySuggestions(data);
         filterRecipesByTags(data);
+        // const inputSearch = document.getElementById("searchInput");
+        // const inputText = inputSearch.value.trim().toLowerCase();
 
-        inputText = document
-          .getElementById("searchInput")
-          .value.trim()
-          .toLowerCase();
-        mySearch(data, inputText);
+        // mySearch(data, inputText);
 
         // (async () => {
         //   const data = await fetchData();

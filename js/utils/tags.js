@@ -135,10 +135,6 @@ export async function addTag(tagText) {
         const inputSearch = document.getElementById("searchInput");
         const inputText = inputSearch.value.trim().toLowerCase();
 
-        inputText = document
-          .getElementById("searchInput")
-          .value.trim()
-          .toLowerCase();
         mySearch(data, inputText);
       });
 

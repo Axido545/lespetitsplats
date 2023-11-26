@@ -14,6 +14,7 @@ export async function fetchData() {
 export function displaySuggestions(myRecipesdata) {
   // Variable locale liste des ingrédients
   let currentIngredientsArray = [];
+  let currentApplianceArray = [];
 
   myRecipesdata.forEach((recipe) => {
     // Pour chaque recette, on extrait les ingrédients
@@ -33,11 +34,23 @@ export function displaySuggestions(myRecipesdata) {
         currentIngredientsArray.push(ingredientName);
       }
     });
+    // Pour chaque recette, on extrait les ingrédients
+    let appliances = recipe.appliance;
+    // On vérifie si l'ingrédient n'est pas déjà présent pour ne pas faire de doublon
+    if (
+      !currentApplianceArray.some(function (element) {
+        return element.toLowerCase() === appliances.toLowerCase();
+      })
+    ) {
+      // Si l'ingrédient n'est pas dans la liste, on l'ajoute à la variable locale
+      currentApplianceArray.push(appliances);
+    }
   });
 
   // Affiche les ingrédients dès le chargement de la page
   // On met en argument = la variable qui contient le tableau des ingrédients et le nom de l'ID où l'on souhaite afficher les ingrédients
   afficheListeSuggestions(currentIngredientsArray, "suggestions-ingredients");
+  afficheListeSuggestions(currentApplianceArray, "suggestions-appareils");
 
   // Ajout de l'écouteur d'évènement sur l'input
   ingredientSearch.addEventListener("input", function () {
@@ -64,7 +77,6 @@ export function afficheListeSuggestions(elements, containerId) {
 
     newSuggestion.addEventListener("click", async function (event) {
       event.stopPropagation();
-
       if (
         newSuggestion &&
         newSuggestion.classList &&

@@ -1,14 +1,15 @@
 import { displayReciepes } from "./display-reciepes.js";
 import { filterRecipesByTags, mySearch } from "../utils/boucle-for.js";
 import { displayDataReciepes, getRecipe } from "./index.js";
-import { displaySuggestions } from "../utils/suggestions.js";
+import { displaySuggestions, fetchData } from "../utils/suggestions.js";
 import { clearIcon } from "../utils/getvalues.js";
+import { updateTagsArray } from "../utils/getvalues.js";
 const myInput = document.getElementById("searchInput");
 
 getRecipe();
-var dataReciepes = await getRecipe();
+const data = await fetchData();
 
-export function setupClearableInput() {
+export async function setupClearableInput() {
   clearIcon.style.display = "none";
 
   clearIcon.addEventListener("input", function () {
@@ -21,16 +22,36 @@ export function setupClearableInput() {
     }
   });
 
-  clearIcon.addEventListener("click", function () {
+  clearIcon.addEventListener("click", async function () {
     myInput.value = "";
-    clearIcon.style.display = "none";
-    // displayDataReciepes(dataReciepes)
-    mySearch(dataReciepes);
-    displaySuggestions(dataReciepes);
-    filterRecipesByTags(dataReciepes);
+
+    //   clearIcon.style.display = "none";
+    if (updateTagsArray.length === 0) {
+      location.reload();
+    } else {
+      const data = await fetchData();
+      filterRecipesByTags(data);
+    }
+    //     removeInput();
+    //     const data = await fetchData();
+    //     filterRecipesByTags(data);
+    //     displaySuggestions(data);
+    //     const inputSearch = document.getElementById("searchInput");
+    //     const inputText = inputSearch.value.trim().toLowerCase();
+    //     mySearch(data, inputText);
+    //   });
+    // }
+    // async function removeInput() {
+    //   myInput.value = "";
+    //   clearIcon.style.display = "none";
+    //   const data = await fetchData();
+    //   filterRecipesByTags(data);
+    //   displaySuggestions(data);
+    //   const inputSearch = document.getElementById("searchInput");
+    //   const inputText = inputSearch.value.trim().toLowerCase();
+    //   mySearch(data, inputText);
   });
 }
-
 // document.addEventListener('DOMContentLoaded', function() {
 //     const clearableInputs = document.querySelectorAll('.clearable-input');
 //     clearableInputs.forEach(input => {

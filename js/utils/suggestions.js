@@ -14,7 +14,8 @@ export async function fetchData() {
 export function displaySuggestions(myRecipesdata) {
   // Variable locale liste des ingrédients
   let currentIngredientsArray = [];
-  let currentApplianceArray = [];
+  let currentAppliancesArray = [];
+  let currentUstensilsArray = [];
 
   myRecipesdata.forEach((recipe) => {
     // Pour chaque recette, on extrait les ingrédients
@@ -30,27 +31,45 @@ export function displaySuggestions(myRecipesdata) {
           return element.toLowerCase() === ingredientName.toLowerCase();
         })
       ) {
-        // Si l'ingrédient n'est pas dans la liste, on l'ajoute à la variable locale
+        // Si l'ingredient n'est pas dans la liste, on l'ajoute à la variable locale
         currentIngredientsArray.push(ingredientName);
       }
     });
-    // Pour chaque recette, on extrait les ingrédients
+    // Pour chaque recette, on extrait les appreils
     let appliances = recipe.appliance;
-    // On vérifie si l'ingrédient n'est pas déjà présent pour ne pas faire de doublon
+    // On vérifie si l'appareil n'est pas déjà présent pour ne pas faire de doublon
     if (
-      !currentApplianceArray.some(function (element) {
+      !currentAppliancesArray.some(function (element) {
         return element.toLowerCase() === appliances.toLowerCase();
       })
     ) {
-      // Si l'ingrédient n'est pas dans la liste, on l'ajoute à la variable locale
-      currentApplianceArray.push(appliances);
+      // Si l'appareil n'est pas dans la liste, on l'ajoute à la variable locale
+      currentAppliancesArray.push(appliances);
     }
+
+    // Pour chaque recette, on extrait les ustensils
+    let ustensils = recipe.ustensils;
+
+    // Et pour chaque ustensils, on extrait la liste des ustensils
+    ustensils.forEach((ustensil) => {
+      // On vérifie si l'ustensil n'est pas déjà présent pour ne pas faire de doublon
+      if (
+        !currentUstensilsArray.some(function (element) {
+          return element && element.toLowerCase() === ustensil.toLowerCase();
+        })
+      ) {
+        // Si l'ustensil n'est pas dans la liste, on l'ajoute à la variable locale
+        currentUstensilsArray.push(ustensil);
+      }
+    });
   });
+  // });
 
   // Affiche les ingrédients dès le chargement de la page
   // On met en argument = la variable qui contient le tableau des ingrédients et le nom de l'ID où l'on souhaite afficher les ingrédients
   afficheListeSuggestions(currentIngredientsArray, "suggestions-ingredients");
-  afficheListeSuggestions(currentApplianceArray, "suggestions-appareils");
+  afficheListeSuggestions(currentAppliancesArray, "suggestions-appareils");
+  afficheListeSuggestions(currentUstensilsArray, "suggestions-ustensiles");
 
   // Ajout de l'écouteur d'évènement sur l'input
   ingredientSearch.addEventListener("input", function () {

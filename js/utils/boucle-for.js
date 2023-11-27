@@ -94,12 +94,20 @@ export function filterRecipesByTags(data) {
   if (globalSelectedTags.length === 0) {
     return recipes;
   }
-
   data.forEach((recipe) => {
     const recipeIngredients = recipe.ingredients.map((ingredient) =>
       ingredient.ingredient.toLowerCase()
     );
+    const recipeUstensils = recipe.ustensils.map((ustensil) =>
+      ustensil.toLowerCase()
+    );
+
+    const recipeAppliance = recipe.appliance.toLowerCase();
+
     console.log("Ingredients:", recipeIngredients);
+    console.log("ustensils:", recipeUstensils);
+    console.log("appareils:", recipeAppliance);
+
     const containsAllTags = globalSelectedTags.every((selectedTag) => {
       const tagLowerCase = selectedTag.toLowerCase();
       return recipeIngredients.some((ingredient) =>

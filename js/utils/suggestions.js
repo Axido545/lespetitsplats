@@ -82,7 +82,27 @@ export function displaySuggestions(myRecipesdata) {
 
     afficheListeSuggestions(filteredIngredient, "suggestions-ingredients");
   });
+  applianceSearch = document.getElementById("applianceSearch");
+  applianceSearch.addEventListener("input", function () {
+    let filteredAppliance = currentAppliancesArray.filter(function (element) {
+      return element
+        .toLowerCase()
+        .includes(applianceSearch.value.toLowerCase());
+    });
+
+    afficheListeSuggestions(filteredAppliance, "suggestions-appareils");
+  });
+
+  ustensilSearch = document.getElementById("ustensilSearch");
+  ustensilSearch.addEventListener("input", function () {
+    let filteredUstensil = currentUstensilsArray.filter(function (element) {
+      return element.toLowerCase().includes(ustensilSearch.value.toLowerCase());
+    });
+
+    afficheListeSuggestions(filteredUstensil, "suggestions-ustensiles");
+  });
 }
+
 export function afficheListeSuggestions(elements, containerId) {
   const container = document.getElementById(containerId);
 

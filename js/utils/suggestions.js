@@ -5,7 +5,7 @@ import { filterRecipesByTags, mySearch } from "./boucle-for.js";
 
 export async function fetchData() {
   const data = await getRecipe();
-  console.log("Valeur de data :", data);
+  // console.log("Valeur de data :", data);
   // Vous pouvez utiliser la valeur de data ici
   return data;
 }

@@ -17,6 +17,6 @@ export function updateTagsArray() {
   const selectedTags = Array.from(document.querySelectorAll(".tag")).map(
     (tag) => tag.textContent
   );
-  console.log(selectedTags);
+  // console.log(selectedTags);
   return selectedTags;
 }

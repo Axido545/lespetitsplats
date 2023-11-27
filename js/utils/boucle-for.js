@@ -85,6 +85,7 @@ window.addEventListener("load", function () {
   myInput.value = "";
 });
 
+/****************Recherche par tag */
 export function filterRecipesByTags(data) {
   const filteredRecipes = [];
   const globalSelectedTags = updateTagsArray();
@@ -101,7 +102,6 @@ export function filterRecipesByTags(data) {
     const recipeUstensils = recipe.ustensils.map((ustensil) =>
       ustensil.toLowerCase()
     );
-
     const recipeAppliance = recipe.appliance.toLowerCase();
 
     console.log("Ingredients:", recipeIngredients);
@@ -110,8 +110,13 @@ export function filterRecipesByTags(data) {
 
     const containsAllTags = globalSelectedTags.every((selectedTag) => {
       const tagLowerCase = selectedTag.toLowerCase();
-      return recipeIngredients.some((ingredient) =>
-        ingredient.includes(tagLowerCase)
+
+      return (
+        recipeIngredients.some((ingredient) =>
+          ingredient.includes(tagLowerCase)
+        ) ||
+        recipeUstensils.some((ustensil) => ustensil.includes(tagLowerCase)) ||
+        recipeAppliance.includes(tagLowerCase)
       );
     });
 

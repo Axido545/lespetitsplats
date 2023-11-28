@@ -6,6 +6,7 @@ import {
   recipeContainer,
   messageError,
 } from "./getvalues.js";
+import { displaySuggestions } from "./suggestions.js";
 // import { afficheListeSuggestions } from "./suggestions.js";
 import { addTag } from "./tags.js";
 const myInput = document.getElementById("searchInput");
@@ -39,6 +40,7 @@ export function bigSearchBar(myrecipesdata) {
         allRecipes.length = 0;
         allRecipes.push(...filteredRecipes);
         filterRecipesByTags(filteredRecipes);
+        displaySuggestions(filteredRecipes);
 
         // const filteredIngredient = getIngredientFromRecipes(filteredRecipes);
         // afficheListeSuggestions(filteredIngredient, "suggestions-ingredients");

@@ -1,10 +1,11 @@
 import { addTag, removeTag } from "./tags.js";
-import { getRecipe, allRecipes } from "../script/index.js";
+import { getRecipe, allRecipes, displayDataReciepes } from "../script/index.js";
 import { updateTagsArray, ingredientSearch } from "./getvalues.js";
 import { filterRecipesByTags, mySearch } from "./boucle-for.js";
 
 export async function fetchData() {
   const data = await getRecipe();
+  displayDataReciepes(data);
   console.log("Valeur de data :", data);
   // Vous pouvez utiliser la valeur de data ici
   return data;
@@ -141,12 +142,16 @@ export function afficheListeSuggestions(elements, containerId) {
           img.classList.add("close-suggestion");
           newSuggestion.appendChild(img);
         }
+        const myInput = document.getElementById("searchInput");
 
         await addTag(element);
         updateTagsArray();
         const data = await fetchData(); // Assurez-vous que fetchData est correctement défini
         // displaySuggestions(data);
         filterRecipesByTags(data);
+        displaySuggestions(data);
+        // mySearch(data, myInput.value);
+
         // const inputSearch = document.getElementById("searchInput");
         // const inputText = inputSearch.value.trim().toLowerCase();
 

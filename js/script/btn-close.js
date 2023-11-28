@@ -6,8 +6,8 @@ import { clearIcon } from "../utils/getvalues.js";
 import { updateTagsArray } from "../utils/getvalues.js";
 const myInput = document.getElementById("searchInput");
 
-getRecipe();
-const data = await fetchData();
+// getRecipe();
+// const data = await fetchData();
 
 export async function setupClearableInput() {
   clearIcon.style.display = "none";
@@ -24,37 +24,66 @@ export async function setupClearableInput() {
 
   clearIcon.addEventListener("click", async function () {
     myInput.value = "";
+    clearIcon.style.display = "none";
+    updateTagsArray();
 
-    //   clearIcon.style.display = "none";
-    if (updateTagsArray.length === 0) {
-      console.log("pas de tags présents");
-      location.reload();
-    } else {
-      console.log("Oui il ya des tags");
+    // const tags = document.querySelectorAll(".tag");
+    console.log(updateTagsArray());
 
+    if (updateTagsArray().length === 0) {
+      // console.log("ya pas de tag");
       // const data = await fetchData();
-      // filterRecipesByTags(data);
+
+      // mySearch(data, "");
+      // console.log(mySearch(data, myInput.value));
+      location.reload();
+
+      const data = await fetchData();
+      displaySuggestions(data);
+      filterRecipesByTags(data);
+      // displayDataReciepes(data);
+      mySearch(data, "");
     }
-    //     removeInput();
-    //     const data = await fetchData();
-    //     filterRecipesByTags(data);
-    //     displaySuggestions(data);
-    //     const inputSearch = document.getElementById("searchInput");
-    //     const inputText = inputSearch.value.trim().toLowerCase();
-    //     mySearch(data, inputText);
-    //   });
-    // }
-    // async function removeInput() {
-    //   myInput.value = "";
-    //   clearIcon.style.display = "none";
-    //   const data = await fetchData();
-    //   filterRecipesByTags(data);
-    //   displaySuggestions(data);
-    //   const inputSearch = document.getElementById("searchInput");
-    //   const inputText = inputSearch.value.trim().toLowerCase();
-    //   mySearch(data, inputText);
+
+    // const data = await fetchData();
+    // console.log(
+    //   JSON.stringify(data) + "= la valeur de data après clic sur croix"
+    // );
+    // filterRecipesByTags(data);
+    // mySearch(data, "");
+    // const result = mySearch(data, "");
+    // console.log(
+    //   "resultat quand on clic sur la croix de searchBar mysearch =" + result
+    // );
   });
 }
+// if (updateTagsArray.length === 0) {
+//   console.log("pas de tags présents");
+//   location.reload();
+// } else {
+//   console.log("Oui il ya des tags");
+
+// const data = await fetchData();
+// filterRecipesByTags(data);
+//     removeInput();
+//     const data = await fetchData();
+//     filterRecipesByTags(data);
+//     displaySuggestions(data);
+//     const inputSearch = document.getElementById("searchInput");
+//     const inputText = inputSearch.value.trim().toLowerCase();
+//     mySearch(data, inputText);
+//   });
+// }
+// async function removeInput() {
+//   myInput.value = "";
+//   clearIcon.style.display = "none";
+//   const data = await fetchData();
+//   filterRecipesByTags(data);
+//   displaySuggestions(data);
+//   const inputSearch = document.getElementById("searchInput");
+//   const inputText = inputSearch.value.trim().toLowerCase();
+//   mySearch(data, inputText);
+
 // document.addEventListener('DOMContentLoaded', function() {
 //     const clearableInputs = document.querySelectorAll('.clearable-input');
 //     clearableInputs.forEach(input => {

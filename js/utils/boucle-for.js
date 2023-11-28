@@ -38,7 +38,7 @@ export function bigSearchBar(myrecipesdata) {
         const filteredRecipes = mySearch(myrecipesdata, inputValue);
         allRecipes.length = 0;
         allRecipes.push(...filteredRecipes);
-        // filterRecipesByTags(filteredRecipes);
+        filterRecipesByTags(filteredRecipes);
         // const filteredIngredient = getIngredientFromRecipes(filteredRecipes);
         // afficheListeSuggestions(filteredIngredient, "suggestions-ingredients");
       }

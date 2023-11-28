@@ -27,10 +27,13 @@ export async function setupClearableInput() {
 
     //   clearIcon.style.display = "none";
     if (updateTagsArray.length === 0) {
+      console.log("pas de tags présents");
       location.reload();
     } else {
-      const data = await fetchData();
-      filterRecipesByTags(data);
+      console.log("Oui il ya des tags");
+
+      // const data = await fetchData();
+      // filterRecipesByTags(data);
     }
     //     removeInput();
     //     const data = await fetchData();

@@ -33,7 +33,7 @@ export async function addTag(tagText) {
       // écoute clic x
       removeButton.addEventListener("click", async function (event) {
         event.stopPropagation();
-        console.log("Remove button a ete cliqué:", tagText);
+        // console.log("Remove button a ete cliqué:", tagText);
         removeTag(tag.textContent, suggestionActive);
         // updateTagsArray();
       });

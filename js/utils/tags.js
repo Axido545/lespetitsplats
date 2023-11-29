@@ -69,6 +69,7 @@ export async function removeTag(tagText, suggestion) {
     const existingImage = suggestion.querySelector(".close-suggestion");
     if (existingImage && existingImage.parentNode) {
       existingImage.parentNode.removeChild(existingImage);
+      console.log("c'est ici");
     }
   }
 

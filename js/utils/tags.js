@@ -1,7 +1,12 @@
 import { updateTagsArray } from "./getvalues.js";
 import { filterRecipesByTags, mySearch } from "./boucle-for.js";
 import { fetchData, displaySuggestions } from "./suggestions.js";
-import { displayDataReciepes, allRecipes } from "../script/index.js";
+import {
+  displayDataReciepes,
+  allRecipes,
+  getRecipe,
+  init,
+} from "../script/index.js";
 import { recipes } from "../data/recipes.js";
 
 export async function addTag(tagText) {
@@ -34,9 +39,7 @@ export async function addTag(tagText) {
       // écoute clic x
       removeButton.addEventListener("click", async function (event) {
         event.stopPropagation();
-        // console.log("Remove button a ete cliqué:", tagText);
         removeTag(tag.textContent, suggestionActive);
-        // updateTagsArray();
       });
 
       // ou ajoute le bouton x au tag
@@ -76,12 +79,13 @@ export async function removeTag(tagText, suggestion) {
   const inputText = inputSearch.value.trim().toLowerCase();
 
   if (remainingTags.length === 0 && inputText === "") {
-    console.log(allRecipes);
+    location.reload();
   } else {
-    const data = await fetchData();
-    const filteredRecipes = filterRecipesByTags(data, inputText);
+    const Idata = fetchData();
+    const filteredRecipes = filterRecipesByTags(Idata);
     mySearch(filteredRecipes, inputText);
-    displaySuggestions(data);
+    displaySuggestions(filteredRecipes);
+    displayDataReciepes(filteredRecipes);
   }
 }
 

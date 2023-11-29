@@ -6,7 +6,6 @@ import { filterRecipesByTags, mySearch } from "./boucle-for.js";
 export async function fetchData() {
   const data = await getRecipe();
   displayDataReciepes(data);
-  console.log("Valeur de data :", data);
   return data;
 }
 

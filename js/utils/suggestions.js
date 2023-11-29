@@ -111,7 +111,6 @@ export function afficheListeSuggestions(elements, containerId) {
     newSuggestion.addEventListener("click", async function (event) {
       event.stopPropagation();
       newSuggestion.classList.add("suggestion-active");
-      console.log("c la");
       const existingImage = newSuggestion.querySelector("img");
       if (!existingImage) {
         let img = document.createElement("img");
@@ -119,6 +118,17 @@ export function afficheListeSuggestions(elements, containerId) {
         img.alt = "fermer la suggestion";
         img.classList.add("close-suggestion");
         newSuggestion.appendChild(img);
+        addTag(element);
+        updateTagsArray();
+        const data = await fetchData();
+        filterRecipesByTags(data);
+        displaySuggestions(data);
+      } else {
+        addTag(element);
+        updateTagsArray();
+        const data = await fetchData();
+        filterRecipesByTags(data);
+        displaySuggestions(data);
       }
 
       addTag(element);

@@ -2,7 +2,6 @@ import { recipes } from "../data/recipes.js";
 import { displayReciepes } from "./display-reciepes.js";
 import { bigSearchBar, filterRecipesByTags } from "../utils/boucle-for.js";
 import { displaySuggestions } from "../utils/suggestions.js";
-import { setupClearableInput } from "./btn-close.js";
 import { recipeCountElement, recipeContainer } from "../utils/getvalues.js";
 export let allRecipes = [];
 
@@ -20,12 +19,11 @@ export async function init() {
   var dataReciepes = await getRecipe();
   allRecipes.length = 0;
   allRecipes.push(...dataReciepes);
-  console.log(allRecipes);
+  // console.log(allRecipes);
   filterRecipesByTags(allRecipes);
   displayDataReciepes(allRecipes);
   numberOfRecipes(allRecipes.length);
   bigSearchBar(allRecipes);
-  setupClearableInput();
 }
 
 export function displayDataReciepes(dataReciepes) {

@@ -2,6 +2,7 @@ import { updateTagsArray } from "./getvalues.js";
 import { filterRecipesByTags, mySearch } from "./boucle-for.js";
 import { fetchData, displaySuggestions } from "./suggestions.js";
 import { displayDataReciepes } from "../script/index.js";
+import { recipes } from "../data/recipes.js";
 
 export async function addTag(tagText) {
   const suggestionActive = document.querySelector(".suggestion-active");
@@ -20,7 +21,17 @@ export async function addTag(tagText) {
       filterRecipesByTags(data);
       displaySuggestions(data);
     } else {
-      // Ajouter un élément de tag
+      const suggest = document.querySelectorAll("suggestion");
+      addSuggest(tagText);
+      // if ((suggest.textContent = tagText)) {
+      //   let img = document.createElement("img");
+      //   img.src = "./asset/croix-suggestion.png";
+      //   img.alt = "fermer la suggestion";
+      //   img.classList.add("close-suggestion");
+      //   suggest.appendChild(img);
+
+      // }
+
       const tag = document.createElement("div");
       tag.className = "tag";
       tag.textContent = tagText;
@@ -78,8 +89,8 @@ export async function removeTag(tagText, suggestion) {
   const inputText = inputSearch.value.trim().toLowerCase();
 
   if (remainingTags.length === 0 && inputText === "") {
-    location.reload();
-
+    // location.reload();
+    displayDataReciepes(recipes);
     // Aucun tag restant et aucun texte dans l'input, affiche toutes les recettes
     // const data = await fetchData();
     // displaySuggestions(data);
@@ -98,4 +109,22 @@ export async function removeTag(tagText, suggestion) {
     mySearch(filteredRecipes, inputText);
     displaySuggestions(data);
   }
+}
+
+function addSuggest(tagText) {
+  const suggest = document.querySelectorAll(".suggestion");
+
+  suggest.forEach((element) => {
+    // Access each suggestion element in this loop
+    // For example, you can check and add an image for each suggestion
+
+    // Assuming tagText is a variable containing the text you're comparing
+    if (element.textContent === tagText) {
+      let img = document.createElement("img");
+      img.src = "./asset/croix-suggestion.png";
+      img.alt = "fermer la suggestion";
+      img.classList.add("close-suggestion");
+      element.appendChild(img);
+    }
+  });
 }

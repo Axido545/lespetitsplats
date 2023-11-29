@@ -23,7 +23,7 @@ export function bigSearchBar(myrecipesdata) {
         allRecipes.push(...myrecipesdata);
         messageError.textContent = "";
         clearIcon.style.display = "none";
-        mySearch(myrecipesdata);
+        mySearch(myrecipesdata, inputValue);
       } else if (inputValue.length < 3) {
         messageError.textContent = "Veuillez entrer trois caractères minimum";
         clearIcon.style.display = "block";
@@ -47,6 +47,15 @@ export function bigSearchBar(myrecipesdata) {
       }
     });
   }
+
+  clearIcon.addEventListener("click", async function () {
+    myInput.value = "";
+    clearIcon.style.display = "none";
+    mySearch(myrecipesdata, "");
+    const filteredRecipes = mySearch(myrecipesdata, "");
+
+    filterRecipesByTags(filteredRecipes);
+  });
 }
 
 export function mySearch(myrecipesdata, inputText) {

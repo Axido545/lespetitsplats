@@ -104,7 +104,7 @@ export function displaySuggestions(myRecipesdata) {
   });
 }
 
-export function afficheListeSuggestions(elements, containerId) {
+export function afficheListeSuggestions(elements, containerId, dataReciepes) {
   const container = document.getElementById(containerId);
 
   // Efface le contenu existant de l'élément

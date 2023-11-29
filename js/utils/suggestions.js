@@ -1,7 +1,8 @@
-import { addTag, removeTag } from "./tags.js";
+import { addTag } from "./tags.js";
 import { getRecipe, allRecipes, displayDataReciepes } from "../script/index.js";
 import { updateTagsArray, ingredientSearch } from "./getvalues.js";
 import { filterRecipesByTags, mySearch } from "./boucle-for.js";
+import { recipes } from "../data/recipes.js";
 
 export async function fetchData() {
   const data = await getRecipe();
@@ -108,34 +109,37 @@ export function afficheListeSuggestions(elements, containerId) {
     newSuggestion.setAttribute("class", "suggestion");
     newSuggestion.innerHTML = element;
 
-    newSuggestion.addEventListener("click", async function (event) {
+    newSuggestion.addEventListener("click", function (event) {
       event.stopPropagation();
       newSuggestion.classList.add("suggestion-active");
       const existingImage = newSuggestion.querySelector("img");
       if (!existingImage) {
+        console.log(newSuggestion.textContent);
         let img = document.createElement("img");
         img.src = "./asset/croix-suggestion.png";
         img.alt = "fermer la suggestion";
         img.classList.add("close-suggestion");
         newSuggestion.appendChild(img);
         addTag(element);
+        // // addTag(element);
         updateTagsArray();
-        const data = await fetchData();
-        filterRecipesByTags(data);
-        displaySuggestions(data);
+        // const data = await fetchData();
+        filterRecipesByTags(recipes);
+        displaySuggestions(recipes);
       } else {
+        //   DeletTag(element);
         addTag(element);
         updateTagsArray();
-        const data = await fetchData();
-        filterRecipesByTags(data);
-        displaySuggestions(data);
+        // const data = await fetchData();
+        filterRecipesByTags(recipes);
+        displaySuggestions(recipes);
       }
 
-      addTag(element);
-      updateTagsArray();
-      const data = await fetchData();
-      filterRecipesByTags(data);
-      displaySuggestions(data);
+      // addTag(element);
+      // updateTagsArray();
+      // // const data = await fetchData();
+      // filterRecipesByTags(recipes);
+      // displaySuggestions(recipes);
     });
 
     container.appendChild(newSuggestion);

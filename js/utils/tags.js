@@ -79,7 +79,8 @@ export async function removeTag(tagText, suggestion) {
   const inputText = inputSearch.value.trim().toLowerCase();
 
   if (remainingTags.length === 0 && inputText === "") {
-    location.reload();
+    // location.reload();
+    displayDataReciepes(recipes);
   } else {
     mySearch(recipes, inputText);
     displaySuggestions(recipes);

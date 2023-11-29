@@ -28,12 +28,12 @@ export function bigSearchBar(myrecipesdata) {
         clearIcon.style.display = "block";
         messageError.textContent = "";
 
-        if (recipeContainer.textContent === "") {
+        const filteredRecipes = mySearch(myrecipesdata, inputValue);
+
+        if (filteredRecipes.length === 0) {
           messageError.textContent = `« Aucune recette ne contient « ${inputValue} »  vous pouvez chercher «
           tarte aux pommes », « poisson », etc.`;
         }
-
-        const filteredRecipes = mySearch(myrecipesdata, inputValue);
         allRecipes.length = 0;
         allRecipes.push(...filteredRecipes);
         filterRecipesByTags(filteredRecipes);
@@ -49,6 +49,7 @@ export function bigSearchBar(myrecipesdata) {
     const filteredRecipes = mySearch(myrecipesdata, "");
 
     filterRecipesByTags(filteredRecipes);
+    displaySuggestions(filteredRecipes);
   });
 }
 

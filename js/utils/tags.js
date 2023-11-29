@@ -83,7 +83,9 @@ export async function removeTag(tagText, suggestion) {
   } else {
     mySearch(recipes, inputText);
     displaySuggestions(recipes);
-    displayDataReciepes(recipes);
+    filterRecipesByTags(recipes);
+
+    // displayDataReciepes(recipes);
   }
 }
 

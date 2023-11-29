@@ -19,7 +19,6 @@ export async function init() {
   var dataReciepes = await getRecipe();
   allRecipes.length = 0;
   allRecipes.push(...dataReciepes);
-  // console.log(allRecipes);
   filterRecipesByTags(allRecipes);
   displayDataReciepes(allRecipes);
   numberOfRecipes(allRecipes.length);

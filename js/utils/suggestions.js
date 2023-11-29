@@ -7,13 +7,10 @@ export async function fetchData() {
   const data = await getRecipe();
   displayDataReciepes(data);
   console.log("Valeur de data :", data);
-  // Vous pouvez utiliser la valeur de data ici
   return data;
 }
 
-// Fonction pour afficher les suggestions
 export function displaySuggestions(myRecipesdata) {
-  // Variable locale liste des ingrédients
   let currentIngredientsArray = [];
   let currentAppliancesArray = [];
   let currentUstensilsArray = [];
@@ -66,8 +63,6 @@ export function displaySuggestions(myRecipesdata) {
   });
   // });
 
-  // Affiche les ingrédients dès le chargement de la page
-  // On met en argument = la variable qui contient le tableau des ingrédients et le nom de l'ID où l'on souhaite afficher les ingrédients
   afficheListeSuggestions(currentIngredientsArray, "suggestions-ingredients");
   afficheListeSuggestions(currentAppliancesArray, "suggestions-appareils");
   afficheListeSuggestions(currentUstensilsArray, "suggestions-ustensiles");
@@ -107,7 +102,6 @@ export function displaySuggestions(myRecipesdata) {
 export function afficheListeSuggestions(elements, containerId, dataReciepes) {
   const container = document.getElementById(containerId);
 
-  // Efface le contenu existant de l'élément
   container.innerHTML = "";
 
   elements.forEach(async (element) => {
@@ -132,10 +126,8 @@ export function afficheListeSuggestions(elements, containerId, dataReciepes) {
       } else {
         newSuggestion.classList.add("suggestion-active");
 
-        // Vérifie si une image est déjà présente dans la suggestion
         const existingImage = newSuggestion.querySelector("img");
         if (!existingImage) {
-          // Ajouter l'image uniquement si aucune image n'est présente
           var img = document.createElement("img");
           img.src = "./asset/croix-suggestion.png";
           img.alt = "fermer la suggestion";
@@ -146,27 +138,9 @@ export function afficheListeSuggestions(elements, containerId, dataReciepes) {
 
         await addTag(element);
         updateTagsArray();
-        const data = await fetchData(); // Assurez-vous que fetchData est correctement défini
-        // displaySuggestions(data);
+        const data = await fetchData();
         filterRecipesByTags(data);
         displaySuggestions(data);
-        // mySearch(data, myInput.value);
-
-        // const inputSearch = document.getElementById("searchInput");
-        // const inputText = inputSearch.value.trim().toLowerCase();
-
-        // mySearch(data, inputText);
-
-        // (async () => {
-        //   const data = await fetchData();
-
-        //   // Ajouter le tag et mettre à jour les autres éléments
-        //   addTag(element);
-        //   updateTagsArray();
-        //   displaySuggestions(data);
-        //   filterRecipesByTags(data);
-        //   mySearch(data);
-        // })();
       }
     });
 

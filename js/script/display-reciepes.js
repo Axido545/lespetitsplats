@@ -2,7 +2,6 @@ import { recipes } from "../data/recipes.js";
 
 /// Fonction pour afficher les recettes
 export function displayReciepes(recipes) {
-  // recipeContainer.innerHTML = ''; // Efface le contenu précédent
   const {
     id,
     image,
@@ -15,9 +14,7 @@ export function displayReciepes(recipes) {
     ustensils,
   } = recipes;
 
-  // for(var i = 0; i< recipes.length ; i++){
   const articleRecipe = document.createElement("article");
-  // articleRecipe.classList.add("recipe-article", "position-relative", "col-4");
   articleRecipe.classList.add(
     "recipe-article",
     "position-relative",
@@ -93,14 +90,12 @@ export function displayReciepes(recipes) {
   const applianceInfo = document.createElement("span");
   applianceInfo.setAttribute("class", "hidden appliance-info");
   applianceInfo.textContent = appliance;
-  // applianceInfo.setAttribute("class","hidden appliance-info")
   wrapTextRecipe.appendChild(applianceInfo);
 
   const ustensileInfo = document.createElement("span");
   ustensileInfo.setAttribute("class", "hidden ustensile-info");
   ustensileInfo.textContent = ustensils;
 
-  // ustensileInfo.setAttribute("class","hidden ustensile-info")
   wrapTextRecipe.appendChild(ustensileInfo);
 
   return articleRecipe;

@@ -81,11 +81,9 @@ export async function removeTag(tagText, suggestion) {
   if (remainingTags.length === 0 && inputText === "") {
     location.reload();
   } else {
-    const Idata = fetchData();
-    const filteredRecipes = filterRecipesByTags(Idata);
-    mySearch(filteredRecipes, inputText);
-    displaySuggestions(filteredRecipes);
-    displayDataReciepes(filteredRecipes);
+    mySearch(recipes, inputText);
+    displaySuggestions(recipes);
+    displayDataReciepes(recipes);
   }
 }
 

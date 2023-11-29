@@ -98,7 +98,7 @@ export function displaySuggestions(myRecipesdata) {
   });
 }
 
-export function afficheListeSuggestions(elements, containerId, dataReciepes) {
+export function afficheListeSuggestions(elements, containerId) {
   const container = document.getElementById(containerId);
 
   container.innerHTML = "";
@@ -110,37 +110,22 @@ export function afficheListeSuggestions(elements, containerId, dataReciepes) {
 
     newSuggestion.addEventListener("click", async function (event) {
       event.stopPropagation();
-      if (
-        newSuggestion &&
-        newSuggestion.classList &&
-        newSuggestion.classList.contains("suggestion-active")
-      ) {
-        newSuggestion.classList.remove("suggestion-active");
-        const existingImage = newSuggestion.querySelector(".close-suggestion");
-        if (existingImage && existingImage.parentNode) {
-          existingImage.parentNode.removeChild(existingImage);
-        }
-        removeTag(element, newSuggestion);
-        updateTagsArray();
-      } else {
-        newSuggestion.classList.add("suggestion-active");
-
-        const existingImage = newSuggestion.querySelector("img");
-        if (!existingImage) {
-          var img = document.createElement("img");
-          img.src = "./asset/croix-suggestion.png";
-          img.alt = "fermer la suggestion";
-          img.classList.add("close-suggestion");
-          newSuggestion.appendChild(img);
-        }
-        const myInput = document.getElementById("searchInput");
-
-        await addTag(element);
-        updateTagsArray();
-        const data = await fetchData();
-        filterRecipesByTags(data);
-        displaySuggestions(data);
+      newSuggestion.classList.add("suggestion-active");
+      console.log("c la");
+      const existingImage = newSuggestion.querySelector("img");
+      if (!existingImage) {
+        let img = document.createElement("img");
+        img.src = "./asset/croix-suggestion.png";
+        img.alt = "fermer la suggestion";
+        img.classList.add("close-suggestion");
+        newSuggestion.appendChild(img);
       }
+
+      addTag(element);
+      updateTagsArray();
+      const data = await fetchData();
+      filterRecipesByTags(data);
+      displaySuggestions(data);
     });
 
     container.appendChild(newSuggestion);

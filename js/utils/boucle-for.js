@@ -67,7 +67,21 @@ export function bigSearchBar(myrecipesdata) {
     const filteredRecipes = mySearch(myrecipesdata, "");
 
     filterRecipesByTags(filteredRecipes);
-    displaySuggestions(filteredRecipes);
+
+    const ingredients = filterSuggestions(
+      filteredRecipes
+        .map((recipe) => recipe.ingredients.map((ing) => ing.ingredient))
+        .flat()
+    );
+    const appliances = filterSuggestions(
+      filteredRecipes.map((recipe) => recipe.appliance)
+    );
+    const ustensils = filterSuggestions(
+      filteredRecipes.map((recipe) => recipe.ustensils).flat()
+    );
+    displaySuggestions(ingredients, "suggestions-ingredients");
+    displaySuggestions(appliances, "suggestions-appareils");
+    displaySuggestions(ustensils, "suggestions-ustensiles");
   });
 }
 

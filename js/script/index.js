@@ -27,11 +27,11 @@ window.addEventListener("load", async function () {
     allRecipes.map((recipe) => recipe.ustensils).flat()
   );
 
-  displaySuggestions(ingredients, "suggestions-ingredients"); // puis les suggestions
-  displaySuggestions(appliances, "suggestions-appareils"); // puis les suggestions
-  displaySuggestions(ustensils, "suggestions-ustensiles"); // puis les suggestions
+  displaySuggestions(ingredients, "suggestions-ingredients");
+  displaySuggestions(appliances, "suggestions-appareils");
+  displaySuggestions(ustensils, "suggestions-ustensiles");
 
-  // bigSearchBar(allRecipes);
+  bigSearchBar(allRecipes);
   //filterRecipesByTags(allRecipes);
 });
 

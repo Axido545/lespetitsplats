@@ -1,6 +1,5 @@
 import { filterRecipesByTags, mySearch } from "./boucle-for.js";
 import { recipes } from "../data/recipes.js";
-
 // variable globale qui récup tous (ingredient/ustensils/appareils) selectionnés ss forme tableau
 const selectedTags = [];
 

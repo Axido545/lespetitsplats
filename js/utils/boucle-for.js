@@ -6,7 +6,7 @@ import {
   recipeContainer,
   messageError,
 } from "./getvalues.js";
-import { displaySuggestions } from "./suggestions.js";
+import { displaySuggestions, filterSuggestions } from "./suggestions.js";
 const myInput = document.getElementById("searchInput");
 export function bigSearchBar(myrecipesdata) {
   if (myInput) {
@@ -36,7 +36,20 @@ export function bigSearchBar(myrecipesdata) {
         allRecipes.length = 0;
         allRecipes.push(...filteredRecipes);
         filterRecipesByTags(filteredRecipes);
-        displaySuggestions(filteredRecipes);
+        const ingredients = filterSuggestions(
+          allRecipes
+            .map((recipe) => recipe.ingredients.map((ing) => ing.ingredient))
+            .flat()
+        );
+        const appliances = filterSuggestions(
+          allRecipes.map((recipe) => recipe.appliance)
+        );
+        const ustensils = filterSuggestions(
+          allRecipes.map((recipe) => recipe.ustensils).flat()
+        );
+        displaySuggestions(ingredients, "suggestions-ingredients");
+        displaySuggestions(appliances, "suggestions-appareils");
+        displaySuggestions(ustensils, "suggestions-ustensiles");
       }
     });
   }

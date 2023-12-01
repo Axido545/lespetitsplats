@@ -1,7 +1,9 @@
 /******const*******/
 export const recipeContainer = document.getElementById("recipeContainer");
 
-export const ingredientSearch = document.getElementById("ingredientSearch");
+export const inputIngredient = document.getElementById("ingredientSearch");
+export const inputAppliance = document.getElementById("applianceSearch");
+export const inputUstensils = document.getElementById("ustensilSearch");
 
 export const clearIcon = document.querySelector(".clear-icon");
 export const messageError = document.querySelector(".message-error");

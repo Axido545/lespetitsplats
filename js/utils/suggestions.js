@@ -10,11 +10,20 @@ const selectedTags = [];
  * @param {*} containerId // l'id de la div ou s'affiche chaque suggestion
  */
 
-export function displaySuggestions(elements, containerId) {
+export function displaySuggestions(elements, containerId, inputElement) {
   const container = document.getElementById(containerId);
   container.innerHTML = "";
+  const inputValue = inputElement.value.trim().toLowerCase();
 
-  elements.forEach((element) => {
+  // Filtrage les éléments en fonction de la saisie de l'utilisateur
+  const autocompletionElements =
+    inputValue === ""
+      ? elements // affiche toutes suggestion avant de taper une lettre
+      : elements.filter((element) =>
+          element.toLowerCase().includes(inputValue)
+        );
+
+  autocompletionElements.forEach((element) => {
     const newSuggestion = document.createElement("li");
     newSuggestion.setAttribute("class", "suggestion");
     newSuggestion.innerText = element;
@@ -45,13 +54,12 @@ function onSuggestion(newSuggestion) {
     selectedTags.push(newSuggestion.innerText);
   }
   displayTags(newSuggestion.innerText);
-  const inptut = document
+  const inputValue = document
     .getElementById("searchInput")
     .value.trim()
     .toLowerCase();
-  mySearch(allRecipes, inptut);
+  mySearch(allRecipes, inputValue);
   filterRecipesByTags(allRecipes);
-  // numberOfRecipes(recipes.length);
 }
 
 /**
@@ -92,13 +100,14 @@ function displayTags(tagText) {
           if (btnX_TagIndex > -1) {
             selectedTags.splice(btnX_TagIndex, 1);
             displayTags(tagText);
-            const inptut = document
-              .getElementById("searchInput")
-              .value.trim()
-              .toLowerCase();
-            mySearch(allRecipes, inptut);
-            filterRecipesByTags(allRecipes);
           }
+          const input = document
+            .getElementById("searchInput")
+            .value.trim()
+            .toLowerCase();
+
+          mySearch(allRecipes, input);
+          filterRecipesByTags(allRecipes);
           //On desactive la classe suggestion active qui correspond à ce tag
           const suggestions = document.querySelectorAll(".suggestion");
           suggestions.forEach((suggestion) => {

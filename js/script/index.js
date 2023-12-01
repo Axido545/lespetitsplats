@@ -6,7 +6,13 @@ import {
   mySearch,
 } from "../utils/boucle-for.js";
 import { displaySuggestions, filterSuggestions } from "../utils/suggestions.js";
-import { recipeCountElement, recipeContainer } from "../utils/getvalues.js";
+import {
+  recipeCountElement,
+  recipeContainer,
+  inputAppliance,
+  inputIngredient,
+  inputUstensils,
+} from "../utils/getvalues.js";
 export let allRecipes = [];
 
 export async function getRecipe() {
@@ -29,10 +35,15 @@ window.addEventListener("load", async function () {
   const ustensils = filterSuggestions(
     allRecipes.map((recipe) => recipe.ustensils).flat()
   );
-
-  displaySuggestions(ingredients, "suggestions-ingredients");
-  displaySuggestions(appliances, "suggestions-appareils");
-  displaySuggestions(ustensils, "suggestions-ustensiles");
+  inputIngredient.addEventListener("input", function () {
+    displaySuggestions(ingredients, "suggestions-ingredients", inputIngredient);
+  });
+  inputAppliance.addEventListener("input", function () {
+    displaySuggestions(appliances, "suggestions-appareils", inputAppliance);
+  });
+  inputUstensils.addEventListener("input", function () {
+    displaySuggestions(ustensils, "suggestions-ustensiles", inputUstensils);
+  });
 
   bigSearchBar(allRecipes);
   numberOfRecipes(allRecipes.length);

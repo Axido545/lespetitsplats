@@ -1,12 +1,7 @@
 import { updateTagsArray } from "./getvalues.js";
 import { filterRecipesByTags, mySearch } from "./boucle-for.js";
 import { fetchData, displaySuggestions } from "./suggestions.js";
-import {
-  displayDataReciepes,
-  allRecipes,
-  getRecipe,
-  init,
-} from "../script/index.js";
+import { displayDataReciepes, allRecipes, getRecipe } from "../script/index.js";
 import { recipes } from "../data/recipes.js";
 
 export async function addTag(tagText) {

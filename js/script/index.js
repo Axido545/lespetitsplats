@@ -13,26 +13,15 @@ export async function getRecipe() {
 // Chargez toutes les recettes au démarrage de la page
 window.addEventListener("load", async function () {
   allRecipes = await getRecipe();
+  displayDataReciepes(allRecipes); // on affiche les recettes
+  numberOfRecipes(allRecipes.length); // on affiche le nb de recettes
+  // bigSearchBar(allRecipes);
+  //filterRecipesByTags(allRecipes);
 });
 
-export async function init() {
-  var dataReciepes = await getRecipe();
-  allRecipes.length = 0;
-  allRecipes.push(...dataReciepes);
-  filterRecipesByTags(allRecipes);
-  displayDataReciepes(allRecipes);
-  numberOfRecipes(allRecipes.length);
-  bigSearchBar(allRecipes);
-}
-
 export function displayDataReciepes(dataReciepes) {
-  displaySuggestions(dataReciepes);
-
   recipeContainer.classList.add("gallery-recipes");
-  while (recipeContainer.firstChild) {
-    recipeContainer.removeChild(recipeContainer.firstChild);
-  }
-  numberOfRecipes(dataReciepes.length);
+  recipeContainer.innerHTML = null;
   dataReciepes.forEach((elt) => {
     recipeContainer.appendChild(displayReciepes(elt));
   });
@@ -45,4 +34,3 @@ export function numberOfRecipes(elt) {
     recipeCountElement.innerHTML = `<span id="NumberRecip">${elt}</span> recettes`;
   }
 }
-init();

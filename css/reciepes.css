@@ -124,7 +124,14 @@
 }
 
 .suggestion-active {
+  padding-right: 20px;
   font-weight: 600;
+  background-image: url("../asset/croix-suggestion.png");
+  background-repeat: no-repeat;
+  background-size: 16px 16px;
+  background-position: right center;
+  background-position-x: 150px;
+  background-position-y: center;
 }
 
 .close-tag {

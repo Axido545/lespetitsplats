@@ -1,6 +1,6 @@
 import { filterRecipesByTags, mySearch } from "./boucle-for.js";
 import { recipes } from "../data/recipes.js";
-import { numberOfRecipes } from "../script/index.js";
+import { allRecipes } from "../script/index.js";
 // variable globale qui récup tous (ingredient/ustensils/appareils) selectionnés ss forme tableau
 const selectedTags = [];
 
@@ -49,8 +49,8 @@ function onSuggestion(newSuggestion) {
     .getElementById("searchInput")
     .value.trim()
     .toLowerCase();
-  mySearch(recipes, inptut);
-  filterRecipesByTags(recipes);
+  mySearch(allRecipes, inptut);
+  filterRecipesByTags(allRecipes);
   // numberOfRecipes(recipes.length);
 }
 
@@ -96,8 +96,8 @@ function displayTags(tagText) {
               .getElementById("searchInput")
               .value.trim()
               .toLowerCase();
-            mySearch(recipes, inptut);
-            filterRecipesByTags(recipes);
+            mySearch(allRecipes, inptut);
+            filterRecipesByTags(allRecipes);
           }
           //On desactive la classe suggestion active qui correspond à ce tag
           const suggestions = document.querySelectorAll(".suggestion");

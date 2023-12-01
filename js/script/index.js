@@ -1,6 +1,10 @@
 import { recipes } from "../data/recipes.js";
 import { displayReciepes } from "./display-reciepes.js";
-import { bigSearchBar, filterRecipesByTags } from "../utils/boucle-for.js";
+import {
+  bigSearchBar,
+  filterRecipesByTags,
+  mySearch,
+} from "../utils/boucle-for.js";
 import { displaySuggestions, filterSuggestions } from "../utils/suggestions.js";
 import { recipeCountElement, recipeContainer } from "../utils/getvalues.js";
 export let allRecipes = [];

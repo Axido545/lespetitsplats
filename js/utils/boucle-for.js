@@ -4,12 +4,7 @@ import {
   allRecipes,
   numberOfRecipes,
 } from "../script/index.js";
-import {
-  updateTagsArray,
-  clearIcon,
-  recipeContainer,
-  messageError,
-} from "./getvalues.js";
+import { updateTagsArray, clearIcon, messageError } from "./getvalues.js";
 import { displaySuggestions, filterSuggestions } from "./suggestions.js";
 const myInput = document.getElementById("searchInput");
 export function bigSearchBar(myrecipesdata) {
@@ -64,20 +59,20 @@ export function bigSearchBar(myrecipesdata) {
     myInput.value = "";
     clearIcon.style.display = "none";
     mySearch(myrecipesdata, "");
-    const filteredRecipes = mySearch(myrecipesdata, "");
+    // const filteredRecipes = mySearch(myrecipesdata, "");
 
-    filterRecipesByTags(filteredRecipes);
+    filterRecipesByTags(myrecipesdata);
 
     const ingredients = filterSuggestions(
-      filteredRecipes
+      myrecipesdata
         .map((recipe) => recipe.ingredients.map((ing) => ing.ingredient))
         .flat()
     );
     const appliances = filterSuggestions(
-      filteredRecipes.map((recipe) => recipe.appliance)
+      myrecipesdata.map((recipe) => recipe.appliance)
     );
     const ustensils = filterSuggestions(
-      filteredRecipes.map((recipe) => recipe.ustensils).flat()
+      myrecipesdata.map((recipe) => recipe.ustensils).flat()
     );
     displaySuggestions(ingredients, "suggestions-ingredients");
     displaySuggestions(appliances, "suggestions-appareils");

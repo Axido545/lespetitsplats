@@ -20,52 +20,80 @@ export function displaySuggestions(elements, containerId) {
       newSuggestion.classList.add("suggestion-active");
     }
     container.appendChild(newSuggestion);
+    newSuggestion.addEventListener("click", () => onSuggestion(newSuggestion));
   });
 }
 
-export function afficheListeSuggestions(elements, containerId) {
-  const container = document.getElementById(containerId);
+/**
+ * @description Ajout/Suppr Tag/suggestion-active | click>>suggestion
+ * @param {*} newSuggestion // Listes d'éléments à afficher en tant que suggestion
+ */
 
-  container.innerHTML = "";
+function onSuggestion(newSuggestion) {
+  const isSelected = selectedTags.findIndex(
+    (selectedTag) => selectedTag === newSuggestion.innerText
+  );
 
-  elements.forEach(async (element) => {
-    const newSuggestion = document.createElement("li");
-    newSuggestion.setAttribute("class", "suggestion");
-    newSuggestion.innerHTML = element;
+  if (isSelected > -1) {
+    newSuggestion.classList.remove("suggestion-active");
+    selectedTags.splice(isSelected, 1);
+  } else {
+    newSuggestion.classList.add("suggestion-active");
+    selectedTags.push(newSuggestion.innerText);
+  }
+  displayTags(newSuggestion.innerText);
+}
 
-    newSuggestion.addEventListener("click", function (event) {
-      event.stopPropagation();
-      newSuggestion.classList.add("suggestion-active");
-      const existingImage = newSuggestion.querySelector("img");
-      if (!existingImage) {
-        console.log(newSuggestion.textContent);
-        let img = document.createElement("img");
-        img.src = "./asset/croix-suggestion.png";
-        img.alt = "fermer la suggestion";
-        img.classList.add("close-suggestion");
-        newSuggestion.appendChild(img);
-        addTag(element);
-        // // addTag(element);
-        updateTagsArray();
-        // const data = await fetchData();
-        filterRecipesByTags(recipes);
-        displaySuggestions(recipes);
-      } else {
-        //   DeletTag(element);
-        addTag(element);
-        updateTagsArray();
-        // const data = await fetchData();
-        filterRecipesByTags(recipes);
-        displaySuggestions(recipes);
-      }
+/**
+ * @description pour retirer les doublons
+ * @param {*} suggestions
+ * @returns
+ */
+export function filterSuggestions(suggestions) {
+  return [...new Set(suggestions)];
+}
 
-      // addTag(element);
-      // updateTagsArray();
-      // // const data = await fetchData();
-      // filterRecipesByTags(recipes);
-      // displaySuggestions(recipes);
-    });
+/**
+ * @description affichage des tags
+ *  @param {*} tagText // le tag selectionné
+ */
+function displayTags(tagText) {
+  const tagsContainer = document.querySelector("#selected-tags");
+  tagsContainer.innerHTML = "";
+  // on parcours ts les tags affichés
+  for (let i = 0; i < selectedTags.length; i++) {
+    const selectedTag = selectedTags[i];
 
-    // container.appendChild(newSuggestion);
-  });
+    // Pour chaque tag selectionné on l'affiche avec le btnX
+    const tag = document.createElement("div");
+    tag.className = "tag";
+    tag.textContent = selectedTag;
+    const btnX = document.createElement("i");
+    btnX.className = "fa-solid fa-xmark close-tag";
+
+    //Action suppr Tag
+    btnX.addEventListener(
+      "click",
+      ((btnX_TagText) => {
+        return () => {
+          // on recupp l'index du tag cliqué
+          const btnX_TagIndex = selectedTags.indexOf(btnX_TagText);
+          // S'il existe on le suppr et on affiche les tags
+          if (btnX_TagIndex > -1) {
+            selectedTags.splice(btnX_TagIndex, 1);
+            displayTags(tagText);
+          }
+          //On desactive la classe suggestion active qui correspond à ce tag
+          const suggestions = document.querySelectorAll(".suggestion");
+          suggestions.forEach((suggestion) => {
+            if (suggestion.innerText === btnX_TagText) {
+              suggestion.classList.remove("suggestion-active");
+            }
+          });
+        };
+      })(selectedTag)
+    );
+    tag.appendChild(btnX);
+    tagsContainer.appendChild(tag);
+  }
 }

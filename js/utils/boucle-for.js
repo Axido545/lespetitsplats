@@ -7,7 +7,6 @@ import {
   messageError,
 } from "./getvalues.js";
 import { displaySuggestions } from "./suggestions.js";
-import { addTag } from "./tags.js";
 const myInput = document.getElementById("searchInput");
 export function bigSearchBar(myrecipesdata) {
   if (myInput) {

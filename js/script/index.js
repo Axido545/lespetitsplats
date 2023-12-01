@@ -1,7 +1,7 @@
 import { recipes } from "../data/recipes.js";
 import { displayReciepes } from "./display-reciepes.js";
 import { bigSearchBar, filterRecipesByTags } from "../utils/boucle-for.js";
-import { displaySuggestions } from "../utils/suggestions.js";
+import { displaySuggestions, filterSuggestions } from "../utils/suggestions.js";
 import { recipeCountElement, recipeContainer } from "../utils/getvalues.js";
 export let allRecipes = [];
 
@@ -15,6 +15,22 @@ window.addEventListener("load", async function () {
   allRecipes = await getRecipe();
   displayDataReciepes(allRecipes); // on affiche les recettes
   numberOfRecipes(allRecipes.length); // on affiche le nb de recettes
+  const ingredients = filterSuggestions(
+    allRecipes
+      .map((recipe) => recipe.ingredients.map((ing) => ing.ingredient))
+      .flat()
+  );
+  const appliances = filterSuggestions(
+    allRecipes.map((recipe) => recipe.appliance)
+  );
+  const ustensils = filterSuggestions(
+    allRecipes.map((recipe) => recipe.ustensils).flat()
+  );
+
+  displaySuggestions(ingredients, "suggestions-ingredients"); // puis les suggestions
+  displaySuggestions(appliances, "suggestions-appareils"); // puis les suggestions
+  displaySuggestions(ustensils, "suggestions-ustensiles"); // puis les suggestions
+
   // bigSearchBar(allRecipes);
   //filterRecipesByTags(allRecipes);
 });

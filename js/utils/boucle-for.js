@@ -126,17 +126,3 @@ export function filterRecipesByTags(data) {
   updateTagsArray();
   return filteredRecipes;
 }
-
-export function getIngredientFromRecipes(filteredRecipes) {
-  const filteredIngredients = [];
-  filteredRecipes.forEach((recipe) => {
-    recipe.ingredients.forEach((ingredient) => {
-      const ingredientName = ingredient.ingredient.toLowerCase();
-      if (!filteredIngredients.includes(ingredientName)) {
-        filteredIngredients.push(ingredientName);
-      }
-    });
-  });
-  filterRecipesByTags(filterRecipesByTags);
-  return filteredIngredients;
-}

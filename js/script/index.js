@@ -14,7 +14,6 @@ export async function getRecipe() {
 window.addEventListener("load", async function () {
   allRecipes = await getRecipe();
   displayDataReciepes(allRecipes); // on affiche les recettes
-  numberOfRecipes(allRecipes.length); // on affiche le nb de recettes
   const ingredients = filterSuggestions(
     allRecipes
       .map((recipe) => recipe.ingredients.map((ing) => ing.ingredient))
@@ -32,7 +31,7 @@ window.addEventListener("load", async function () {
   displaySuggestions(ustensils, "suggestions-ustensiles");
 
   bigSearchBar(allRecipes);
-  //filterRecipesByTags(allRecipes);
+  numberOfRecipes(allRecipes.length);
 });
 
 export function displayDataReciepes(dataReciepes) {

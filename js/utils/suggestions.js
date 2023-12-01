@@ -1,5 +1,6 @@
 import { filterRecipesByTags, mySearch } from "./boucle-for.js";
 import { recipes } from "../data/recipes.js";
+import { numberOfRecipes } from "../script/index.js";
 // variable globale qui récup tous (ingredient/ustensils/appareils) selectionnés ss forme tableau
 const selectedTags = [];
 
@@ -50,6 +51,7 @@ function onSuggestion(newSuggestion) {
     .toLowerCase();
   mySearch(recipes, inptut);
   filterRecipesByTags(recipes);
+  // numberOfRecipes(recipes.length);
 }
 
 /**

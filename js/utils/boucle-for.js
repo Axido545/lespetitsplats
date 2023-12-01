@@ -1,5 +1,9 @@
 import { recipes } from "../data/recipes.js";
-import { displayDataReciepes, allRecipes } from "../script/index.js";
+import {
+  displayDataReciepes,
+  allRecipes,
+  numberOfRecipes,
+} from "../script/index.js";
 import {
   updateTagsArray,
   clearIcon,
@@ -36,6 +40,8 @@ export function bigSearchBar(myrecipesdata) {
         allRecipes.length = 0;
         allRecipes.push(...filteredRecipes);
         filterRecipesByTags(filteredRecipes);
+        numberOfRecipes(recipes.length);
+
         const ingredients = filterSuggestions(
           allRecipes
             .map((recipe) => recipe.ingredients.map((ing) => ing.ingredient))
@@ -93,6 +99,7 @@ export function mySearch(myrecipesdata, inputText) {
 
   /************************ fin boucle for */
   displayDataReciepes(filteredRecipes);
+  numberOfRecipes(filteredRecipes.length);
 
   return filteredRecipes;
 }
@@ -136,6 +143,8 @@ export function filterRecipesByTags(data) {
   });
 
   displayDataReciepes(filteredRecipes);
+  numberOfRecipes(filteredRecipes.length);
+
   updateTagsArray();
   return filteredRecipes;
 }

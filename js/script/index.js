@@ -20,34 +20,26 @@ export async function getRecipe() {
   return newDataReciepes;
 }
 
-// Chargez toutes les recettes au démarrage de la page
-window.addEventListener("load", async function () {
-  allRecipes = await getRecipe();
-  displayDataReciepes(allRecipes); // on affiche les recettes
-  const ingredients = filterSuggestions(
-    allRecipes
-      .map((recipe) => recipe.ingredients.map((ing) => ing.ingredient))
-      .flat()
-  );
-  const appliances = filterSuggestions(
-    allRecipes.map((recipe) => recipe.appliance)
-  );
-  const ustensils = filterSuggestions(
-    allRecipes.map((recipe) => recipe.ustensils).flat()
-  );
-  inputIngredient.addEventListener("input", function () {
-    displaySuggestions(ingredients, "suggestions-ingredients", inputIngredient);
-  });
-  inputAppliance.addEventListener("input", function () {
-    displaySuggestions(appliances, "suggestions-appareils", inputAppliance);
-  });
-  inputUstensils.addEventListener("input", function () {
-    displaySuggestions(ustensils, "suggestions-ustensiles", inputUstensils);
-  });
+allRecipes = await getRecipe();
+displayDataReciepes(allRecipes); // on affiche les recettes
+const ingredients = filterSuggestions(
+  allRecipes
+    .map((recipe) => recipe.ingredients.map((ing) => ing.ingredient))
+    .flat()
+);
+const appliances = filterSuggestions(
+  allRecipes.map((recipe) => recipe.appliance)
+);
+const ustensils = filterSuggestions(
+  allRecipes.map((recipe) => recipe.ustensils).flat()
+);
 
-  bigSearchBar(allRecipes);
-  numberOfRecipes(allRecipes.length);
-});
+displaySuggestions(ingredients, "suggestions-ingredients", inputIngredient);
+displaySuggestions(appliances, "suggestions-appareils", inputAppliance);
+displaySuggestions(ustensils, "suggestions-ustensiles", inputUstensils);
+
+bigSearchBar(allRecipes);
+numberOfRecipes(allRecipes.length);
 
 export function displayDataReciepes(dataReciepes) {
   recipeContainer.classList.add("gallery-recipes");

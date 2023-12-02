@@ -40,40 +40,41 @@ export function bigSearchBar(myrecipesdata) {
         }
         allRecipes.length = 0;
         allRecipes.push(...filteredRecipes);
+        mySearch(allRecipes, inputValue);
         filterRecipesByTags(allRecipes);
         numberOfRecipes(recipes.length);
-        const ingredients = filterSuggestions(
-          allRecipes
-            .map((recipe) => recipe.ingredients.map((ing) => ing.ingredient))
-            .flat()
-        );
-        const appliances = filterSuggestions(
-          allRecipes.map((recipe) => recipe.appliance)
-        );
-        const ustensils = filterSuggestions(
-          allRecipes.map((recipe) => recipe.ustensils).flat()
-        );
-        inputIngredient.addEventListener("input", function () {
-          displaySuggestions(
-            ingredients,
-            "suggestions-ingredients",
-            inputIngredient
-          );
-        });
-        inputAppliance.addEventListener("input", function () {
-          displaySuggestions(
-            appliances,
-            "suggestions-appareils",
-            inputAppliance
-          );
-        });
-        inputUstensils.addEventListener("input", function () {
-          displaySuggestions(
-            ustensils,
-            "suggestions-ustensiles",
-            inputUstensils
-          );
-        });
+        // const ingredients = filterSuggestions(
+        //   allRecipes
+        //     .map((recipe) => recipe.ingredients.map((ing) => ing.ingredient))
+        //     .flat()
+        // );
+        // const appliances = filterSuggestions(
+        //   allRecipes.map((recipe) => recipe.appliance)
+        // );
+        // const ustensils = filterSuggestions(
+        //   allRecipes.map((recipe) => recipe.ustensils).flat()
+        // );
+        // inputIngredient.addEventListener("input", function () {
+        //   displaySuggestions(
+        //     ingredients,
+        //     "suggestions-ingredients",
+        //     inputIngredient
+        //   );
+        // });
+        // inputAppliance.addEventListener("input", function () {
+        //   displaySuggestions(
+        //     appliances,
+        //     "suggestions-appareils",
+        //     inputAppliance
+        //   );
+        // });
+        // inputUstensils.addEventListener("input", function () {
+        //   displaySuggestions(
+        //     ustensils,
+        //     "suggestions-ustensiles",
+        //     inputUstensils
+        //   );
+        // });
       }
     });
   }

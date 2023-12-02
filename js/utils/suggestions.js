@@ -8,9 +8,6 @@ import {
 
 // stock tous (ingredient/ustensils/appareils) selectionnés ss forme tableau
 export const selectedTags = [];
-export const selectedIngredients = [];
-export const selectedUstensils = [];
-export const selectedAppareils = [];
 
 /**
  * @description permet d'afficher les ingredients, ustensils et appareils
@@ -63,44 +60,9 @@ function onSuggestion(newSuggestion, elementType) {
   if (isSelected > -1) {
     newSuggestion.classList.remove("suggestion-active");
     selectedTags.splice(isSelected, 1);
-    if (elementType === "ingredient") {
-      const index = selectedIngredients.indexOf(newSuggestion.innerText);
-      if (index > -1) {
-        selectedIngredients.splice(index, 1);
-      }
-    }
-    if (elementType === "appareil") {
-      const index = selectedAppareils.indexOf(newSuggestion.innerText);
-      if (index > -1) {
-        selectedAppareils.splice(index, 1);
-      }
-    }
-    if (elementType === "ustensil") {
-      const index = selectedUstensils.indexOf(newSuggestion.innerText);
-      if (index > -1) {
-        selectedUstensils.splice(index, 1);
-      }
-    }
-    console.log(selectedIngredients);
-    console.log(selectedAppareils);
-    console.log(selectedUstensils);
   } else {
     newSuggestion.classList.add("suggestion-active");
     selectedTags.push(newSuggestion.innerText);
-
-    if (elementType === "ingredient") {
-      selectedIngredients.push(newSuggestion.innerText);
-    }
-    if (elementType === "appareil") {
-      selectedAppareils.push(newSuggestion.innerText);
-    }
-    if (elementType === "ustensil") {
-      selectedUstensils.push(newSuggestion.innerText);
-    }
-
-    console.log(selectedIngredients);
-    console.log(selectedAppareils);
-    console.log(selectedUstensils);
   }
   displayTags(newSuggestion.innerText);
   const inputValue = document
@@ -146,33 +108,6 @@ function displayTags(tagText) {
           // S'il existe on le suppr et on affiche les tags
           if (btnX_TagIndex > -1) {
             selectedTags.splice(btnX_TagIndex, 1);
-
-            const suggestions = document.querySelectorAll(".suggestion");
-            suggestions.forEach((suggestion) => {
-              const type = suggestion.getAttribute("data-type");
-              if (type === "ingredient") {
-                const index = selectedIngredients.indexOf(btnX_TagText);
-                if (index > -1) {
-                  selectedIngredients.splice(index, 1);
-                }
-              }
-              if (type === "appareil") {
-                const index = selectedAppareils.indexOf(btnX_TagText);
-                if (index > -1) {
-                  selectedAppareils.splice(index, 1);
-                }
-              }
-              if (type === "ustensil") {
-                const index = selectedUstensils.indexOf(btnX_TagText);
-                if (index > -1) {
-                  selectedUstensils.splice(index, 1);
-                }
-              }
-
-              console.log(selectedIngredients);
-              console.log(selectedAppareils);
-              console.log(selectedUstensils);
-            });
 
             displayTags(tagText);
           }

@@ -19,9 +19,6 @@ import {
   displaySuggestions,
   filterSuggestions,
   selectedTags,
-  selectedIngredients,
-  selectedAppareils,
-  selectedUstensils,
 } from "./suggestions.js";
 
 export function bigSearchBar(myrecipesdata) {
@@ -103,37 +100,7 @@ export function mySearch(myrecipesdata, inputText) {
           break;
         }
       }
-      // // Recherche par selectedIngredients
-      // const hasSelectedIngredientsMatch =
-      //   selectedIngredients.length === 0 ||
-      //   selectedIngredients.every((selectedIngredient) =>
-      //     recipe.ingredients.some((recipeIngredient) =>
-      //       recipeIngredient.ingredient
-      //         .toLowerCase()
-      //         .includes(selectedIngredient.toLowerCase())
-      //     )
-      //   );
 
-      // // Recherche par selectedUstensils
-      // const hasSelectedUstensilsMatch =
-      //   selectedUstensils.length === 0 ||
-      //   selectedUstensils.every((selectedUstensil) =>
-      //     recipe.ustensils.includes(selectedUstensil)
-      //   );
-
-      // // Recherche par selectedAppareils
-      // const hasSelectedAppareilsMatch =
-      //   selectedAppareils.length === 0 ||
-      //   selectedAppareils.includes(recipe.appliance);
-
-      // // Si la recherche correspond à l'un des critères, ajoutez la recette
-      // if (
-      //   hasSelectedIngredientsMatch ||
-      //   hasSelectedUstensilsMatch ||
-      //   hasSelectedAppareilsMatch
-      // ) {
-
-      // }
       if (filteredRecipes.length === 0) {
         messageError.textContent = `« Aucune recette ne contient « ${inputText} »  vous pouvez chercher «
             tarte aux pommes », « poisson », etc.`;
@@ -142,6 +109,8 @@ export function mySearch(myrecipesdata, inputText) {
     }
   }
   /************************ fin boucle for */
+  filterRecipesByTags(filteredRecipes);
+
   return filteredRecipes;
 }
 /****************Recherche par tag */
@@ -177,11 +146,9 @@ export function filterRecipesByTags(data) {
       filteredRecipes.push(recipe);
     }
   });
+  const inputValue = myInput.value.trim().toLowerCase();
 
-  displayDataReciepes(filteredRecipes);
-  numberOfRecipes(filteredRecipes.length);
-
-  updateTagsArray();
+  mySearch(filteredRecipes, inputValue);
   return filteredRecipes;
 }
 

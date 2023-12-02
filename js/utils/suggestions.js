@@ -1,6 +1,6 @@
 import { filterRecipesByTags, mySearch } from "./boucle-for.js";
 import { recipes } from "../data/recipes.js";
-import { allRecipes } from "../script/index.js";
+import { allRecipes, updateSuggestions } from "../script/index.js";
 // variable globale qui récup tous (ingredient/ustensils/appareils) selectionnés ss forme tableau
 const selectedTags = [];
 
@@ -59,7 +59,12 @@ function onSuggestion(newSuggestion) {
     .value.trim()
     .toLowerCase();
   mySearch(allRecipes, inputValue);
+  const filteredRecipes = mySearch(allRecipes, inputValue);
+  const filteredRecipes2 = filterRecipesByTags(allRecipes);
+
+  console.log(filteredRecipes2);
   filterRecipesByTags(allRecipes);
+  updateSuggestions(filteredRecipes2);
 }
 
 /**
@@ -108,6 +113,8 @@ function displayTags(tagText) {
 
           mySearch(allRecipes, input);
           filterRecipesByTags(allRecipes);
+          updateSuggestions(allRecipes);
+
           //On desactive la classe suggestion active qui correspond à ce tag
           const suggestions = document.querySelectorAll(".suggestion");
           suggestions.forEach((suggestion) => {

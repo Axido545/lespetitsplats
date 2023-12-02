@@ -22,22 +22,7 @@ export async function getRecipe() {
 
 allRecipes = await getRecipe();
 displayDataReciepes(allRecipes); // on affiche les recettes
-const ingredients = filterSuggestions(
-  allRecipes
-    .map((recipe) => recipe.ingredients.map((ing) => ing.ingredient))
-    .flat()
-);
-const appliances = filterSuggestions(
-  allRecipes.map((recipe) => recipe.appliance)
-);
-const ustensils = filterSuggestions(
-  allRecipes.map((recipe) => recipe.ustensils).flat()
-);
-
-displaySuggestions(ingredients, "suggestions-ingredients", inputIngredient);
-displaySuggestions(appliances, "suggestions-appareils", inputAppliance);
-displaySuggestions(ustensils, "suggestions-ustensiles", inputUstensils);
-
+updateSuggestions(allRecipes);
 bigSearchBar(allRecipes);
 numberOfRecipes(allRecipes.length);
 
@@ -55,4 +40,28 @@ export function numberOfRecipes(elt) {
   } else {
     recipeCountElement.innerHTML = `<span id="NumberRecip">${elt}</span> recettes`;
   }
+}
+
+export function updateSuggestions(allRecipes) {
+  const ingredients = filterSuggestions(
+    allRecipes
+      .map((recipe) => recipe.ingredients.map((ing) => ing.ingredient))
+      .flat()
+  );
+  const appliances = filterSuggestions(
+    allRecipes.map((recipe) => recipe.appliance)
+  );
+  const ustensils = filterSuggestions(
+    allRecipes.map((recipe) => recipe.ustensils).flat()
+  );
+
+  return (
+    displaySuggestions(
+      ingredients,
+      "suggestions-ingredients",
+      inputIngredient
+    ) ||
+    displaySuggestions(appliances, "suggestions-appareils", inputAppliance) ||
+    displaySuggestions(ustensils, "suggestions-ustensiles", inputUstensils)
+  );
 }

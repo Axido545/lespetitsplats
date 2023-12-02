@@ -23,7 +23,7 @@ export function bigSearchBar(myrecipesdata) {
       } else {
         const filteredRecipesBySearch = mySearch(myrecipesdata, inputValue);
         filterRecipesByTags(filteredRecipesBySearch);
-        updateSuggestions(mySearch(myrecipesdata, inputValue));
+        updateSuggestions(filterRecipesByTags(filteredRecipesBySearch));
         if (filteredRecipesBySearch.length === 0) {
           messageError.textContent = `« Aucune recette ne contient « ${inputValue} »  vous pouvez chercher «
             tarte aux pommes », « poisson », etc.`;

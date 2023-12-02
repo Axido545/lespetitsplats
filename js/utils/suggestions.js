@@ -1,8 +1,16 @@
 import { filterRecipesByTags, mySearch } from "./boucle-for.js";
 import { recipes } from "../data/recipes.js";
-import { allRecipes, updateSuggestions } from "../script/index.js";
-// variable globale qui récup tous (ingredient/ustensils/appareils) selectionnés ss forme tableau
-const selectedTags = [];
+import {
+  allRecipes,
+  numberOfRecipes,
+  updateSuggestions,
+} from "../script/index.js";
+
+// stock tous (ingredient/ustensils/appareils) selectionnés ss forme tableau
+export const selectedTags = [];
+export const selectedIngredients = [];
+export const selectedUstensils = [];
+export const selectedAppareils = [];
 
 /**
  * @description permet d'afficher les ingredients, ustensils et appareils
@@ -10,11 +18,15 @@ const selectedTags = [];
  * @param {*} containerId // l'id de la div ou s'affiche chaque suggestion
  */
 
-export function displaySuggestions(elements, containerId, inputElement) {
+export function displaySuggestions(
+  elements,
+  containerId,
+  inputElement,
+  elementType
+) {
   const container = document.getElementById(containerId);
   container.innerHTML = "";
   const inputValue = inputElement.value.trim().toLowerCase();
-
   // Filtrage les éléments en fonction de la saisie de l'utilisateur
   const autocompletionElements =
     inputValue === ""
@@ -26,13 +38,15 @@ export function displaySuggestions(elements, containerId, inputElement) {
   autocompletionElements.forEach((element) => {
     const newSuggestion = document.createElement("li");
     newSuggestion.setAttribute("class", "suggestion");
+    newSuggestion.setAttribute("data-type", elementType);
     newSuggestion.innerText = element;
-
     if (selectedTags.includes(element)) {
       newSuggestion.classList.add("suggestion-active");
     }
     container.appendChild(newSuggestion);
-    newSuggestion.addEventListener("click", () => onSuggestion(newSuggestion));
+    newSuggestion.addEventListener("click", () =>
+      onSuggestion(newSuggestion, elementType)
+    );
   });
 }
 
@@ -41,7 +55,7 @@ export function displaySuggestions(elements, containerId, inputElement) {
  * @param {*} newSuggestion // Listes d'éléments à afficher en tant que suggestion
  */
 
-function onSuggestion(newSuggestion) {
+function onSuggestion(newSuggestion, elementType) {
   const isSelected = selectedTags.findIndex(
     (selectedTag) => selectedTag === newSuggestion.innerText
   );
@@ -49,22 +63,50 @@ function onSuggestion(newSuggestion) {
   if (isSelected > -1) {
     newSuggestion.classList.remove("suggestion-active");
     selectedTags.splice(isSelected, 1);
+    if (elementType === "ingredient") {
+      const index = selectedIngredients.indexOf(newSuggestion.innerText);
+      if (index > -1) {
+        selectedIngredients.splice(index, 1);
+      }
+    }
+    if (elementType === "appareil") {
+      const index = selectedAppareils.indexOf(newSuggestion.innerText);
+      if (index > -1) {
+        selectedAppareils.splice(index, 1);
+      }
+    }
+    if (elementType === "ustensil") {
+      const index = selectedUstensils.indexOf(newSuggestion.innerText);
+      if (index > -1) {
+        selectedUstensils.splice(index, 1);
+      }
+    }
+    console.log(selectedIngredients);
+    console.log(selectedAppareils);
+    console.log(selectedUstensils);
   } else {
     newSuggestion.classList.add("suggestion-active");
     selectedTags.push(newSuggestion.innerText);
+
+    if (elementType === "ingredient") {
+      selectedIngredients.push(newSuggestion.innerText);
+    }
+    if (elementType === "appareil") {
+      selectedAppareils.push(newSuggestion.innerText);
+    }
+    if (elementType === "ustensil") {
+      selectedUstensils.push(newSuggestion.innerText);
+    }
+
+    console.log(selectedIngredients);
+    console.log(selectedAppareils);
+    console.log(selectedUstensils);
   }
   displayTags(newSuggestion.innerText);
   const inputValue = document
     .getElementById("searchInput")
     .value.trim()
     .toLowerCase();
-  mySearch(allRecipes, inputValue);
-  const filteredRecipes = mySearch(allRecipes, inputValue);
-  const filteredRecipes2 = filterRecipesByTags(allRecipes);
-
-  console.log(filteredRecipes2);
-  filterRecipesByTags(allRecipes);
-  updateSuggestions(filteredRecipes2);
 }
 
 /**
@@ -104,6 +146,34 @@ function displayTags(tagText) {
           // S'il existe on le suppr et on affiche les tags
           if (btnX_TagIndex > -1) {
             selectedTags.splice(btnX_TagIndex, 1);
+
+            const suggestions = document.querySelectorAll(".suggestion");
+            suggestions.forEach((suggestion) => {
+              const type = suggestion.getAttribute("data-type");
+              if (type === "ingredient") {
+                const index = selectedIngredients.indexOf(btnX_TagText);
+                if (index > -1) {
+                  selectedIngredients.splice(index, 1);
+                }
+              }
+              if (type === "appareil") {
+                const index = selectedAppareils.indexOf(btnX_TagText);
+                if (index > -1) {
+                  selectedAppareils.splice(index, 1);
+                }
+              }
+              if (type === "ustensil") {
+                const index = selectedUstensils.indexOf(btnX_TagText);
+                if (index > -1) {
+                  selectedUstensils.splice(index, 1);
+                }
+              }
+
+              console.log(selectedIngredients);
+              console.log(selectedAppareils);
+              console.log(selectedUstensils);
+            });
+
             displayTags(tagText);
           }
           const input = document
@@ -111,10 +181,11 @@ function displayTags(tagText) {
             .value.trim()
             .toLowerCase();
 
-          mySearch(allRecipes, input);
           filterRecipesByTags(allRecipes);
-          updateSuggestions(allRecipes);
-
+          // updateSuggestions(allRecipes);
+          const filterRecipes = filterRecipesByTags(allRecipes);
+          mySearch(filterRecipes, input);
+          numberOfRecipes(filterRecipes.length);
           //On desactive la classe suggestion active qui correspond à ce tag
           const suggestions = document.querySelectorAll(".suggestion");
           suggestions.forEach((suggestion) => {

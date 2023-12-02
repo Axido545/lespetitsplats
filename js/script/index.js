@@ -12,6 +12,7 @@ import {
   inputAppliance,
   inputIngredient,
   inputUstensils,
+  inputSuggestion,
 } from "../utils/getvalues.js";
 export let allRecipes = [];
 
@@ -59,9 +60,20 @@ export function updateSuggestions(allRecipes) {
     displaySuggestions(
       ingredients,
       "suggestions-ingredients",
-      inputIngredient
+      inputIngredient,
+      "ingredient"
     ) ||
-    displaySuggestions(appliances, "suggestions-appareils", inputAppliance) ||
-    displaySuggestions(ustensils, "suggestions-ustensiles", inputUstensils)
+    displaySuggestions(
+      appliances,
+      "suggestions-appareils",
+      inputAppliance,
+      "appareil"
+    ) ||
+    displaySuggestions(
+      ustensils,
+      "suggestions-ustensiles",
+      inputUstensils,
+      "ustensil"
+    )
   );
 }

@@ -7,109 +7,74 @@ import {
 import {
   updateTagsArray,
   clearIcon,
+  clearInput,
   messageError,
   inputAppliance,
   inputIngredient,
   inputUstensils,
+  myInput,
+  recipeContainer,
 } from "./getvalues.js";
-import { displaySuggestions, filterSuggestions } from "./suggestions.js";
-const myInput = document.getElementById("searchInput");
+import {
+  displaySuggestions,
+  filterSuggestions,
+  selectedTags,
+  selectedIngredients,
+  selectedAppareils,
+  selectedUstensils,
+} from "./suggestions.js";
+
 export function bigSearchBar(myrecipesdata) {
   if (myInput) {
     myInput.addEventListener("input", function () {
       const inputValue = myInput.value.trim().toLowerCase();
+      clearInput.classList.add("hidden");
 
-      clearIcon.style.display = "none";
       if (inputValue.length === 0) {
-        allRecipes.length = 0;
-        allRecipes.push(...myrecipesdata);
         messageError.textContent = "";
-        clearIcon.style.display = "none";
-        mySearch(myrecipesdata, inputValue);
-        filterRecipesByTags(myrecipesdata);
+        clearInput.classList.add("hidden");
       } else if (inputValue.length < 3) {
         messageError.textContent = "Veuillez entrer trois caractères minimum";
-        clearIcon.style.display = "block";
+        clearInput.classList.remove("hidden");
       } else {
-        clearIcon.style.display = "block";
+        displayDataReciepes(mySearch(myrecipesdata, inputValue));
+        clearInput.classList.remove("hidden");
         messageError.textContent = "";
-        const filteredRecipes = mySearch(myrecipesdata, inputValue);
-        if (filteredRecipes.length === 0) {
-          messageError.textContent = `« Aucune recette ne contient « ${inputValue} »  vous pouvez chercher «
-          tarte aux pommes », « poisson », etc.`;
-        }
-        allRecipes.length = 0;
-        allRecipes.push(...filteredRecipes);
-        mySearch(allRecipes, inputValue);
-        filterRecipesByTags(allRecipes);
-        numberOfRecipes(recipes.length);
-        // const ingredients = filterSuggestions(
-        //   allRecipes
-        //     .map((recipe) => recipe.ingredients.map((ing) => ing.ingredient))
-        //     .flat()
-        // );
-        // const appliances = filterSuggestions(
-        //   allRecipes.map((recipe) => recipe.appliance)
-        // );
-        // const ustensils = filterSuggestions(
-        //   allRecipes.map((recipe) => recipe.ustensils).flat()
-        // );
-        // inputIngredient.addEventListener("input", function () {
-        //   displaySuggestions(
-        //     ingredients,
-        //     "suggestions-ingredients",
-        //     inputIngredient
-        //   );
-        // });
-        // inputAppliance.addEventListener("input", function () {
-        //   displaySuggestions(
-        //     appliances,
-        //     "suggestions-appareils",
-        //     inputAppliance
-        //   );
-        // });
-        // inputUstensils.addEventListener("input", function () {
-        //   displaySuggestions(
-        //     ustensils,
-        //     "suggestions-ustensiles",
-        //     inputUstensils
-        //   );
-        // });
       }
     });
   }
 
-  clearIcon.addEventListener("click", async function () {
-    myInput.value = "";
-    clearIcon.style.display = "none";
-    // mySearch(myrecipesdata, "");
-    const filteredRecipes = mySearch(myrecipesdata, "");
-    filterRecipesByTags(myrecipesdata);
-    const ingredients = filterSuggestions(
-      myrecipesdata
-        .map((recipe) => recipe.ingredients.map((ing) => ing.ingredient))
-        .flat()
-    );
-    const appliances = filterSuggestions(
-      myrecipesdata.map((recipe) => recipe.appliance)
-    );
-    const ustensils = filterSuggestions(
-      myrecipesdata.map((recipe) => recipe.ustensils).flat()
-    );
-    inputIngredient.addEventListener("input", function () {
-      displaySuggestions(
-        ingredients,
-        "suggestions-ingredients",
-        inputIngredient
-      );
-    });
-    inputAppliance.addEventListener("input", function () {
-      displaySuggestions(appliances, "suggestions-appareils", inputAppliance);
-    });
-    inputUstensils.addEventListener("input", function () {
-      displaySuggestions(ustensils, "suggestions-ustensiles", inputUstensils);
-    });
-  });
+  // clearIcon.addEventListener("click", async function () {
+  //   myInput.value = "";
+  //   clearIcon.style.display = "none";
+  //   // mySearch(myrecipesdata, "");
+  //   const filteredRecipes = mySearch(myrecipesdata, "");
+  //   filterRecipesByTags(myrecipesdata);
+  //   const ingredients = filterSuggestions(
+  //     myrecipesdata
+  //       .map((recipe) => recipe.ingredients.map((ing) => ing.ingredient))
+  //       .flat()
+  //   );
+  //   const appliances = filterSuggestions(
+  //     myrecipesdata.map((recipe) => recipe.appliance)
+  //   );
+  //   const ustensils = filterSuggestions(
+  //     myrecipesdata.map((recipe) => recipe.ustensils).flat()
+  //   );
+  //   inputIngredient.addEventListener("input", function () {
+  //     displaySuggestions(
+  //       ingredients,
+  //       "suggestions-ingredients",
+  //       inputIngredient
+  //     );
+  //   });
+  //   inputAppliance.addEventListener("input", function () {
+  //     displaySuggestions(appliances, "suggestions-appareils", inputAppliance);
+  //   });
+  //   inputUstensils.addEventListener("input", function () {
+  //     displaySuggestions(ustensils, "suggestions-ustensiles", inputUstensils);
+  //   });
+  // });
 }
 
 export function mySearch(myrecipesdata, inputText) {
@@ -123,7 +88,6 @@ export function mySearch(myrecipesdata, inputText) {
     } else {
       numberOfRecipes(filteredRecipes.length);
     }
-
     if (recipe.name.toLowerCase().includes(inputText)) {
       filteredRecipes.push(recipe);
       continue;
@@ -139,20 +103,47 @@ export function mySearch(myrecipesdata, inputText) {
           break;
         }
       }
+      // // Recherche par selectedIngredients
+      // const hasSelectedIngredientsMatch =
+      //   selectedIngredients.length === 0 ||
+      //   selectedIngredients.every((selectedIngredient) =>
+      //     recipe.ingredients.some((recipeIngredient) =>
+      //       recipeIngredient.ingredient
+      //         .toLowerCase()
+      //         .includes(selectedIngredient.toLowerCase())
+      //     )
+      //   );
+
+      // // Recherche par selectedUstensils
+      // const hasSelectedUstensilsMatch =
+      //   selectedUstensils.length === 0 ||
+      //   selectedUstensils.every((selectedUstensil) =>
+      //     recipe.ustensils.includes(selectedUstensil)
+      //   );
+
+      // // Recherche par selectedAppareils
+      // const hasSelectedAppareilsMatch =
+      //   selectedAppareils.length === 0 ||
+      //   selectedAppareils.includes(recipe.appliance);
+
+      // // Si la recherche correspond à l'un des critères, ajoutez la recette
+      // if (
+      //   hasSelectedIngredientsMatch ||
+      //   hasSelectedUstensilsMatch ||
+      //   hasSelectedAppareilsMatch
+      // ) {
+
+      // }
+      if (filteredRecipes.length === 0) {
+        messageError.textContent = `« Aucune recette ne contient « ${inputText} »  vous pouvez chercher «
+            tarte aux pommes », « poisson », etc.`;
+        recipeContainer.innerHTML = "";
+      }
     }
   }
-
   /************************ fin boucle for */
-  displayDataReciepes(filteredRecipes);
-  numberOfRecipes(filteredRecipes.length);
-
   return filteredRecipes;
 }
-
-window.addEventListener("load", function () {
-  myInput.value = "";
-});
-
 /****************Recherche par tag */
 export function filterRecipesByTags(data) {
   const filteredRecipes = [];
@@ -193,3 +184,10 @@ export function filterRecipesByTags(data) {
   updateTagsArray();
   return filteredRecipes;
 }
+
+window.addEventListener("load", function () {
+  myInput.value = "";
+  inputIngredient.value = "";
+  inputAppliance.value = "";
+  inputUstensils.value = "";
+});

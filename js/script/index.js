@@ -1,11 +1,7 @@
 import { recipes } from "../data/recipes.js";
 import { displayReciepes } from "./display-reciepes.js";
 import { displayBtnBigSearch } from "./btn-search.js";
-import {
-  bigSearchBar,
-  filterRecipesByTags,
-  mySearch,
-} from "../utils/boucle-for.js";
+import { bigSearchBar } from "../utils/boucle-for.js";
 import { displaySuggestions, filterSuggestions } from "../utils/suggestions.js";
 import {
   recipeCountElement,
@@ -13,7 +9,6 @@ import {
   inputAppliance,
   inputIngredient,
   inputUstensils,
-  inputSuggestion,
 } from "../utils/getvalues.js";
 export let allRecipes = [];
 
@@ -91,9 +86,6 @@ export function updateSuggestions(allRecipes) {
   } else {
     displaySuggestions(ustensils, "suggestions-ustensiles", inputUstensils);
   }
-  console.log(updateIngredients);
-  console.log(uptdateAppliances);
-  console.log(updateUstensils);
 
   return updateIngredients || uptdateAppliances || updateUstensils;
 }

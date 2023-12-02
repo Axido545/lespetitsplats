@@ -4,22 +4,13 @@ import {
   numberOfRecipes,
   updateSuggestions,
 } from "../script/index.js";
-import {
-  clearInput,
-  messageError,
-  myInput,
-  recipeContainer,
-} from "./getvalues.js";
+import { clearInput, messageError, myInput } from "./getvalues.js";
 import { selectedTags } from "./suggestions.js";
 
 export function bigSearchBar(myrecipesdata) {
   if (myInput) {
     myInput.addEventListener("input", function () {
-      // if (myrecipesdata.length === 0) {
-      //   messageError.textContent = `« Aucune recette ne contient « ${inputText} »  vous pouvez chercher «
-      //       tarte aux pommes », « poisson », etc.`;
-      //   recipeContainer.innerHTML = "";
-      // }
+      console.log(myrecipesdata.length);
       const inputValue = myInput.value.trim().toLowerCase();
       clearInput.classList.add("hidden");
 
@@ -33,9 +24,13 @@ export function bigSearchBar(myrecipesdata) {
         const filteredRecipesBySearch = mySearch(myrecipesdata, inputValue);
         filterRecipesByTags(filteredRecipesBySearch);
         updateSuggestions(mySearch(myrecipesdata, inputValue));
-
+        if (filteredRecipesBySearch.length === 0) {
+          messageError.textContent = `« Aucune recette ne contient « ${inputValue} »  vous pouvez chercher «
+            tarte aux pommes », « poisson », etc.`;
+        } else {
+          messageError.textContent = "";
+        }
         clearInput.classList.remove("hidden");
-        messageError.textContent = "";
       }
     });
   }

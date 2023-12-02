@@ -57,24 +57,45 @@ export function updateSuggestions(allRecipes) {
     allRecipes.map((recipe) => recipe.ustensils).flat()
   );
 
-  return (
-    displaySuggestions(
-      ingredients,
-      "suggestions-ingredients",
-      inputIngredient,
-      "ingredient"
-    ) ||
-    displaySuggestions(
-      appliances,
-      "suggestions-appareils",
-      inputAppliance,
-      "appareil"
-    ) ||
-    displaySuggestions(
-      ustensils,
-      "suggestions-ustensiles",
-      inputUstensils,
-      "ustensil"
-    )
-  );
+  // on stock affichage suggestions dans fonction
+  const updateIngredients = function () {
+    displaySuggestions(ingredients, "suggestions-ingredients", inputIngredient);
+  };
+
+  const uptdateAppliances = function () {
+    displaySuggestions(appliances, "suggestions-appareils", inputAppliance);
+  };
+
+  const updateUstensils = function () {
+    displaySuggestions(ustensils, "suggestions-ustensiles", inputUstensils);
+  };
+
+  if (inputIngredient) {
+    inputIngredient.addEventListener("input", updateIngredients);
+  }
+
+  if (inputAppliance) {
+    inputIngredient.addEventListener("input", uptdateAppliances);
+  }
+
+  if (inputUstensils) {
+    inputIngredient.addEventListener("input", updateUstensils);
+  }
+
+  return updateIngredients || uptdateAppliances || updateUstensils;
 }
+
+const ingredients = filterSuggestions(
+  allRecipes
+    .map((recipe) => recipe.ingredients.map((ing) => ing.ingredient))
+    .flat()
+);
+const appliances = filterSuggestions(
+  allRecipes.map((recipe) => recipe.appliance)
+);
+const ustensils = filterSuggestions(
+  allRecipes.map((recipe) => recipe.ustensils).flat()
+);
+displaySuggestions(ingredients, "suggestions-ingredients", inputIngredient);
+displaySuggestions(appliances, "suggestions-appareils", inputAppliance);
+displaySuggestions(ustensils, "suggestions-ustensiles", inputUstensils);

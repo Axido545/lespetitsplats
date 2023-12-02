@@ -3,6 +3,7 @@ import {
   allRecipes,
   displayDataReciepes,
   numberOfRecipes,
+  updateSuggestions,
 } from "../script/index.js";
 
 // stock tous (ingredient/ustensils/appareils) selectionnés ss forme tableau
@@ -62,7 +63,9 @@ function onSuggestion(newSuggestion) {
     .toLowerCase();
   const myRecipes = mySearch(allRecipes, inputValue);
   filterRecipesByTags(myRecipes);
+  const filteredSuggestions = filterRecipesByTags(myRecipes);
   console.log(filterRecipesByTags(myRecipes));
+  updateSuggestions(filteredSuggestions);
 }
 
 /**
@@ -111,6 +114,12 @@ function displayTags(tagText) {
             .toLowerCase();
 
           filterRecipesByTags(mySearch(allRecipes, inputValue));
+
+          const myRecipes = filterRecipesByTags(
+            mySearch(allRecipes, inputValue)
+          );
+
+          updateSuggestions(myRecipes);
 
           //On desactive la classe suggestion active qui correspond à ce tag
           const suggestions = document.querySelectorAll(".suggestion");

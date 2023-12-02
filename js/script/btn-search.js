@@ -8,9 +8,13 @@ export const whiteGlass = document.querySelector(".glass-white");
 export const blackGlass = document.querySelector(".glass-black");
 
 export function displayBtnBigSearch() {
+  if (myInput.value != "") {
+    clearIcon.classList.remove("hidden");
+  }
   clearIcon.addEventListener("click", async function () {
     myInput.value = "";
-    clearIcon.style.display = "none";
+
+    clearIcon.classList.add("hidden");
     const filteredRecipes = filterRecipesByTags(recipes);
 
     mySearch(filteredRecipes, "");

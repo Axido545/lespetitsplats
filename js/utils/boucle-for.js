@@ -102,7 +102,6 @@ export function filterRecipesByTags(data) {
       filteredRecipes.push(recipe);
     }
   });
-  const inputValue = myInput.value.trim().toLowerCase();
 
   displayDataReciepes(filteredRecipes);
   numberOfRecipes(filteredRecipes.length);

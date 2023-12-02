@@ -43,7 +43,7 @@ export function numberOfRecipes(elt) {
     recipeCountElement.innerHTML = `<span id="NumberRecip">${elt}</span> recettes`;
   }
 }
-
+//autocompletion
 export function updateSuggestions(allRecipes) {
   const ingredients = filterSuggestions(
     allRecipes
@@ -56,6 +56,10 @@ export function updateSuggestions(allRecipes) {
   const ustensils = filterSuggestions(
     allRecipes.map((recipe) => recipe.ustensils).flat()
   );
+
+  displaySuggestions(ingredients, "suggestions-ingredients", inputIngredient);
+  displaySuggestions(appliances, "suggestions-appareils", inputAppliance);
+  displaySuggestions(ustensils, "suggestions-ustensiles", inputUstensils);
 
   // on stock affichage suggestions dans fonction
   const updateIngredients = function () {
@@ -70,32 +74,26 @@ export function updateSuggestions(allRecipes) {
     displaySuggestions(ustensils, "suggestions-ustensiles", inputUstensils);
   };
 
-  if (inputIngredient) {
+  if (inputIngredient.length != 0) {
     inputIngredient.addEventListener("input", updateIngredients);
+  } else {
+    displaySuggestions(ingredients, "suggestions-ingredients", inputIngredient);
   }
 
-  if (inputAppliance) {
-    inputIngredient.addEventListener("input", uptdateAppliances);
+  if (inputAppliance.length != 0) {
+    inputAppliance.addEventListener("input", uptdateAppliances);
+  } else {
+    displaySuggestions(appliances, "suggestions-appareils", inputAppliance);
   }
 
-  if (inputUstensils) {
-    inputIngredient.addEventListener("input", updateUstensils);
+  if (inputUstensils.length != 0) {
+    inputUstensils.addEventListener("input", updateUstensils);
+  } else {
+    displaySuggestions(ustensils, "suggestions-ustensiles", inputUstensils);
   }
+  console.log(updateIngredients);
+  console.log(uptdateAppliances);
+  console.log(updateUstensils);
 
   return updateIngredients || uptdateAppliances || updateUstensils;
 }
-
-const ingredients = filterSuggestions(
-  allRecipes
-    .map((recipe) => recipe.ingredients.map((ing) => ing.ingredient))
-    .flat()
-);
-const appliances = filterSuggestions(
-  allRecipes.map((recipe) => recipe.appliance)
-);
-const ustensils = filterSuggestions(
-  allRecipes.map((recipe) => recipe.ustensils).flat()
-);
-displaySuggestions(ingredients, "suggestions-ingredients", inputIngredient);
-displaySuggestions(appliances, "suggestions-appareils", inputAppliance);
-displaySuggestions(ustensils, "suggestions-ustensiles", inputUstensils);

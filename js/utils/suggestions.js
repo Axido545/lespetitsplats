@@ -118,7 +118,7 @@ function displayTags(tagText) {
           const myRecipes = filterRecipesByTags(
             mySearch(allRecipes, inputValue)
           );
-
+          console.log(myRecipes);
           updateSuggestions(myRecipes);
 
           //On desactive la classe suggestion active qui correspond à ce tag

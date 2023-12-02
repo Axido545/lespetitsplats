@@ -1,9 +1,8 @@
 import { filterRecipesByTags, mySearch } from "./boucle-for.js";
-import { recipes } from "../data/recipes.js";
 import {
   allRecipes,
+  displayDataReciepes,
   numberOfRecipes,
-  updateSuggestions,
 } from "../script/index.js";
 
 // stock tous (ingredient/ustensils/appareils) selectionnés ss forme tableau
@@ -15,12 +14,7 @@ export const selectedTags = [];
  * @param {*} containerId // l'id de la div ou s'affiche chaque suggestion
  */
 
-export function displaySuggestions(
-  elements,
-  containerId,
-  inputElement,
-  elementType
-) {
+export function displaySuggestions(elements, containerId, inputElement) {
   const container = document.getElementById(containerId);
   container.innerHTML = "";
   const inputValue = inputElement.value.trim().toLowerCase();
@@ -35,15 +29,12 @@ export function displaySuggestions(
   autocompletionElements.forEach((element) => {
     const newSuggestion = document.createElement("li");
     newSuggestion.setAttribute("class", "suggestion");
-    newSuggestion.setAttribute("data-type", elementType);
     newSuggestion.innerText = element;
     if (selectedTags.includes(element)) {
       newSuggestion.classList.add("suggestion-active");
     }
     container.appendChild(newSuggestion);
-    newSuggestion.addEventListener("click", () =>
-      onSuggestion(newSuggestion, elementType)
-    );
+    newSuggestion.addEventListener("click", () => onSuggestion(newSuggestion));
   });
 }
 
@@ -52,7 +43,7 @@ export function displaySuggestions(
  * @param {*} newSuggestion // Listes d'éléments à afficher en tant que suggestion
  */
 
-function onSuggestion(newSuggestion, elementType) {
+function onSuggestion(newSuggestion) {
   const isSelected = selectedTags.findIndex(
     (selectedTag) => selectedTag === newSuggestion.innerText
   );
@@ -69,6 +60,9 @@ function onSuggestion(newSuggestion, elementType) {
     .getElementById("searchInput")
     .value.trim()
     .toLowerCase();
+  const myRecipes = mySearch(allRecipes, inputValue);
+  filterRecipesByTags(myRecipes);
+  console.log(filterRecipesByTags(myRecipes));
 }
 
 /**
@@ -111,16 +105,13 @@ function displayTags(tagText) {
 
             displayTags(tagText);
           }
-          const input = document
+          const inputValue = document
             .getElementById("searchInput")
             .value.trim()
             .toLowerCase();
 
-          filterRecipesByTags(allRecipes);
-          // updateSuggestions(allRecipes);
-          const filterRecipes = filterRecipesByTags(allRecipes);
-          mySearch(filterRecipes, input);
-          numberOfRecipes(filterRecipes.length);
+          filterRecipesByTags(mySearch(allRecipes, inputValue));
+
           //On desactive la classe suggestion active qui correspond à ce tag
           const suggestions = document.querySelectorAll(".suggestion");
           suggestions.forEach((suggestion) => {

@@ -11,9 +11,9 @@ export function displayBtnBigSearch() {
   clearIcon.addEventListener("click", async function () {
     myInput.value = "";
     clearIcon.style.display = "none";
-    mySearch(recipes, "");
-    const filteredRecipes = filterRecipesByTags(mySearch(recipes, ""));
-    displayDataReciepes(filteredRecipes);
+    const filteredRecipes = filterRecipesByTags(recipes);
+
+    mySearch(filteredRecipes, "");
   });
 }
 

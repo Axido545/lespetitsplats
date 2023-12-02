@@ -14,13 +14,9 @@ export const recipeCountElement = document.getElementById("recipeCount");
 export const tagsContainer = document.getElementById("selected-tags");
 export const suggestionActive = document.querySelector(".suggestion-active");
 
-/******functions*******/
-
-// récupere le tableau des tags
-export function updateTagsArray() {
-  const selectedTags = Array.from(document.querySelectorAll(".tag")).map(
-    (tag) => tag.textContent
-  );
-  // console.log(selectedTags);
-  return selectedTags;
-}
+window.addEventListener("load", function () {
+  myInput.value = "";
+  inputIngredient.value = "";
+  inputAppliance.value = "";
+  inputUstensils.value = "";
+});

@@ -1,25 +1,12 @@
 import { recipes } from "../data/recipes.js";
+import { displayDataReciepes, numberOfRecipes } from "../script/index.js";
 import {
-  displayDataReciepes,
-  allRecipes,
-  numberOfRecipes,
-} from "../script/index.js";
-import {
-  updateTagsArray,
-  clearIcon,
   clearInput,
   messageError,
-  inputAppliance,
-  inputIngredient,
-  inputUstensils,
   myInput,
   recipeContainer,
 } from "./getvalues.js";
-import {
-  displaySuggestions,
-  filterSuggestions,
-  selectedTags,
-} from "./suggestions.js";
+import { selectedTags } from "./suggestions.js";
 
 export function bigSearchBar(myrecipesdata) {
   if (myInput) {
@@ -34,44 +21,13 @@ export function bigSearchBar(myrecipesdata) {
         messageError.textContent = "Veuillez entrer trois caractères minimum";
         clearInput.classList.remove("hidden");
       } else {
-        displayDataReciepes(mySearch(myrecipesdata, inputValue));
+        const filteredRecipesBySearch = mySearch(myrecipesdata, inputValue);
+        filterRecipesByTags(filteredRecipesBySearch);
         clearInput.classList.remove("hidden");
         messageError.textContent = "";
       }
     });
   }
-
-  // clearIcon.addEventListener("click", async function () {
-  //   myInput.value = "";
-  //   clearIcon.style.display = "none";
-  //   // mySearch(myrecipesdata, "");
-  //   const filteredRecipes = mySearch(myrecipesdata, "");
-  //   filterRecipesByTags(myrecipesdata);
-  //   const ingredients = filterSuggestions(
-  //     myrecipesdata
-  //       .map((recipe) => recipe.ingredients.map((ing) => ing.ingredient))
-  //       .flat()
-  //   );
-  //   const appliances = filterSuggestions(
-  //     myrecipesdata.map((recipe) => recipe.appliance)
-  //   );
-  //   const ustensils = filterSuggestions(
-  //     myrecipesdata.map((recipe) => recipe.ustensils).flat()
-  //   );
-  //   inputIngredient.addEventListener("input", function () {
-  //     displaySuggestions(
-  //       ingredients,
-  //       "suggestions-ingredients",
-  //       inputIngredient
-  //     );
-  //   });
-  //   inputAppliance.addEventListener("input", function () {
-  //     displaySuggestions(appliances, "suggestions-appareils", inputAppliance);
-  //   });
-  //   inputUstensils.addEventListener("input", function () {
-  //     displaySuggestions(ustensils, "suggestions-ustensiles", inputUstensils);
-  //   });
-  // });
 }
 
 export function mySearch(myrecipesdata, inputText) {
@@ -109,14 +65,14 @@ export function mySearch(myrecipesdata, inputText) {
     }
   }
   /************************ fin boucle for */
-  filterRecipesByTags(filteredRecipes);
-
+  displayDataReciepes(filteredRecipes);
+  numberOfRecipes(filteredRecipes.length);
   return filteredRecipes;
 }
 /****************Recherche par tag */
 export function filterRecipesByTags(data) {
   const filteredRecipes = [];
-  const globalSelectedTags = updateTagsArray();
+  const globalSelectedTags = selectedTags;
 
   if (globalSelectedTags.length === 0) {
     return recipes;
@@ -148,13 +104,8 @@ export function filterRecipesByTags(data) {
   });
   const inputValue = myInput.value.trim().toLowerCase();
 
-  mySearch(filteredRecipes, inputValue);
+  displayDataReciepes(filteredRecipes);
+  numberOfRecipes(filteredRecipes.length);
+
   return filteredRecipes;
 }
-
-window.addEventListener("load", function () {
-  myInput.value = "";
-  inputIngredient.value = "";
-  inputAppliance.value = "";
-  inputUstensils.value = "";
-});

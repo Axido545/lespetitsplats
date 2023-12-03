@@ -56,6 +56,7 @@ export function displayReciepes(recipes) {
 
   const subTitlRecipeIng = document.createElement("h3");
   subTitlRecipeIng.classList.add("reciepe-subtitle", "mb-2");
+  subTitlRecipeIng.textContent = "INGREDIENTS";
   wrapTextRecipe.appendChild(subTitlRecipeIng);
 
   const ingredientsList = document.createElement("section");

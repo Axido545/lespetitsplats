@@ -10,7 +10,6 @@ import { selectedTags } from "./suggestions.js";
 export function bigSearchBar(myrecipesdata) {
   if (myInput) {
     myInput.addEventListener("input", function () {
-      console.log(myrecipesdata.length);
       const inputValue = myInput.value.trim().toLowerCase();
       clearInput.classList.add("hidden");
 

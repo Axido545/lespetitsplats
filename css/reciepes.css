@@ -52,7 +52,7 @@
   font-size: 12px;
   font-family: "Manrope";
   font-weight: 700;
-  letter-spacing: 9%;
+  letter-spacing: 1.2rem;
 }
 
 .ingredient-Item-name {
@@ -71,7 +71,7 @@
 #suggestions-ustensiles {
   width: 195px;
   background-color: white;
-  margin-top: 2.3 rem;
+  margin-top: 2.3rem;
   padding-left: 15px;
   margin-left: -11px;
   list-style-type: none;

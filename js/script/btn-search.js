@@ -1,7 +1,7 @@
 import { displayDataReciepes, allRecipes } from "./index.js";
 import { recipes } from "../data/recipes.js";
 import { clearIcon, myInput } from "../utils/getvalues.js";
-import { filterRecipesByTags, mySearch } from "../utils/boucle-for.js";
+import { filterRecipesByTags, mySearch } from "../utils/search.js";
 
 export const searchBtn = document.querySelector(".search-btn");
 export const whiteGlass = document.querySelector(".glass-white");

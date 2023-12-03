@@ -1,4 +1,4 @@
-import { filterRecipesByTags, mySearch } from "./boucle-for.js";
+import { filterRecipesByTags, mySearch } from "./search.js";
 import {
   allRecipes,
   displayDataReciepes,

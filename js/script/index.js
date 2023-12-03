@@ -1,7 +1,7 @@
 import { recipes } from "../data/recipes.js";
 import { displayReciepes } from "./display-reciepes.js";
 import { displayBtnBigSearch } from "./btn-search.js";
-import { bigSearchBar } from "../utils/boucle-for.js";
+import { bigSearchBar } from "../utils/search.js";
 import { displaySuggestions, filterSuggestions } from "../utils/suggestions.js";
 import {
   recipeCountElement,

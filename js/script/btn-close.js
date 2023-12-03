@@ -1,38 +1,35 @@
-import { displayReciepes } from './display-reciepes.js';
-import { filterRecipesByTags, mySearch } from '../utils/boucle-for.js';
-import { messageError } from './index.js';
-import { displayDataReciepes, getRecipe } from './index.js';
-import { displaySuggestions } from '../utils/suggestions.js';
+import { displayReciepes } from "./display-reciepes.js";
+import { filterRecipesByTags, mySearch } from "../utils/search.js";
+import { messageError } from "./index.js";
+import { displayDataReciepes, getRecipe } from "./index.js";
+import { displaySuggestions } from "../utils/suggestions.js";
 
-getRecipe()
+getRecipe();
 var dataReciepes = await getRecipe();
 
 export function setupClearableInput() {
+  const clearIcon = document.getElementById("clearInput");
+  const inputOne = document.getElementById("searchInput");
+  clearIcon.style.display = "none";
 
-    const clearIcon = document.getElementById('clearInput');
-    const inputOne = document.getElementById('searchInput')
-    clearIcon.style.display = "none"
+  clearIcon.addEventListener("input", function () {
+    console.log(inputOne.value);
 
-        clearIcon.addEventListener('input', function () {
-            console.log(inputOne.value)
+    if (inputOne.value.trim() !== "") {
+      clearIcon.style.display = "block";
+    } else {
+      clearIcon.style.display = "none";
+    }
+  });
 
-        if (inputOne.value.trim() !== "") {
-            clearIcon.style.display = 'block';
-        } else {
-            clearIcon.style.display = 'none';
-        }
-    });
-
-    clearIcon.addEventListener('click', function () {
-        inputOne.value =  "";
-    clearIcon.style.display = "none"
-        // displayDataReciepes(dataReciepes)
-        mySearch(dataReciepes)
-        displaySuggestions(dataReciepes)
-        filterRecipesByTags(dataReciepes)
-
-    });
-
+  clearIcon.addEventListener("click", function () {
+    inputOne.value = "";
+    clearIcon.style.display = "none";
+    // displayDataReciepes(dataReciepes)
+    mySearch(dataReciepes);
+    displaySuggestions(dataReciepes);
+    filterRecipesByTags(dataReciepes);
+  });
 }
 
 // document.addEventListener('DOMContentLoaded', function() {
@@ -49,11 +46,11 @@ export function setupClearableInput() {
 //         const inputValue = myInput.value.trim();
 
 //         if (inputValue === '') {
-//             displayReciepes(); 
+//             displayReciepes();
 //             messageError.style.display = 'block';
 //         } else if (inputValue.length >= 3) {
 //             const filteredRecipes = mySearch(inputValue);
-//             displayDataReciepes(filteredRecipes); 
+//             displayDataReciepes(filteredRecipes);
 //         } else {
 //             const allRecipeItems = document.querySelectorAll("article");
 //             for (const recipeItem of allRecipeItems) {

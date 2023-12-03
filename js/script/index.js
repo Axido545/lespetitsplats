@@ -1,57 +1,51 @@
-import {recipes}  from '../data/recipes.js';
-import { displayReciepes } from './display-reciepes.js';
-import {bigSearchBar, 
-  // filterRecipesByTags 
-} from '../utils/boucle-for.js';
-import { displaySuggestions } from '../utils/suggestions.js';
-import { setupClearableInput } from './btn-close.js';
+import { recipes } from "../data/recipes.js";
+import { displayReciepes } from "./display-reciepes.js";
+import {
+  bigSearchBar,
+  // filterRecipesByTags
+} from "../utils/search.js";
+import { displaySuggestions } from "../utils/suggestions.js";
+import { setupClearableInput } from "./btn-close.js";
 
 export const messageError = document.querySelector(".message-error");
 
-export async function getRecipe(){
-let newDataReciepes = recipes;
-return newDataReciepes;
+export async function getRecipe() {
+  let newDataReciepes = recipes;
+  return newDataReciepes;
 }
 
-export async function init(){
+export async function init() {
   var dataReciepes = await getRecipe();
-  displayDataReciepes(dataReciepes)
-  numberOfRecipes()
-  // filterRecipesByTags(dataReciepes) 
+  displayDataReciepes(dataReciepes);
+  numberOfRecipes();
+  // filterRecipesByTags(dataReciepes)
   // displaySuggestions()
-    bigSearchBar(dataReciepes);
+  bigSearchBar(dataReciepes);
 
-  setupClearableInput()
+  setupClearableInput();
   // newTagsActive()
-
-
-
- }
+}
 
 export function displayDataReciepes(dataReciepes) {
-displaySuggestions(dataReciepes)
+  displaySuggestions(dataReciepes);
 
   const recipeContainer = document.getElementById("recipeContainer");
   recipeContainer.classList.add("gallery-recipes");
-  while(recipeContainer.firstChild){
-    recipeContainer.removeChild(recipeContainer.firstChild)
+  while (recipeContainer.firstChild) {
+    recipeContainer.removeChild(recipeContainer.firstChild);
   }
   numberOfRecipes(dataReciepes.length);
-  dataReciepes.forEach(elt => {
-recipeContainer.appendChild(displayReciepes(elt));
-
+  dataReciepes.forEach((elt) => {
+    recipeContainer.appendChild(displayReciepes(elt));
   });
 }
 
-export function numberOfRecipes(elt){
+export function numberOfRecipes(elt) {
   const recipeCountElement = document.getElementById("recipeCount");
-if(elt===undefined){
-  recipeCountElement.textContent = `50 recettes`;
-} else {
-      recipeCountElement.innerHTML = `<span id="NumberRecip">${elt}</span> recettes`;
-    } 
+  if (elt === undefined) {
+    recipeCountElement.textContent = `50 recettes`;
+  } else {
+    recipeCountElement.innerHTML = `<span id="NumberRecip">${elt}</span> recettes`;
+  }
 }
-init()
-
-
-
+init();

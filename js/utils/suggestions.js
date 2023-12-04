@@ -15,45 +15,34 @@ export function displaySuggestions(elements, containerId, inputElement) {
   const container = document.getElementById(containerId);
   container.innerHTML = "";
   const inputValue = inputElement.value.trim().toLowerCase();
-  // const regex = /^[a-zA-Z]+$/;
+  const regex = /^[a-zA-Z]+$/;
 
-  // // if (!regex.test(inputValue) && inputValue) {
-  //   messageError.textContent = "Le champ doit contenir uniquement des lettres.";
-  // } else {
-  // messageError.textContent = "";
+  if (!regex.test(inputValue) && inputValue) {
+    messageError.textContent = "Le champ doit contenir uniquement des lettres.";
+  } else {
+    messageError.textContent = "";
 
-  //pour éviter doublons
-  // const uniqueSuggestions = new Set();
+    // Filtrage les éléments en fonction de la saisie de l'utilisateur
+    const autocompletionElements =
+      inputValue === ""
+        ? elements // affiche toutes suggestion avant de taper une lettre
+        : elements.filter((element) =>
+            element.toLowerCase().includes(inputValue)
+          );
 
-  // Filtrage les éléments en fonction de la saisie de l'utilisateur et ajouter à l'ensemble
-  // elements.forEach((element) => {
-  //   const lowercasedElement = element.toLowerCase().replace(/s/g, "");
-  //   if (inputValue === "" || lowercasedElement.includes(inputValue)) {
-  //     element.add(lowercasedElement);
-  //   }
-  // });
-
-  // const autocompletionElements = Array.from(uniqueSuggestions);
-
-  // Filtrage les éléments en fonction de la saisie de l'utilisateur
-  const autocompletionElements =
-    inputValue === ""
-      ? elements // affiche toutes suggestion avant de taper une lettre
-      : elements.filter((element) =>
-          element.toLowerCase().includes(inputValue)
-        );
-
-  autocompletionElements.forEach((element) => {
-    const newSuggestion = document.createElement("li");
-    newSuggestion.setAttribute("class", "suggestion");
-    newSuggestion.innerText = element;
-    if (selectedTags.includes(element)) {
-      newSuggestion.classList.add("suggestion-active");
-    }
-    container.appendChild(newSuggestion);
-    newSuggestion.addEventListener("click", () => onSuggestion(newSuggestion));
-  });
-  // }
+    autocompletionElements.forEach((element) => {
+      const newSuggestion = document.createElement("li");
+      newSuggestion.setAttribute("class", "suggestion");
+      newSuggestion.innerText = element;
+      if (selectedTags.includes(element)) {
+        newSuggestion.classList.add("suggestion-active");
+      }
+      container.appendChild(newSuggestion);
+      newSuggestion.addEventListener("click", () =>
+        onSuggestion(newSuggestion)
+      );
+    });
+  }
 }
 
 /**
@@ -91,7 +80,11 @@ function onSuggestion(newSuggestion) {
  * @returns
  */
 export function filterSuggestions(suggestions) {
-  return [...new Set(suggestions)];
+  const uniqueSuggetion = suggestions.map((suggestion) =>
+    suggestion.toLowerCase().replace(/s/g, "")
+  );
+
+  return [...new Set(uniqueSuggetion)];
 }
 
 /**

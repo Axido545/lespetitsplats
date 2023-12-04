@@ -80,11 +80,7 @@ function onSuggestion(newSuggestion) {
  * @returns
  */
 export function filterSuggestions(suggestions) {
-  const uniqueSuggetion = suggestions.map((suggestion) =>
-    suggestion.toLowerCase().replace(/s/g, "")
-  );
-
-  return [...new Set(uniqueSuggetion)];
+  return [...new Set(suggestions)];
 }
 
 /**

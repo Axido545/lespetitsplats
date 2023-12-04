@@ -6,32 +6,38 @@ import {
 } from "../script/index.js";
 import { clearInput, messageError, myInput } from "./getvalues.js";
 import { selectedTags } from "./suggestions.js";
-
 export function bigSearchBar(myrecipesdata) {
   if (myInput) {
     myInput.addEventListener("input", function () {
       const inputValue = myInput.value.trim().toLowerCase();
       clearInput.classList.add("hidden");
 
-      if (inputValue.length === 0) {
-        messageError.textContent = "";
-        clearInput.classList.add("hidden");
-      } else if (inputValue.length < 3) {
-        messageError.textContent = "Veuillez entrer trois caractères minimum";
-        clearInput.classList.remove("hidden");
-      } else {
-        const filteredRecipesBySearch = mySearch(myrecipesdata, inputValue);
-        filterRecipesByTags(filteredRecipesBySearch);
+      const regex = /^[a-zA-Z]+$/;
 
-        const filteredAll = filterRecipesByTags(filteredRecipesBySearch);
-        updateSuggestions(filteredRecipesBySearch);
-        if (filteredRecipesBySearch.length === 0) {
-          messageError.textContent = `« Aucune recette ne contient « ${inputValue} »  vous pouvez chercher «
-            tarte aux pommes », « poisson », etc.`;
-        } else {
+      if (!regex.test(inputValue) && inputValue != "") {
+        messageError.textContent =
+          "Le champ doit contenir uniquement des lettres.";
+      } else {
+        if (inputValue.length === 0) {
           messageError.textContent = "";
+          clearInput.classList.add("hidden");
+        } else if (inputValue.length < 3) {
+          messageError.textContent = "Veuillez entrer trois caractères minimum";
+          clearInput.classList.remove("hidden");
+        } else {
+          const filteredRecipesBySearch = mySearch(myrecipesdata, inputValue);
+          filterRecipesByTags(filteredRecipesBySearch);
+
+          const filteredAll = filterRecipesByTags(filteredRecipesBySearch);
+          updateSuggestions(filteredRecipesBySearch);
+          if (filteredRecipesBySearch.length === 0) {
+            messageError.textContent = `« Aucune recette ne contient « ${inputValue} »  vous pouvez chercher «
+              tarte aux pommes », « poisson », etc.`;
+          } else {
+            messageError.textContent = "";
+          }
+          clearInput.classList.remove("hidden");
         }
-        clearInput.classList.remove("hidden");
       }
     });
   }

@@ -1,10 +1,6 @@
 import { filterRecipesByTags, mySearch } from "./search.js";
-import {
-  allRecipes,
-  displayDataReciepes,
-  numberOfRecipes,
-  updateSuggestions,
-} from "../script/index.js";
+import { allRecipes, updateSuggestions } from "../script/index.js";
+import { messageError } from "./getvalues.js";
 
 // stock tous (ingredient/ustensils/appareils) selectionnés ss forme tableau
 export const selectedTags = [];
@@ -19,36 +15,40 @@ export function displaySuggestions(elements, containerId, inputElement) {
   const container = document.getElementById(containerId);
   container.innerHTML = "";
   const inputValue = inputElement.value.trim().toLowerCase();
+  const regex = /^[a-zA-Z]+$/;
 
-  //pour éviter doublons
-  const uniqueSuggestions = new Set();
+  if (!regex.test(inputValue) && inputValue != "") {
+    messageError.textContent = "Le champ doit contenir uniquement des lettres.";
+  } else {
+    messageError.textContent = "";
 
-  // Filtrage les éléments en fonction de la saisie de l'utilisateur et ajouter à l'ensemble
-  elements.forEach((element) => {
-    const lowercasedElement = element.toLowerCase().replace(/s/g, "");
-    if (inputValue === "" || lowercasedElement.includes(inputValue)) {
-      uniqueSuggestions.add(lowercasedElement);
-    }
-  });
-  // const autocompletionElements =
-  //   inputValue === ""
-  //     ? elements // affiche toutes suggestion avant de taper une lettre
-  //     : elements.filter((element) =>
-  //         element.toLowerCase().includes(inputValue)
-  //       );
+    //pour éviter doublons
+    const uniqueSuggestions = new Set();
 
-  const autocompletionElements = Array.from(uniqueSuggestions);
+    // Filtrage les éléments en fonction de la saisie de l'utilisateur et ajouter à l'ensemble
+    elements.forEach((element) => {
+      const lowercasedElement = element.toLowerCase().replace(/s/g, "");
+      if (inputValue === "" || lowercasedElement.includes(inputValue)) {
+        uniqueSuggestions.add(lowercasedElement);
+      }
+    });
 
-  autocompletionElements.forEach((element) => {
-    const newSuggestion = document.createElement("li");
-    newSuggestion.setAttribute("class", "suggestion");
-    newSuggestion.innerText = element;
-    if (selectedTags.includes(element)) {
-      newSuggestion.classList.add("suggestion-active");
-    }
-    container.appendChild(newSuggestion);
-    newSuggestion.addEventListener("click", () => onSuggestion(newSuggestion));
-  });
+    const autocompletionElements = Array.from(uniqueSuggestions);
+
+    autocompletionElements.forEach((element) => {
+      const newSuggestion = document.createElement("li");
+      newSuggestion.setAttribute("class", "suggestion");
+      // methode sanitize >> pour évider Cross-site Scripting (abrégé XSS)
+      newSuggestion.innerText = element;
+      if (selectedTags.includes(element)) {
+        newSuggestion.classList.add("suggestion-active");
+      }
+      container.appendChild(newSuggestion);
+      newSuggestion.addEventListener("click", () =>
+        onSuggestion(newSuggestion)
+      );
+    });
+  }
 }
 
 /**

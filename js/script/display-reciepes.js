@@ -1,5 +1,3 @@
-import { recipes } from "../data/recipes.js";
-
 /// Fonction pour afficher les recettes
 export function displayReciepes(recipes) {
   const {

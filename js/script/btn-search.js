@@ -1,4 +1,3 @@
-import { displayDataReciepes, allRecipes } from "./index.js";
 import { recipes } from "../data/recipes.js";
 import { clearIcon, myInput } from "../utils/getvalues.js";
 import { filterRecipesByTags, mySearch } from "../utils/search.js";
@@ -7,7 +6,7 @@ export const searchBtn = document.querySelector(".search-btn");
 export const whiteGlass = document.querySelector(".glass-white");
 export const blackGlass = document.querySelector(".glass-black");
 
-export function displayBtnBigSearch() {
+export function btnCloseSearch() {
   if (myInput.value != "") {
     clearIcon.classList.remove("hidden");
   }

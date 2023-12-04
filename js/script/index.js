@@ -1,6 +1,6 @@
 import { recipes } from "../data/recipes.js";
 import { displayReciepes } from "./display-reciepes.js";
-import { displayBtnBigSearch } from "./btn-search.js";
+import { btnCloseSearch } from "./btn-search.js";
 import { searchBar } from "../utils/search.js";
 import { displaySuggestions, filterSuggestions } from "../utils/suggestions.js";
 import {
@@ -22,7 +22,7 @@ displayDataReciepes(allRecipes); // on affiche les recettes
 updateSuggestions(allRecipes);
 searchBar(allRecipes);
 numberOfRecipes(allRecipes.length);
-displayBtnBigSearch();
+btnCloseSearch();
 export function displayDataReciepes(dataReciepes) {
   recipeContainer.classList.add("gallery-recipes");
   recipeContainer.innerHTML = null;

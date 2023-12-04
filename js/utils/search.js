@@ -27,8 +27,10 @@ export function searchBar(myrecipesdata) {
           clearInput.classList.remove("hidden");
         } else {
           const recipesAfterSearch = mySearch(myrecipesdata, inputValue);
+          updateSuggestions(recipesAfterSearch);
           filterRecipesByTags(recipesAfterSearch);
           updateSuggestions(recipesAfterSearch);
+
           if (recipesAfterSearch.length === 0) {
             messageError.textContent = `« Aucune recette ne contient « ${inputValue} »  vous pouvez chercher «
               tarte aux pommes », « poisson », etc.`;

@@ -1,7 +1,7 @@
 import { recipes } from "../data/recipes.js";
 import { displayReciepes } from "./display-reciepes.js";
 import { displayBtnBigSearch } from "./btn-search.js";
-import { bigSearchBar } from "../utils/search.js";
+import { searchBar } from "../utils/search.js";
 import { displaySuggestions, filterSuggestions } from "../utils/suggestions.js";
 import {
   recipeCountElement,
@@ -20,7 +20,7 @@ export async function getRecipe() {
 allRecipes = await getRecipe();
 displayDataReciepes(allRecipes); // on affiche les recettes
 updateSuggestions(allRecipes);
-bigSearchBar(allRecipes);
+searchBar(allRecipes);
 numberOfRecipes(allRecipes.length);
 displayBtnBigSearch();
 export function displayDataReciepes(dataReciepes) {
@@ -38,7 +38,7 @@ export function numberOfRecipes(elt) {
     recipeCountElement.innerHTML = `<span id="NumberRecip">${elt}</span> recettes`;
   }
 }
-//autocompletion
+
 export function updateSuggestions(allRecipes) {
   const ingredients = filterSuggestions(
     allRecipes

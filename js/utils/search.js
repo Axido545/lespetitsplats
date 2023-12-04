@@ -6,7 +6,7 @@ import {
 } from "../script/index.js";
 import { clearInput, messageError, myInput } from "./getvalues.js";
 import { selectedTags } from "./suggestions.js";
-export function bigSearchBar(myrecipesdata) {
+export function searchBar(myrecipesdata) {
   if (myInput) {
     myInput.addEventListener("input", function () {
       const inputValue = myInput.value.trim().toLowerCase();

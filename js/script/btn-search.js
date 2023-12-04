@@ -1,6 +1,7 @@
 import { recipes } from "../data/recipes.js";
 import { clearIcon, myInput } from "../utils/getvalues.js";
 import { filterRecipesByTags, mySearch } from "../utils/search.js";
+import { updateSuggestions } from "./index.js";
 
 export const searchBtn = document.querySelector(".search-btn");
 export const whiteGlass = document.querySelector(".glass-white");
@@ -13,11 +14,10 @@ export function btnCloseSearch() {
   }
   clearIcon.addEventListener("click", async function () {
     myInput.value = "";
-
+    mySearch(recipes, "");
     clearIcon.classList.add("hidden");
-    const filteredRecipes = filterRecipesByTags(recipes);
-
-    mySearch(filteredRecipes, "");
+    filterRecipesByTags(recipes);
+    updateSuggestions(filterRecipesByTags(recipes));
   });
 }
 

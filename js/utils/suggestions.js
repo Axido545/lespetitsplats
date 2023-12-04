@@ -67,11 +67,15 @@ function onSuggestion(newSuggestion) {
     .getElementById("searchInput")
     .value.trim()
     .toLowerCase();
-  const myRecipes = mySearch(allRecipes, inputValue);
-  filterRecipesByTags(myRecipes);
-  const filteredSuggestions = filterRecipesByTags(myRecipes);
-  console.log(filterRecipesByTags(myRecipes));
-  updateSuggestions(filteredSuggestions);
+
+  if (inputValue.length != 0) {
+    const myRecipes = mySearch(allRecipes, inputValue);
+    filterRecipesByTags(myRecipes);
+    updateSuggestions(filterRecipesByTags(myRecipes));
+  } else {
+    filterRecipesByTags(allRecipes);
+    updateSuggestions(filterRecipesByTags(allRecipes));
+  }
 }
 
 /**
@@ -114,18 +118,20 @@ function displayTags(tagText) {
 
             displayTags(tagText);
           }
+
           const inputValue = document
             .getElementById("searchInput")
             .value.trim()
             .toLowerCase();
 
-          filterRecipesByTags(mySearch(allRecipes, inputValue));
-
-          const myRecipes = filterRecipesByTags(
-            mySearch(allRecipes, inputValue)
-          );
-          console.log(myRecipes);
-          updateSuggestions(myRecipes);
+          if (inputValue.length != 0) {
+            const myRecipes = mySearch(allRecipes, inputValue);
+            filterRecipesByTags(myRecipes);
+            updateSuggestions(filterRecipesByTags(myRecipes));
+          } else {
+            filterRecipesByTags(allRecipes);
+            updateSuggestions(filterRecipesByTags(allRecipes));
+          }
 
           //On desactive la classe suggestion active qui correspond à ce tag
           const suggestions = document.querySelectorAll(".suggestion");

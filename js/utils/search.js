@@ -6,6 +6,7 @@ import {
 } from "../script/index.js";
 import { clearInput, messageError, myInput } from "./getvalues.js";
 import { selectedTags } from "./suggestions.js";
+
 export function searchBar(myrecipesdata) {
   if (myInput) {
     myInput.addEventListener("input", function () {
@@ -25,12 +26,10 @@ export function searchBar(myrecipesdata) {
           messageError.textContent = "Veuillez entrer trois caractères minimum";
           clearInput.classList.remove("hidden");
         } else {
-          const filteredRecipesBySearch = mySearch(myrecipesdata, inputValue);
-          filterRecipesByTags(filteredRecipesBySearch);
-
-          const filteredAll = filterRecipesByTags(filteredRecipesBySearch);
-          updateSuggestions(filteredRecipesBySearch);
-          if (filteredRecipesBySearch.length === 0) {
+          const recipesAfterSearch = mySearch(myrecipesdata, inputValue);
+          filterRecipesByTags(recipesAfterSearch);
+          updateSuggestions(recipesAfterSearch);
+          if (recipesAfterSearch.length === 0) {
             messageError.textContent = `« Aucune recette ne contient « ${inputValue} »  vous pouvez chercher «
               tarte aux pommes », « poisson », etc.`;
           } else {
@@ -76,7 +75,6 @@ export function mySearch(myrecipesdata, inputText) {
   numberOfRecipes(filteredRecipes.length);
   return filteredRecipes;
 }
-/****************Recherche par tag */
 export function filterRecipesByTags(data) {
   const filteredRecipes = [];
   const globalSelectedTags = selectedTags;

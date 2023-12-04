@@ -157,3 +157,9 @@ ul {
   top: 50%;
   transform: translateY(-50%);
 }
+
+.full-description {
+  -webkit-line-clamp: initial; /* Retire la limite de lignes */
+  display: block;
+  overflow: visible; /* Assure que le texte complet est visible */
+}

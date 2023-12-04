@@ -6,6 +6,7 @@ export const searchBtn = document.querySelector(".search-btn");
 export const whiteGlass = document.querySelector(".glass-white");
 export const blackGlass = document.querySelector(".glass-black");
 
+//croix pour effacer le text
 export function btnCloseSearch() {
   if (myInput.value != "") {
     clearIcon.classList.remove("hidden");
@@ -20,6 +21,7 @@ export function btnCloseSearch() {
   });
 }
 
+//changement de couleur de la loupe du bouton search
 export function displayBtnSearch() {
   // Gestionnaires d'événements pour les boutons "mouseover" et "mouseout"
   whiteGlass.style.display = "block";

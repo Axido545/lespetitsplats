@@ -4,7 +4,6 @@ export function displayReciepes(recipes) {
     id,
     image,
     name,
-    servings,
     ingredients,
     time,
     description,
@@ -23,8 +22,6 @@ export function displayReciepes(recipes) {
   );
 
   articleRecipe.setAttribute("id", id);
-
-  // recipeContainer.appendChild(articleRecipe);
 
   const imgRecipe = document.createElement("img");
   imgRecipe.classList.add("img-recette", "img-fluid");
@@ -97,12 +94,10 @@ export function displayReciepes(recipes) {
 
   wrapTextRecipe.appendChild(ustensileInfo);
 
-  return articleRecipe;
-}
-
-export function maskReciepe() {
-  const allRecipe = document.querySelectorAll("article");
-  allRecipe.forEach((recipe) => {
-    recipe.style.display = "none";
+  articleRecipe.addEventListener("click", function () {
+    const fullDescription = this.querySelector(".recipe-desc");
+    fullDescription.classList.toggle("full-description");
   });
+
+  return articleRecipe;
 }

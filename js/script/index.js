@@ -1,6 +1,6 @@
 import { recipes } from "../data/recipes.js";
 import { displayReciepes } from "./display-reciepes.js";
-import { btnCloseSearch } from "./btn-search.js";
+import { btnCloseSearch, displayBtnSearch } from "./btn-search.js";
 import { searchBar } from "../utils/search.js";
 import { displaySuggestions, filterSuggestions } from "../utils/suggestions.js";
 import {
@@ -19,10 +19,12 @@ export async function getRecipe() {
 
 allRecipes = await getRecipe();
 displayDataReciepes(allRecipes); // on affiche les recettes
-updateSuggestions(allRecipes);
+updateSuggestions(allRecipes); // mise a jour des suggestions
 searchBar(allRecipes);
 numberOfRecipes(allRecipes.length);
 btnCloseSearch();
+displayBtnSearch();
+
 export function displayDataReciepes(dataReciepes) {
   recipeContainer.classList.add("gallery-recipes");
   recipeContainer.innerHTML = null;

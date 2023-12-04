@@ -26,12 +26,13 @@ export function searchBar(myrecipesdata) {
           messageError.textContent = "Veuillez entrer trois caractères minimum";
           clearInput.classList.remove("hidden");
         } else {
-          const recipesAfterSearch = mySearch(myrecipesdata, inputValue);
-          updateSuggestions(recipesAfterSearch);
-          if (selectedTags.length != 0) {
-            filterRecipesByTags(recipesAfterSearch);
-            updateSuggestions(filterRecipesByTags(recipesAfterSearch));
-          }
+          mySearch(myrecipesdata, inputValue);
+          const myRecipes = mySearch(myrecipesdata, inputValue);
+          updateSuggestions(myRecipes);
+          filterRecipesByTags(myRecipes);
+          const myRecipes2 = filterRecipesByTags(myRecipes);
+          updateSuggestions(myRecipes2);
+          clearInput.classList.remove("hidden");
 
           if (recipesAfterSearch.length === 0) {
             messageError.textContent = `« Aucune recette ne contient « ${inputValue} »  vous pouvez chercher «

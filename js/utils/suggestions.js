@@ -68,14 +68,12 @@ function onSuggestion(newSuggestion) {
     .value.trim()
     .toLowerCase();
 
-  if (inputValue.length != 0) {
-    const myRecipes = mySearch(allRecipes, inputValue);
-    filterRecipesByTags(myRecipes);
-    updateSuggestions(filterRecipesByTags(myRecipes));
-  } else {
-    filterRecipesByTags(allRecipes);
-    updateSuggestions(filterRecipesByTags(allRecipes));
-  }
+  mySearch(allRecipes, inputValue);
+  const myRecipes = mySearch(allRecipes, inputValue);
+  updateSuggestions(myRecipes);
+  filterRecipesByTags(myRecipes);
+  const myRecipes2 = filterRecipesByTags(myRecipes);
+  updateSuggestions(myRecipes2);
 }
 
 /**
@@ -124,14 +122,12 @@ function displayTags(tagText) {
             .value.trim()
             .toLowerCase();
 
-          if (inputValue.length != 0) {
-            const myRecipes = mySearch(allRecipes, inputValue);
-            filterRecipesByTags(myRecipes);
-            updateSuggestions(filterRecipesByTags(myRecipes));
-          } else {
-            filterRecipesByTags(allRecipes);
-            updateSuggestions(filterRecipesByTags(allRecipes));
-          }
+          mySearch(allRecipes, inputValue);
+          const myRecipes = mySearch(allRecipes, inputValue);
+          updateSuggestions(myRecipes);
+          filterRecipesByTags(myRecipes);
+          const myRecipes2 = filterRecipesByTags(myRecipes);
+          updateSuggestions(myRecipes2);
 
           //On desactive la classe suggestion active qui correspond à ce tag
           const suggestions = document.querySelectorAll(".suggestion");

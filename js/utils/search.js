@@ -37,7 +37,7 @@ export function bigSearchBar(myrecipesdata) {
 
 export function mySearch(myrecipesdata, inputText) {
   console.log(myrecipesdata);
-  /************************boucle filter TODO*/
+  /************************boucle filter*/
   const filteredRecipes = myrecipesdata.filter((recipe) => {
     if (recipe.name.toLowerCase().indexOf(inputText) > 0) {
       return true;

@@ -8,6 +8,8 @@
 }
 
 .img-recette {
+  /* max-width: 380px;
+  height: 253px; */
   width: 380px;
   height: 253px;
   border-radius: 21px 21px 0 0;
@@ -16,7 +18,7 @@
 
 .recipe-article {
   background-color: white;
-  width: 380px;
+  width: 100%;
   border-radius: 21px;
   position: relative;
 }
@@ -50,7 +52,7 @@
   font-size: 12px;
   font-family: "Manrope";
   font-weight: 700;
-  letter-spacing: 9%;
+  letter-spacing: 0.1rem;
 }
 
 .ingredient-Item-name {
@@ -69,12 +71,11 @@
 #suggestions-ustensiles {
   width: 195px;
   background-color: white;
-  margin-top: 2.3 rem;
+  margin-top: 2.3rem;
   padding-left: 15px;
   margin-left: -11px;
   list-style-type: none;
   z-index: 10;
-  padding-top: 56px;
   padding-bottom: 0;
   position: absolute;
   max-height: 200px;
@@ -110,7 +111,7 @@
   width: 195px;
   margin-left: -15px;
   padding-left: 15px;
-  padding-top: 10px;
+  padding-top: 20px;
   padding-bottom: 10px;
   list-style-type: none;
   position: relative;
@@ -122,7 +123,14 @@
 }
 
 .suggestion-active {
+  padding-right: 20px;
   font-weight: 600;
+  background-image: url("../asset/croix-suggestion.png");
+  background-repeat: no-repeat;
+  background-size: 16px 16px;
+  background-position: right center;
+  background-position-x: 150px;
+  background-position-y: center;
 }
 
 .close-tag {
@@ -148,4 +156,10 @@ ul {
   right: 25px;
   top: 50%;
   transform: translateY(-50%);
+}
+
+.full-description {
+  -webkit-line-clamp: initial; /* Retire la limite de lignes */
+  display: block;
+  overflow: visible; /* Assure que le texte complet est visible */
 }

@@ -1,116 +1,147 @@
-import { addTag, removeTag } from "./tags.js";
-import { getRecipe } from "../script/index.js";
-import { updateTagsArray } from "./getvalues.js";
 import { filterRecipesByTags, mySearch } from "./search.js";
+import { allRecipes, updateSuggestions } from "../script/index.js";
+import { messageError } from "./getvalues.js";
 
-export async function fetchData() {
-  const data = await getRecipe();
-  console.log("Valeur de data :", data);
-  // Vous pouvez utiliser la valeur de data ici
-  return data;
-}
+// stock tous (ingredient/ustensils/appareils) selectionnés ss forme tableau
+export const selectedTags = [];
 
-// Fonction pour afficher les suggestions
-export function displaySuggestions(myRecipesdata) {
-  // Variable locale liste des ingrédients
-  let currentIngredientsArray = [];
+/**
+ * @description permet d'afficher les ingredients, ustensils et appareils
+ * @param {*} elements // Listes d'éléments à afficher en tant que suggestion
+ * @param {*} containerId // l'id de la div ou s'affiche chaque suggestion
+ */
 
-  myRecipesdata.forEach((recipe) => {
-    // Pour chaque recette, on extrait les ingrédients
-    let ingredients = recipe.ingredients;
-
-    // Et pour chaque ingrédient, on extrait le nom de l'ingrédient
-    ingredients.forEach((ingredient) => {
-      let ingredientName = ingredient.ingredient;
-
-      // On vérifie si l'ingrédient n'est pas déjà présent pour ne pas faire de doublon
-      if (
-        !currentIngredientsArray.some(function (element) {
-          return element.toLowerCase() === ingredientName.toLowerCase();
-        })
-      ) {
-        // Si l'ingrédient n'est pas dans la liste, on l'ajoute à la variable locale
-        currentIngredientsArray.push(ingredientName);
-      }
-    });
-  });
-
-  // Affiche les ingrédients dès le chargement de la page
-  // On met en argument = la variable qui contient le tableau des ingrédients et le nom de l'ID où l'on souhaite afficher les ingrédients
-  afficheListeSuggestions(currentIngredientsArray, "suggestions-ingredients");
-
-  // Récupération du champ de recherche
-  const ingredientSearch = document.getElementById("ingredientSearch");
-
-  // Ajout de l'écouteur d'évènement sur l'input
-  ingredientSearch.addEventListener("input", function () {
-    // Système d'autocomplétion
-    let filteredIngredient = currentIngredientsArray.filter(function (element) {
-      return element
-        .toLowerCase()
-        .includes(ingredientSearch.value.toLowerCase());
-    });
-
-    afficheListeSuggestions(filteredIngredient, "suggestions-ingredients");
-  });
-}
-export function afficheListeSuggestions(elements, containerId) {
+export function displaySuggestions(elements, containerId, inputElement) {
   const container = document.getElementById(containerId);
-
-  // Efface le contenu existant de l'élément
   container.innerHTML = "";
+  const inputValue = inputElement.value.trim().toLowerCase();
+  const regex = /^[a-zA-Z]+$/;
 
-  elements.forEach(async (element) => {
-    const newSuggestion = document.createElement("li");
-    newSuggestion.setAttribute("class", "suggestion");
-    newSuggestion.innerHTML = element;
+  if (!regex.test(inputValue) && inputValue) {
+    messageError.textContent = "Le champ doit contenir uniquement des lettres.";
+  } else {
+    messageError.textContent = "";
 
-    newSuggestion.addEventListener("click", async function (event) {
-      event.stopPropagation();
-      // Vérifie si la suggestion a la classe suggestion-active
-      const isActive = newSuggestion.classList.contains("suggestion-active");
+    // Filtrage les éléments en fonction de la saisie de l'utilisateur
+    const autocompletionElements =
+      inputValue === ""
+        ? elements // affiche toutes suggestion avant de taper une lettre
+        : elements.filter((element) =>
+            element.toLowerCase().includes(inputValue)
+          );
 
-      // Si la suggestion est active, supprimer la classe et l'image
-      if (isActive) {
-        newSuggestion.classList.remove("suggestion-active");
-        const existingImage = newSuggestion.querySelector("img");
-        if (existingImage) {
-          existingImage.remove();
-        }
-
-        removeTag(element, newSuggestion);
-        const data = await fetchData();
-        filterRecipesByTags(data);
-
-        console.log(element + "," + newSuggestion);
-      } else {
-        // Ajouter la classe suggestion-active à la suggestion
+    autocompletionElements.forEach((element) => {
+      const newSuggestion = document.createElement("li");
+      newSuggestion.setAttribute("class", "suggestion");
+      newSuggestion.innerText = element;
+      if (selectedTags.includes(element)) {
         newSuggestion.classList.add("suggestion-active");
-
-        // Vérifie si une image est déjà présente dans la suggestion
-        const existingImage = newSuggestion.querySelector("img");
-        if (!existingImage) {
-          // Ajouter l'image uniquement si aucune image n'est présente
-          var img = document.createElement("img");
-          img.src = "./asset/croix-suggestion.png";
-          img.alt = "fermer la suggestion";
-          img.classList.add("close-suggestion");
-          newSuggestion.appendChild(img);
-        }
-
-        (async () => {
-          const data = await fetchData();
-
-          // Ajouter le tag et mettre à jour les autres éléments
-          addTag(element);
-          updateTagsArray();
-          displaySuggestions(data);
-          filterRecipesByTags(data);
-          mySearch(data);
-        })();
       }
+      container.appendChild(newSuggestion);
+      newSuggestion.addEventListener("click", () =>
+        onSuggestion(newSuggestion)
+      );
     });
+  }
+}
 
-    container.appendChild(newSuggestion);
-  });
+/**
+ * @description Ajout/Suppr Tag/suggestion-active | click>>suggestion
+ * @param {*} newSuggestion // Listes d'éléments à afficher en tant que suggestion
+ */
+
+function onSuggestion(newSuggestion) {
+  const isSelected = selectedTags.findIndex(
+    (selectedTag) => selectedTag === newSuggestion.innerText
+  );
+
+  if (isSelected > -1) {
+    newSuggestion.classList.remove("suggestion-active");
+    selectedTags.splice(isSelected, 1);
+  } else {
+    newSuggestion.classList.add("suggestion-active");
+    selectedTags.push(newSuggestion.innerText);
+  }
+  displayTags(newSuggestion.innerText);
+  const inputValue = document
+    .getElementById("searchInput")
+    .value.trim()
+    .toLowerCase();
+
+  if (inputValue.length != 0) {
+    const myRecipes = mySearch(allRecipes, inputValue);
+    filterRecipesByTags(myRecipes);
+    updateSuggestions(filterRecipesByTags(myRecipes));
+  } else {
+    filterRecipesByTags(allRecipes);
+    updateSuggestions(filterRecipesByTags(allRecipes));
+  }
+}
+
+/**
+ * @description pour retirer les doublons
+ * @param {*} suggestions
+ * @returns
+ */
+export function filterSuggestions(suggestions) {
+  return [...new Set(suggestions)];
+}
+
+/**
+ * @description affichage des tags
+ *  @param {*} tagText // le tag selectionné
+ */
+function displayTags(tagText) {
+  const tagsContainer = document.querySelector("#selected-tags");
+  tagsContainer.innerHTML = "";
+  // on parcours ts les tags affichés
+  for (let i = 0; i < selectedTags.length; i++) {
+    const selectedTag = selectedTags[i];
+
+    // Pour chaque tag selectionné on l'affiche avec le btnX
+    const tag = document.createElement("div");
+    tag.className = "tag";
+    tag.textContent = selectedTag;
+    const btnX = document.createElement("i");
+    btnX.className = "fa-solid fa-xmark close-tag";
+
+    //Action suppr Tag
+    btnX.addEventListener(
+      "click",
+      ((btnX_TagText) => {
+        return () => {
+          // on recupp l'index du tag cliqué
+          const btnX_TagIndex = selectedTags.indexOf(btnX_TagText);
+          // S'il existe on le suppr et on affiche les tags
+          if (btnX_TagIndex > -1) {
+            selectedTags.splice(btnX_TagIndex, 1);
+
+            displayTags(tagText);
+          }
+
+          const inputValue = document
+            .getElementById("searchInput")
+            .value.trim()
+            .toLowerCase();
+
+          mySearch(allRecipes, inputValue);
+          const myRecipes = mySearch(allRecipes, inputValue);
+          console.log(myRecipes);
+          filterRecipesByTags(myRecipes);
+          console.log(filterRecipesByTags(myRecipes));
+          updateSuggestions(filterRecipesByTags(myRecipes));
+
+          //On desactive la classe suggestion active qui correspond à ce tag
+          const suggestions = document.querySelectorAll(".suggestion");
+          suggestions.forEach((suggestion) => {
+            if (suggestion.innerText === btnX_TagText) {
+              suggestion.classList.remove("suggestion-active");
+            }
+          });
+        };
+      })(selectedTag)
+    );
+    tag.appendChild(btnX);
+    tagsContainer.appendChild(tag);
+  }
 }

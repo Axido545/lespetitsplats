@@ -1,23 +1,22 @@
-export function firstInputValue(){
-  const FirstinputValue = document.getElementById("searchInput").value;
-  if (FirstinputValue.length > 2){
-    var elts = ArrayLowerCase(FirstinputValue);
-    return elts;
-  }
-  return [];
-}
+/******const*******/
+export const recipeContainer = document.getElementById("recipeContainer");
+export const myInput = document.getElementById("searchInput");
 
-function ArrayLowerCase(inputString){
-  const inputArray = inputString.split(" ");
-  const ArrayLowerCase = inputArray.map(element => {
-    return element.toLowerCase();
-  });
-  return ArrayLowerCase;
-}
+export const inputIngredient = document.getElementById("ingredientSearch");
+export const inputAppliance = document.getElementById("applianceSearch");
+export const inputUstensils = document.getElementById("ustensilSearch");
+export const inputSuggestion = document.querySelectorAll("little-search");
+export const clearInput = document.getElementById("clearInput");
+export const clearIcon = document.querySelector(".clear-icon");
+export const messageError = document.querySelector(".message-error");
+export const recipeCountElement = document.getElementById("recipeCount");
 
-// récupere le tableau des tags
-  export function updateTagsArray() {
-  const selectedTags = Array.from(document.querySelectorAll('.tag')).map(tag => tag.textContent);
-  console.log(selectedTags)
-  return selectedTags
-}
+export const tagsContainer = document.getElementById("selected-tags");
+export const suggestionActive = document.querySelector(".suggestion-active");
+
+window.addEventListener("load", function () {
+  myInput.value = "";
+  inputIngredient.value = "";
+  inputAppliance.value = "";
+  inputUstensils.value = "";
+});

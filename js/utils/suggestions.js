@@ -19,13 +19,25 @@ export function displaySuggestions(elements, containerId, inputElement) {
   const container = document.getElementById(containerId);
   container.innerHTML = "";
   const inputValue = inputElement.value.trim().toLowerCase();
-  // Filtrage les éléments en fonction de la saisie de l'utilisateur
-  const autocompletionElements =
-    inputValue === ""
-      ? elements // affiche toutes suggestion avant de taper une lettre
-      : elements.filter((element) =>
-          element.toLowerCase().includes(inputValue)
-        );
+
+  //pour éviter doublons
+  const uniqueSuggestions = new Set();
+
+  // Filtrage les éléments en fonction de la saisie de l'utilisateur et ajouter à l'ensemble
+  elements.forEach((element) => {
+    const lowercasedElement = element.toLowerCase().replace(/s/g, "");
+    if (inputValue === "" || lowercasedElement.includes(inputValue)) {
+      uniqueSuggestions.add(lowercasedElement);
+    }
+  });
+  // const autocompletionElements =
+  //   inputValue === ""
+  //     ? elements // affiche toutes suggestion avant de taper une lettre
+  //     : elements.filter((element) =>
+  //         element.toLowerCase().includes(inputValue)
+  //       );
+
+  const autocompletionElements = Array.from(uniqueSuggestions);
 
   autocompletionElements.forEach((element) => {
     const newSuggestion = document.createElement("li");

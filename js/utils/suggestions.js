@@ -1,14 +1,13 @@
 import { filterRecipesByTags, mySearch } from "./search.js";
 import { allRecipes, updateSuggestions } from "../script/index.js";
-import { messageError } from "./getvalues.js";
+import { messageError, myInput } from "./getvalues.js";
 
-// stock tous (ingredient/ustensils/appareils) selectionnés ss forme tableau
 export const selectedTags = [];
 
 /**
- * @description permet d'afficher les ingredients, ustensils et appareils
- * @param {*} elements // Listes d'éléments à afficher en tant que suggestion
- * @param {*} containerId // l'id de la div ou s'affiche chaque suggestion
+ * @description
+ * @param {*} elements
+ * @param {*} containerId
  */
 
 export function displaySuggestions(elements, containerId, inputElement) {
@@ -30,21 +29,35 @@ export function displaySuggestions(elements, containerId, inputElement) {
             element.toLowerCase().includes(inputValue)
           );
 
+    // Set on suit tt élément
+    const displayedSuggestions = new Set();
+
     autocompletionElements.forEach((element) => {
-      const newSuggestion = document.createElement("li");
-      newSuggestion.setAttribute("class", "suggestion");
-      newSuggestion.innerText = element;
-      if (selectedTags.includes(element)) {
-        newSuggestion.classList.add("suggestion-active");
+      //minuscule sans s
+      const normalizedElement = element.toLowerCase().replace(/s$/, "");
+      if (!displayedSuggestions.has(normalizedElement)) {
+        const newSuggestion = document.createElement("li");
+        newSuggestion.setAttribute("class", "suggestion");
+        newSuggestion.innerText = capitalizeFirstLetter(element);
+        if (selectedTags.includes(element)) {
+          newSuggestion.classList.add("suggestion-active");
+        }
+        container.appendChild(newSuggestion);
+        newSuggestion.addEventListener("click", () =>
+          onSuggestion(newSuggestion)
+        );
+
+        // On ajoute la version normalisée (sans "s") à l'ensemble des suggestions déjà affichées
+        // pour 1 version de chaque mot (avec et sans s)
+        displayedSuggestions.add(normalizedElement);
       }
-      container.appendChild(newSuggestion);
-      newSuggestion.addEventListener("click", () =>
-        onSuggestion(newSuggestion)
-      );
     });
   }
 }
 
+function capitalizeFirstLetter(element) {
+  return element.charAt(0).toUpperCase() + element.slice(1);
+}
 /**
  * @description Ajout/Suppr Tag/suggestion-active | click>>suggestion
  * @param {*} newSuggestion // Listes d'éléments à afficher en tant que suggestion
@@ -63,18 +76,21 @@ function onSuggestion(newSuggestion) {
     selectedTags.push(newSuggestion.innerText);
   }
   displayTags(newSuggestion.innerText);
-  const inputValue = document
-    .getElementById("searchInput")
-    .value.trim()
-    .toLowerCase();
+  updateSearchTags();
+}
 
-  if (inputValue.length != 0) {
-    const myRecipes = mySearch(allRecipes, inputValue);
-    filterRecipesByTags(myRecipes);
-    updateSuggestions(filterRecipesByTags(myRecipes));
+function updateSearchTags() {
+  const inputValue = myInput.value.trim().toLowerCase();
+
+  // si il ya des tag recherch basé sur le tag mise a jour des suggestions
+  if (selectedTags.length > 0) {
+    const filteredRecipes = filterRecipesByTags(allRecipes);
+    mySearch(filteredRecipes, inputValue);
+    updateSuggestions(mySearch(filteredRecipes, inputValue));
   } else {
-    filterRecipesByTags(allRecipes);
-    updateSuggestions(filterRecipesByTags(allRecipes));
+    // si pas de tag mise a jour uniquement sur input
+    const filteredRecipes = mySearch(allRecipes, inputValue);
+    updateSuggestions(filteredRecipes);
   }
 }
 
@@ -118,18 +134,7 @@ function displayTags(tagText) {
 
             displayTags(tagText);
           }
-
-          const inputValue = document
-            .getElementById("searchInput")
-            .value.trim()
-            .toLowerCase();
-
-          mySearch(allRecipes, inputValue);
-          const myRecipes = mySearch(allRecipes, inputValue);
-          console.log(myRecipes);
-          filterRecipesByTags(myRecipes);
-          console.log(filterRecipesByTags(myRecipes));
-          updateSuggestions(filterRecipesByTags(myRecipes));
+          updateSearchTags();
 
           //On desactive la classe suggestion active qui correspond à ce tag
           const suggestions = document.querySelectorAll(".suggestion");

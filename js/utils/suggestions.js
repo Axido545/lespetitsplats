@@ -30,21 +30,36 @@ export function displaySuggestions(elements, containerId, inputElement) {
             element.toLowerCase().includes(inputValue)
           );
 
+    // Set on suit tt élément
+    const displayedSuggestions = new Set();
+
     autocompletionElements.forEach((element) => {
-      const newSuggestion = document.createElement("li");
-      newSuggestion.setAttribute("class", "suggestion");
-      newSuggestion.innerText = element;
-      if (selectedTags.includes(element)) {
-        newSuggestion.classList.add("suggestion-active");
+      //minuscule sans ss
+      const normalizedElement = element.toLowerCase().replace(/s$/, "");
+      // pour vérifier
+      if (!displayedSuggestions.has(normalizedElement)) {
+        const newSuggestion = document.createElement("li");
+        newSuggestion.setAttribute("class", "suggestion");
+        newSuggestion.innerText = capitalizeFirstLetter(element);
+        if (selectedTags.includes(element)) {
+          newSuggestion.classList.add("suggestion-active");
+        }
+        container.appendChild(newSuggestion);
+        newSuggestion.addEventListener("click", () =>
+          onSuggestion(newSuggestion)
+        );
+
+        // On ajoute la version normalisée (sans "s") à l'ensemble des suggestions déjà affichées
+        // pour 1 version de chaque mot (avec et sans s)
+        displayedSuggestions.add(normalizedElement);
       }
-      container.appendChild(newSuggestion);
-      newSuggestion.addEventListener("click", () =>
-        onSuggestion(newSuggestion)
-      );
     });
   }
 }
 
+function capitalizeFirstLetter(element) {
+  return element.charAt(0).toUpperCase() + element.slice(1);
+}
 /**
  * @description Ajout/Suppr Tag/suggestion-active | click>>suggestion
  * @param {*} newSuggestion // Listes d'éléments à afficher en tant que suggestion

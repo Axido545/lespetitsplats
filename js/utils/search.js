@@ -13,7 +13,7 @@ export function searchBar(myrecipesdata) {
       const inputValue = myInput.value.trim().toLowerCase();
       clearInput.classList.add("hidden");
 
-      const regex = /^[a-zA-Z]+$/;
+      const regex = /^[a-zA-ZÀ-ÖØ-öø-ÿ]+$/;
 
       if (!regex.test(inputValue) && inputValue != "") {
         messageError.textContent =

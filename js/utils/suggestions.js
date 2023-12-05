@@ -14,7 +14,7 @@ export function displaySuggestions(elements, containerId, inputElement) {
   const container = document.getElementById(containerId);
   container.innerHTML = "";
   const inputValue = inputElement.value.trim().toLowerCase();
-  const regex = /^[a-zA-Z]+$/;
+  const regex = /^[a-zA-ZÀ-ÖØ-öø-ÿ]+$/;
 
   if (!regex.test(inputValue) && inputValue) {
     messageError.textContent = "Le champ doit contenir uniquement des lettres.";

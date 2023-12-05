@@ -26,12 +26,12 @@ export function searchBar(myrecipesdata) {
           messageError.textContent = "Veuillez entrer trois caractères minimum";
           clearInput.classList.remove("hidden");
         } else {
-          mySearch(myrecipesdata, inputValue);
-          const myRecipes = mySearch(myrecipesdata, inputValue);
-          updateSuggestions(myRecipes);
-          filterRecipesByTags(myRecipes);
-          const myRecipes2 = filterRecipesByTags(myRecipes);
-          updateSuggestions(myRecipes2);
+          filterRecipesByTags(myrecipesdata);
+          mySearch(filterRecipesByTags(myrecipesdata), inputValue);
+          updateSuggestions(
+            mySearch(filterRecipesByTags(myrecipesdata), inputValue)
+          );
+
           clearInput.classList.remove("hidden");
 
           if (recipesAfterSearch.length === 0) {

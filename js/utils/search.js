@@ -26,21 +26,21 @@ export function searchBar(myrecipesdata) {
           messageError.textContent = "Veuillez entrer trois caractères minimum";
           clearInput.classList.remove("hidden");
         } else {
-          filterRecipesByTags(myrecipesdata);
+          clearInput.classList.remove("hidden");
           mySearch(filterRecipesByTags(myrecipesdata), inputValue);
           updateSuggestions(
             mySearch(filterRecipesByTags(myrecipesdata), inputValue)
           );
-
-          clearInput.classList.remove("hidden");
-
+          const recipesAfterSearch = mySearch(
+            filterRecipesByTags(myrecipesdata),
+            inputValue
+          );
           if (recipesAfterSearch.length === 0) {
             messageError.textContent = `« Aucune recette ne contient « ${inputValue} »  vous pouvez chercher «
               tarte aux pommes », « poisson », etc.`;
           } else {
             messageError.textContent = "";
           }
-          clearInput.classList.remove("hidden");
         }
       }
     });

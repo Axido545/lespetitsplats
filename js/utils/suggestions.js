@@ -1,6 +1,6 @@
 import { filterRecipesByTags, mySearch } from "./search.js";
 import { allRecipes, updateSuggestions } from "../script/index.js";
-import { messageError } from "./getvalues.js";
+import { messageError, myInput } from "./getvalues.js";
 
 // stock tous (ingredient/ustensils/appareils) selectionnés ss forme tableau
 export const selectedTags = [];
@@ -63,17 +63,22 @@ function onSuggestion(newSuggestion) {
     selectedTags.push(newSuggestion.innerText);
   }
   displayTags(newSuggestion.innerText);
-  const inputValue = document
-    .getElementById("searchInput")
-    .value.trim()
-    .toLowerCase();
+  updateSearchTags();
+}
 
-  mySearch(allRecipes, inputValue);
-  const myRecipes = mySearch(allRecipes, inputValue);
-  updateSuggestions(myRecipes);
-  filterRecipesByTags(myRecipes);
-  const myRecipes2 = filterRecipesByTags(myRecipes);
-  updateSuggestions(myRecipes2);
+function updateSearchTags() {
+  const inputValue = myInput.value.trim().toLowerCase();
+
+  // si il ya des tag recherch basé sur le tag mise a jour des suggestions
+  if (selectedTags.length > 0) {
+    const filteredRecipes = filterRecipesByTags(allRecipes);
+    mySearch(filteredRecipes, inputValue);
+    updateSuggestions(mySearch(filteredRecipes, inputValue));
+  } else {
+    // si pas de tag mise a jour uniquement sur input
+    const filteredRecipes = mySearch(allRecipes, inputValue);
+    updateSuggestions(filteredRecipes);
+  }
 }
 
 /**
@@ -117,17 +122,7 @@ function displayTags(tagText) {
             displayTags(tagText);
           }
 
-          const inputValue = document
-            .getElementById("searchInput")
-            .value.trim()
-            .toLowerCase();
-
-          mySearch(allRecipes, inputValue);
-          const myRecipes = mySearch(allRecipes, inputValue);
-          updateSuggestions(myRecipes);
-          filterRecipesByTags(myRecipes);
-          const myRecipes2 = filterRecipesByTags(myRecipes);
-          updateSuggestions(myRecipes2);
+          updateSearchTags();
 
           //On desactive la classe suggestion active qui correspond à ce tag
           const suggestions = document.querySelectorAll(".suggestion");

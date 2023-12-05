@@ -2,13 +2,12 @@ import { filterRecipesByTags, mySearch } from "./search.js";
 import { allRecipes, updateSuggestions } from "../script/index.js";
 import { messageError, myInput } from "./getvalues.js";
 
-// stock tous (ingredient/ustensils/appareils) selectionnés ss forme tableau
 export const selectedTags = [];
 
 /**
- * @description permet d'afficher les ingredients, ustensils et appareils
- * @param {*} elements // Listes d'éléments à afficher en tant que suggestion
- * @param {*} containerId // l'id de la div ou s'affiche chaque suggestion
+ * @description
+ * @param {*} elements
+ * @param {*} containerId
  */
 
 export function displaySuggestions(elements, containerId, inputElement) {
@@ -34,9 +33,8 @@ export function displaySuggestions(elements, containerId, inputElement) {
     const displayedSuggestions = new Set();
 
     autocompletionElements.forEach((element) => {
-      //minuscule sans ss
+      //minuscule sans s
       const normalizedElement = element.toLowerCase().replace(/s$/, "");
-      // pour vérifier
       if (!displayedSuggestions.has(normalizedElement)) {
         const newSuggestion = document.createElement("li");
         newSuggestion.setAttribute("class", "suggestion");
@@ -136,7 +134,6 @@ function displayTags(tagText) {
 
             displayTags(tagText);
           }
-
           updateSearchTags();
 
           //On desactive la classe suggestion active qui correspond à ce tag

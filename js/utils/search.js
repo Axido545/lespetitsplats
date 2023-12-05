@@ -26,20 +26,21 @@ export function searchBar(myrecipesdata) {
           messageError.textContent = "Veuillez entrer trois caractères minimum";
           clearInput.classList.remove("hidden");
         } else {
-          const recipesAfterSearch = mySearch(myrecipesdata, inputValue);
-          updateSuggestions(recipesAfterSearch);
-          if (selectedTags.length != 0) {
-            filterRecipesByTags(recipesAfterSearch);
-            updateSuggestions(filterRecipesByTags(recipesAfterSearch));
-          }
-
+          clearInput.classList.remove("hidden");
+          mySearch(filterRecipesByTags(myrecipesdata), inputValue);
+          updateSuggestions(
+            mySearch(filterRecipesByTags(myrecipesdata), inputValue)
+          );
+          const recipesAfterSearch = mySearch(
+            filterRecipesByTags(myrecipesdata),
+            inputValue
+          );
           if (recipesAfterSearch.length === 0) {
             messageError.textContent = `« Aucune recette ne contient « ${inputValue} »  vous pouvez chercher «
               tarte aux pommes », « poisson », etc.`;
           } else {
             messageError.textContent = "";
           }
-          clearInput.classList.remove("hidden");
         }
       }
     });
@@ -47,22 +48,34 @@ export function searchBar(myrecipesdata) {
 }
 
 export function mySearch(myrecipesdata, inputText) {
-  /************************boucle filter*/
-  const filteredRecipes = myrecipesdata.filter((recipe) => {
-    if (recipe.name.toLowerCase().indexOf(inputText) > 0) {
-      return true;
-    } else if (recipe.description.toLowerCase().indexOf(inputText) > 0) {
-      return true;
+  /************************boucle for */
+  const filteredRecipes = [];
+  for (let i = 0; i < myrecipesdata.length; i++) {
+    const recipe = myrecipesdata[i];
+
+    if (inputText === "") {
+      numberOfRecipes(myrecipesdata.length);
     } else {
-      const ingredients = recipe.ingredients.map(
-        (ingredient) => ingredient.ingredient
-      );
-      return ingredients.find(
-        (ingredient) => ingredient.toLowerCase().indexOf(inputText) > 0
-      );
+      numberOfRecipes(filteredRecipes.length);
     }
-  });
-  /************************ fin boucle filter */
+    if (recipe.name.toLowerCase().includes(inputText)) {
+      filteredRecipes.push(recipe);
+      continue;
+    } else if (recipe.description.toLowerCase().includes(inputText)) {
+      filteredRecipes.push(recipe);
+      continue;
+    } else {
+      for (let j = 0; j < recipe.ingredients.length; j++) {
+        if (
+          recipe.ingredients[j].ingredient.toLowerCase().includes(inputText)
+        ) {
+          filteredRecipes.push(recipe);
+          break;
+        }
+      }
+    }
+  }
+  /************************ fin boucle for */
   displayDataReciepes(filteredRecipes);
   numberOfRecipes(filteredRecipes.length);
   return filteredRecipes;

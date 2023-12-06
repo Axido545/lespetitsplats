@@ -48,34 +48,22 @@ export function searchBar(myrecipesdata) {
 }
 
 export function mySearch(myrecipesdata, inputText) {
-  /************************boucle for */
-  const filteredRecipes = [];
-  for (let i = 0; i < myrecipesdata.length; i++) {
-    const recipe = myrecipesdata[i];
-
-    if (inputText === "") {
-      numberOfRecipes(myrecipesdata.length);
+  /************************boucle filter*/
+  const filteredRecipes = myrecipesdata.filter((recipe) => {
+    if (recipe.name.toLowerCase().indexOf(inputText) > 0) {
+      return true;
+    } else if (recipe.description.toLowerCase().indexOf(inputText) > 0) {
+      return true;
     } else {
-      numberOfRecipes(filteredRecipes.length);
+      const ingredients = recipe.ingredients.map(
+        (ingredient) => ingredient.ingredient
+      );
+      return ingredients.find(
+        (ingredient) => ingredient.toLowerCase().indexOf(inputText) > 0
+      );
     }
-    if (recipe.name.toLowerCase().includes(inputText)) {
-      filteredRecipes.push(recipe);
-      continue;
-    } else if (recipe.description.toLowerCase().includes(inputText)) {
-      filteredRecipes.push(recipe);
-      continue;
-    } else {
-      for (let j = 0; j < recipe.ingredients.length; j++) {
-        if (
-          recipe.ingredients[j].ingredient.toLowerCase().includes(inputText)
-        ) {
-          filteredRecipes.push(recipe);
-          break;
-        }
-      }
-    }
-  }
-  /************************ fin boucle for */
+  });
+  /************************ fin boucle filter */
   displayDataReciepes(filteredRecipes);
   numberOfRecipes(filteredRecipes.length);
   return filteredRecipes;

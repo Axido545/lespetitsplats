@@ -22,6 +22,7 @@ export function searchBar(myrecipesdata) {
         if (inputValue.length === 0) {
           messageError.textContent = "";
           clearInput.classList.add("hidden");
+          mySearch(filterRecipesByTags(myrecipesdata));
         } else if (inputValue.length < 3) {
           messageError.textContent = "Veuillez entrer trois caractères minimum";
           clearInput.classList.remove("hidden");
@@ -49,32 +50,32 @@ export function searchBar(myrecipesdata) {
 
 export function mySearch(myrecipesdata, inputText) {
   /************************boucle for */
-  const filteredRecipes = [];
-  for (let i = 0; i < myrecipesdata.length; i++) {
-    const recipe = myrecipesdata[i];
-
-    if (inputText === "") {
-      numberOfRecipes(myrecipesdata.length);
-    } else {
+  let filteredRecipes = [];
+  if (!inputText) {
+    filteredRecipes = filterRecipesByTags(recipes);
+  } else {
+    for (let i = 0; i < myrecipesdata.length; i++) {
+      const recipe = myrecipesdata[i];
       numberOfRecipes(filteredRecipes.length);
-    }
-    if (recipe.name.toLowerCase().includes(inputText)) {
-      filteredRecipes.push(recipe);
-      continue;
-    } else if (recipe.description.toLowerCase().includes(inputText)) {
-      filteredRecipes.push(recipe);
-      continue;
-    } else {
-      for (let j = 0; j < recipe.ingredients.length; j++) {
-        if (
-          recipe.ingredients[j].ingredient.toLowerCase().includes(inputText)
-        ) {
-          filteredRecipes.push(recipe);
-          break;
+      if (recipe.name.toLowerCase().includes(inputText)) {
+        filteredRecipes.push(recipe);
+        continue;
+      } else if (recipe.description.toLowerCase().includes(inputText)) {
+        filteredRecipes.push(recipe);
+        continue;
+      } else {
+        for (let j = 0; j < recipe.ingredients.length; j++) {
+          if (
+            recipe.ingredients[j].ingredient.toLowerCase().includes(inputText)
+          ) {
+            filteredRecipes.push(recipe);
+            break;
+          }
         }
       }
     }
   }
+
   /************************ fin boucle for */
   displayDataReciepes(filteredRecipes);
   numberOfRecipes(filteredRecipes.length);

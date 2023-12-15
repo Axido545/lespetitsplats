@@ -99,6 +99,8 @@ function updateSearchTags() {
  * @param {*} suggestions
  * @returns
  */
+
+
 export function filterSuggestions(suggestions) {
   return [...new Set(suggestions)];
 }

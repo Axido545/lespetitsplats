@@ -22,6 +22,7 @@ export function searchBar(myrecipesdata) {
         if (inputValue.length === 0) {
           messageError.textContent = "";
           clearInput.classList.add("hidden");
+          mySearch(filterRecipesByTags(myrecipesdata));
         } else if (inputValue.length < 3) {
           messageError.textContent = "Veuillez entrer trois caractères minimum";
           clearInput.classList.remove("hidden");
@@ -46,7 +47,6 @@ export function searchBar(myrecipesdata) {
     });
   }
 }
-
 export function mySearch(myrecipesdata, inputText) {
   /************************boucle filter*/
   const filteredRecipes = myrecipesdata.filter((recipe) => {

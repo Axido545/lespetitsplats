@@ -48,8 +48,12 @@ export function searchBar(myrecipesdata) {
   }
 }
 export function mySearch(myrecipesdata, inputText) {
+  let filteredRecipes = [];
+  if (!inputText) {
+    filteredRecipes = filterRecipesByTags(recipes);
+  } else {
   /************************boucle filter*/
-  const filteredRecipes = myrecipesdata.filter((recipe) => {
+  filteredRecipes = myrecipesdata.filter((recipe) => {
     if (recipe.name.toLowerCase().indexOf(inputText) > 0) {
       return true;
     } else if (recipe.description.toLowerCase().indexOf(inputText) > 0) {
@@ -62,7 +66,7 @@ export function mySearch(myrecipesdata, inputText) {
         (ingredient) => ingredient.toLowerCase().indexOf(inputText) > 0
       );
     }
-  });
+  });}
   /************************ fin boucle filter */
   displayDataReciepes(filteredRecipes);
   numberOfRecipes(filteredRecipes.length);

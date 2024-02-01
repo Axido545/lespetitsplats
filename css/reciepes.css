@@ -8,8 +8,6 @@
 }
 
 .img-recette {
-  /* max-width: 380px;
-  height: 253px; */
   width: 380px;
   height: 253px;
   border-radius: 21px 21px 0 0;
@@ -159,7 +157,17 @@ ul {
 }
 
 .full-description {
-  -webkit-line-clamp: initial; /* Retire la limite de lignes */
+  -webkit-line-clamp: initial;
+  /* Retire la limite de lignes */
   display: block;
-  overflow: visible; /* Assure que le texte complet est visible */
+  overflow: visible;
+  /*  texte complet  visible */
+}
+
+
+@media only screen and (max-width: 767px) {
+  .gallery-recipes {
+    grid-template-columns: repeat(1, 1fr);
+
+  }
 }

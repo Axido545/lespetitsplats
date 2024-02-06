@@ -164,7 +164,6 @@ ul {
   /*  texte complet  visible */
 }
 
-
 @media only screen and (max-width: 767px) {
   .gallery-recipes {
     grid-template-columns: repeat(1, 1fr);

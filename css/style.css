@@ -34,7 +34,6 @@ main {
   text-align: center;
   font-family: "Anton", sans-serif;
   top: 245px;
-
 }
 
 .search-elts {
@@ -192,6 +191,14 @@ input::placeholder {
   top: 17px;
 }
 
+#recipeCount {
+  position: absolute;
+  right: 15px;
+  font-family: "Anton";
+  color: black;
+  font-size: 21px;
+  top: 30px;
+}
 
 @media only screen and (max-width: 767px) {
   .background-header {
@@ -235,6 +242,7 @@ input::placeholder {
     padding-top: 100px;
   }
 
+
   #recipeCount {
     position: absolute;
     right: 15px;
@@ -250,6 +258,8 @@ input::placeholder {
   }
 
 }
+
+
 
 .header-main {
   position: relative;

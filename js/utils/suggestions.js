@@ -26,8 +26,8 @@ export function displaySuggestions(elements, containerId, inputElement) {
       inputValue === ""
         ? elements // affiche toutes suggestion avant de taper une lettre
         : elements.filter((element) =>
-            element.toLowerCase().includes(inputValue)
-          );
+          element.toLowerCase().includes(inputValue)
+        );
 
     // Set on suit tt élément
     const displayedSuggestions = new Set();
@@ -46,7 +46,6 @@ export function displaySuggestions(elements, containerId, inputElement) {
         newSuggestion.addEventListener("click", () =>
           onSuggestion(newSuggestion)
         );
-
         // On ajoute la version normalisée (sans "s") à l'ensemble des suggestions déjà affichées
         // pour 1 version de chaque mot (avec et sans s)
         displayedSuggestions.add(normalizedElement);

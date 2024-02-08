@@ -13,7 +13,7 @@ export function searchBar(myrecipesdata) {
       const inputValue = myInput.value.trim().toLowerCase();
       clearInput.classList.add("hidden");
 
-      const regex = /^[a-zA-ZÀ-ÖØ-öø-ÿ]+$/;
+      const regex = /^[a-zA-ZÀ-ÖØ-öø-ÿ\s]+$/;
 
       if (!regex.test(inputValue) && inputValue != "") {
         messageError.textContent =
@@ -52,21 +52,22 @@ export function mySearch(myrecipesdata, inputText) {
   if (!inputText) {
     filteredRecipes = filterRecipesByTags(recipes);
   } else {
-  /************************boucle filter*/
-  filteredRecipes = myrecipesdata.filter((recipe) => {
-    if (recipe.name.toLowerCase().indexOf(inputText) > 0) {
-      return true;
-    } else if (recipe.description.toLowerCase().indexOf(inputText) > 0) {
-      return true;
-    } else {
-      const ingredients = recipe.ingredients.map(
-        (ingredient) => ingredient.ingredient
-      );
-      return ingredients.find(
-        (ingredient) => ingredient.toLowerCase().indexOf(inputText) > 0
-      );
-    }
-  });}
+    /************************boucle filter*/
+    filteredRecipes = myrecipesdata.filter((recipe) => {
+      if (recipe.name.toLowerCase().indexOf(inputText) > 0) {
+        return true;
+      } else if (recipe.description.toLowerCase().indexOf(inputText) > 0) {
+        return true;
+      } else {
+        const ingredients = recipe.ingredients.map(
+          (ingredient) => ingredient.ingredient
+        );
+        return ingredients.find(
+          (ingredient) => ingredient.toLowerCase().indexOf(inputText) > 0
+        );
+      }
+    });
+  }
   /************************ fin boucle filter */
   displayDataReciepes(filteredRecipes);
   numberOfRecipes(filteredRecipes.length);
